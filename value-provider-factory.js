@@ -5,7 +5,7 @@ export const _setCurrentDate = (timestamp) => {};
  * returns a function (which acts as valueProvider and returns last N months start and end date)
  * @param {Number} n is positive integer
  */
-export const lastMonths = (n) => {};
+export const lastNMonths = (n) => {};
 
 /**
  * factory function (valueProvider)

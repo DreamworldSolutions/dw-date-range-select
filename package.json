@@ -38,6 +38,7 @@
     "@open-wc/building-rollup": "^2.0.2",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@web/dev-server": "^0.1.34",
+    "mocha": "^10.0.0",
     "semantic-release": "^19.0.5"
   },
   "release": {
