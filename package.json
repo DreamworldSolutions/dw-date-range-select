@@ -32,7 +32,8 @@
     "access": "public"
   },
   "dependencies": {
-    "lit": "^2.3.1"
+    "lit": "^2.3.1",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^2.0.2",
