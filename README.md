@@ -1,1 +1,1 @@
-# dw-date-range-select
+# `<dw-date-range-select>`
