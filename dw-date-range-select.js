@@ -1,9 +1,11 @@
-import { LitElement, html, css } from "lit";
+import { DwSelect } from "@dreamworld/dw-select/dw-select.js";
 
-export class DwDateRangeSelect extends LitElement {
-  render() {
-    return html`Dw-date-range-select`;
-  }
-}
+/**
+ * Date range input control is used to input a custom duration.
+ * 
+ * Behaviour
+ */
+
+export class DwDateRangeSelect extends DwSelect {}
 
 customElements.define("dw-date-range-select", DwDateRangeSelect);
