@@ -1,5 +1,4 @@
 import { LitElement, html, css } from "lit";
-import moment from "moment";
 import "../dw-date-range-select.js";
 import { all, thisMonth, lastMonth } from "../value-provider";
 import {
@@ -56,13 +55,13 @@ export class DwDateRangeSelectDemo extends LitElement {
 
   render() {
     return html`
-      <span>Input Value Empty</span>
-      <dw-date-range-select .items=${DateRangeItems}> </dw-date-range-select>
+      <!-- <span>Input Value Empty</span>
+      <dw-date-range-select .items=${DateRangeItems}> </dw-date-range-select> -->
 
       <br />
 
       <span>Input value matches with one of items</span>
-      <dw-date-range-select .items=${DateRangeItems} .value=${thisMonth()}> </dw-date-range-select>
+      <dw-date-range-select .items=${DateRangeItems} .value=${lastMonth()}> </dw-date-range-select>
 
       <br />
 

@@ -1,9 +1,9 @@
 import { DwSelect } from "@dreamworld/dw-select/dw-select.js";
-import moment from "moment";
+import isEqual from "lodash-es/isEqual";
 
 /**
  * Date range input control is used to input a custom duration.
- * 
+ *
  * ## Behaviour
  * - It overrides all the beahviors of dw-select input control.
  * - Default Input
@@ -33,7 +33,27 @@ import moment from "moment";
  *    - Dates greater than “end” date are disable for “START date” selection.
  */
 
-export class DwDateRangeSelect extends DwSelect {}
+export class DwDateRangeSelect extends DwSelect {
+  constructor() {
+    super();
+    this.valueExpression = "label";
+  }
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.value) {
+      const item = this.selectInputValue();
+      if (item) {
+        this.value = item;
+      }
+    }
+  }
+
+  selectInputValue() {
+    return this.items.find((item) => {
+      return isEqual(this.value, item.valueProvider())
+    });
+  }
+}
 
 customElements.define("dw-date-range-select", DwDateRangeSelect);
