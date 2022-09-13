@@ -61,7 +61,7 @@ export class DwDateRangeSelectDemo extends LitElement {
       <br />
 
       <span>Input value matches with one of items</span>
-      <dw-date-range-select .items=${DateRangeItems} .value=${lastMonth()}> </dw-date-range-select>
+      <dw-date-range-select .items=${DateRangeItems} .value=${lastMonth()} @selected=${this._onSelected}> </dw-date-range-select>
 
       <br />
 
@@ -69,9 +69,14 @@ export class DwDateRangeSelectDemo extends LitElement {
       <dw-date-range-select
         .items=${DateRangeItems}
         .value=${{ start: "2022-09-12", end: "2022-10-12" }}
+        @selected=${this._onSelected}
       >
       </dw-date-range-select>
     `;
+  }
+
+  _onSelected(e) {
+    console.log(e.detail);
   }
 }
 
