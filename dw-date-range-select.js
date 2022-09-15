@@ -39,7 +39,7 @@ export class DwDateRangeSelect extends DwSelect {
     this.valueExpression = "label";
   }
 
-  connectedCallback() {
+  firstUpdated() {
     super.connectedCallback();
     if (this.value) {
       const item = this.selectInputValue();
@@ -51,7 +51,7 @@ export class DwDateRangeSelect extends DwSelect {
 
   selectInputValue() {
     return this.items.find((item) => {
-      return isEqual(this.value, item.valueProvider())
+      return isEqual(this.value, item.valueProvider());
     });
   }
 }
