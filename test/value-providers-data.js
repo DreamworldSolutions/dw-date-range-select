@@ -34,3 +34,12 @@ export const lastFinancialYearData = {
   start: "2020-04-01",
   end: "2021-03-31",
 };
+
+export const lastNthMonthData = {
+  start: "2021-08-01",
+  end: "2021-08-31",
+};
+
+export const beforeNDaysData = {
+  end: "2021-09-04",
+};

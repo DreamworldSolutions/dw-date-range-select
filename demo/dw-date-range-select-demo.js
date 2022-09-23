@@ -7,6 +7,8 @@ import {
   lastQuarter,
   thisFinancialYear,
   lastFinancialYear,
+  beforeNDays,
+  lastNthMonth,
 } from "../value-provider-factory";
 
 const DateRangeItems = [
@@ -42,6 +44,14 @@ const DateRangeItems = [
     label: "Last 3 Months",
     valueProvider: lastNMonths(3),
   },
+  {
+    label: "Last 2nd month",
+    valueProvider: lastNthMonth(2),
+  },
+  {
+    label: "before 30 days",
+    valueProvider: beforeNDays(30),
+  },
 ];
 
 export class DwDateRangeSelectDemo extends LitElement {
@@ -61,7 +71,12 @@ export class DwDateRangeSelectDemo extends LitElement {
       <br />
 
       <span>Input value matches with one of items</span>
-      <dw-date-range-select .items=${DateRangeItems} .value=${lastMonth()} @selected=${this._onSelected}> </dw-date-range-select>
+      <dw-date-range-select
+        .items=${DateRangeItems}
+        .value=${lastMonth()}
+        @selected=${this._onSelected}
+      >
+      </dw-date-range-select>
 
       <br />
 
@@ -76,7 +91,7 @@ export class DwDateRangeSelectDemo extends LitElement {
   }
 
   _onSelected(e) {
-    console.log(e.detail);
+    console.log({ event: e, detail: e.detail, valueProvider: e.detail.value.valueProvider() });
   }
 }
 
