@@ -15,6 +15,7 @@ export const all = () => {};
 
 /**
  * returns an object whose start & end is the current month’s first & last date.
+ * @param {Boolean} end is boolen, default value is false. If true, it returns only this month's end date.
  */
 export const thisMonth = (end = false) => {
   return {
@@ -25,8 +26,15 @@ export const thisMonth = (end = false) => {
 
 /**
  * returns an object whose start & end is the last month’s first & last date.
+ * @param {Boolean} end is boolen, default value is false. If true, it returns only last month's end date.
  */
-export const lastMonth = () => {
+export const lastMonth = (end = false) => {
+  if (end) {
+    return {
+      end: moment(currentDate).endOf("month").format(DATE_FORMAT),
+    };
+  }
+
   return {
     start: moment(currentDate).subtract(1, "months").startOf("month").format(DATE_FORMAT),
     end: moment(currentDate).subtract(1, "months").endOf("month").format(DATE_FORMAT),
