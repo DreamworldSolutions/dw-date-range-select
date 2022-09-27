@@ -16,7 +16,7 @@ export const all = () => {};
 /**
  * returns an object whose start & end is the current month’s first & last date.
  */
-export const thisMonth = (end = false) => {
+export const thisMonth = () => {
   return {
     start: moment(currentDate).startOf("month").format(DATE_FORMAT),
     end: moment(currentDate).endOf("month").format(DATE_FORMAT),
