@@ -24,10 +24,11 @@ export const lastNMonths = (n) => {
  * factory function (valueProvider)
  * returns a function (which acts as valueProvider and returns this Quarter start and end date)
  * @param {String} fyStartsFrom is String in the format “dd/mm”.
-If true,  */
-export const thisQuarter = (fyStartsFrom, end = false) => {
+ * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the this quarter's end date.
+*/
+export const thisQuarter = (fyStartsFrom, endDate = false) => {
   return () => {
-    if (end) {
+    if (endDate) {
       return {
         end: moment(currentDate).endOf("quarter").format(DATE_FORMAT),
       };
@@ -44,11 +45,11 @@ export const thisQuarter = (fyStartsFrom, end = false) => {
  * factory function (valueProvider)
  * returns a function (which acts as valueProvider and returns last Quarter start and end date)
  * @param {String} fyStartsFrom is String in the format “dd/mm”.
- * @param {Boolean} end is boolen, default value is false. If true, it returns only the last quarter's end date.
+ * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the last quarter's end date.
  */
-export const lastQuarter = (fyStartsFrom, end = false) => {
+export const lastQuarter = (fyStartsFrom, endDate = false) => {
   return () => {
-    if (end) {
+    if (endDate) {
       return {
         end: moment(currentDate).subtract(1, "Q").endOf("quarter").format(DATE_FORMAT),
       };
@@ -65,13 +66,13 @@ export const lastQuarter = (fyStartsFrom, end = false) => {
  * factory function (valueProvider)
  * returns a function (which acts as valueProvider and returns this financian year start and end date)
  * @param {String} startsFrom is String in the format “dd/mm”.
- * @param {Boolean} end is boolen, default value is false. If true, it returns only the current financial year's end date.
+ * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the current financial year's end date.
  */
-export const thisFinancialYear = (startsFrom, end = false) => {
+export const thisFinancialYear = (startsFrom, endDate = false) => {
   let startsFromDay = moment(startsFrom, "DD/MM").date();
   let startsFromMonth = moment(startsFrom, "DD/MM").month();
   return () => {
-    if (end) {
+    if (endDate) {
       return {
         end: moment(currentDate)
           .month(startsFromMonth - 1)
@@ -98,13 +99,13 @@ export const thisFinancialYear = (startsFrom, end = false) => {
  * factory function (valueProvider)
  * returns a function (which acts as valueProvider and returns last financian year start and end date)
  * @param {String} startsFrom is String in the format “dd/mm”.
- * @param {Boolean} end is boolen, default value is false. If true, it returns only the last financial year's end date.
+ * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the last financial year's end date.
  */
-export const lastFinancialYear = (startsFrom, end = false) => {
+export const lastFinancialYear = (startsFrom, endDate = false) => {
   let startsFromDay = moment(startsFrom, "DD/MM").date();
   let startsFromMonth = moment(startsFrom, "DD/MM").month();
   return () => {
-    if (end) {
+    if (endDate) {
       return {
         end: moment(currentDate)
           .month(startsFromMonth - 1)
