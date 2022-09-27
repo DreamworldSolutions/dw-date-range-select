@@ -40,7 +40,7 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   firstUpdated() {
-    super.connectedCallback();
+    super.firstUpdated();
     if (this.value) {
       const item = this.selectInputValue();
       if (item) {

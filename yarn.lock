@@ -991,10 +991,10 @@
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-select@^4.0.0-development.9":
-  version "4.0.0-development.9"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.0.0-development.9.tgz#745394c328ec4e9020bba3f8d9895fdef0c54642"
-  integrity sha512-2GEVTHY/Ob8RdtCBOWHd9dm15MbB1+zlq6vTAS+vbgJfw2Zyf7m92ypU5lEthiQlhxrgkZ1JxjUNpmozurKJEQ==
+"@dreamworld/dw-select@^4.0.0-development.10":
+  version "4.0.0-development.10"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.0.0-development.10.tgz#8a994c8970f734e228a4076f2fc6ef07e2edf79b"
+  integrity sha512-TFMuSAlGu87wJM9trOhFAsVo3kydRnLSS/c7OA0c0+Io454m4m1aWCBUiS26Lc6GdoPAJ4GmrBkbe/gfOYnhhA==
   dependencies:
     "@dreamworld/dw-dialog" "^4.2.0-development.1"
     "@dreamworld/dw-icon" "^2.3.1"
