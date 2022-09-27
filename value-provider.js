@@ -47,6 +47,6 @@ export const endOfThisMonth = () => {
  */
 export const endOfLastMonth = () => {
   return {
-    end: moment(currentDate).endOf("month").format(DATE_FORMAT),
+    end: moment(currentDate).subtract(1, "months").endOf("month").format(DATE_FORMAT),
   };
 };
