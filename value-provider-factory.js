@@ -94,3 +94,31 @@ export const lastFinancialYear = (startsFrom) => {
     };
   };
 };
+
+/**
+ * Computed last Nth Month start and end date (N is a positive integer)
+ * @param {Number} n last nth month
+ * @returns {Function} function (which acts as valueProvider and returns last Nth Month start and end date)
+ */
+export const lastNthMonth = (n) => {
+  return () => {
+    return {
+      start: moment(currentDate).subtract(n, "months").startOf("month").format(DATE_FORMAT),
+      end: moment(currentDate).subtract(n, "months").endOf("month").format(DATE_FORMAT),
+    };
+  };
+};
+
+/**
+ * only the end date is provided.
+ * If n is not a positive integer then return the current day as the end date and throw a warning log.
+ * @param {*} n last n days
+ * @returns {Function} function (which acts as valueProvider and returns before N days (from today)
+ */
+export const beforeNDays = (n) => {
+  return () => {
+    return {
+      end: moment(currentDate).subtract(n, "days").format(DATE_FORMAT),
+    };
+  };
+};
