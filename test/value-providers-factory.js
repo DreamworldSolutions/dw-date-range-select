@@ -1,15 +1,19 @@
 import {
+  beforeNDays,
   lastFinancialYear,
   lastNMonths,
+  lastNthMonth,
   lastQuarter,
   thisFinancialYear,
   thisQuarter,
   _setCurrentDate,
 } from "../value-provider-factory.js";
 import {
+  beforeNDaysData,
   currentDate,
   lastFinancialYearData,
   lastNMonthisData,
+  lastNthMonthData,
   lastQuarterData,
   thisFinancialYearData,
   thisQuarterData,
@@ -41,6 +45,16 @@ describe("value-provider-factory", function () {
   describe("#lastFinancialYear(startsFrom)", function () {
     it("returns a function", function () {
       deepStrictEqual(lastFinancialYear("01/04")(), lastFinancialYearData);
+    });
+  });
+  describe("#lastNthMonth(n)", function () {
+    it("returns a function", function () {
+      deepStrictEqual(lastNthMonth(2)(), lastNthMonthData);
+    });
+  });
+  describe("#lastNthMonth(n)", function () {
+    it("returns a function", function () {
+      deepStrictEqual(beforeNDays(45)(), beforeNDaysData);
     });
   });
 });
