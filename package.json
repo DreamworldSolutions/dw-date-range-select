@@ -32,12 +32,16 @@
     "access": "public"
   },
   "dependencies": {
-    "lit": "^2.3.1"
+    "@dreamworld/dw-select": "^4.0.0-development.9",
+    "lit": "^2.3.1",
+    "lodash-es": "^4.17.21",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^2.0.2",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@web/dev-server": "^0.1.34",
+    "mocha": "^10.0.0",
     "semantic-release": "^19.0.5"
   },
   "release": {

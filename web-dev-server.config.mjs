@@ -4,9 +4,9 @@ import { fromRollup } from "@web/dev-server-rollup";
 const commonjs = fromRollup(rollupCommonjs);
 
 export default {
-  appIndex: "demo/index.html",
   open: true,
   nodeResolve: true,
+  appIndex: "demo/index.html",
   // esbuildTarget: "auto",
   plugins: [commonjs()],
 };
