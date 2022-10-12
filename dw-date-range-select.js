@@ -36,10 +36,10 @@ import isEqual from "lodash-es/isEqual";
 export class DwDateRangeSelect extends DwSelect {
   constructor() {
     super();
-    this.valueExpression = "label";
+    this.valueTextProvider = (item) => item.label;
   }
 
-  firstUpdated() {
+  connectedCallback() {
     super.connectedCallback();
     if (this.value) {
       const item = this.selectInputValue();

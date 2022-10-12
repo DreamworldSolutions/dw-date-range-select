@@ -32,7 +32,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@dreamworld/dw-select": "^4.0.0-development.9",
+    "@dreamworld/dw-select": "^4.0.0-v2-init.6",
     "lit": "^2.3.1",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4"
@@ -43,6 +43,9 @@
     "@web/dev-server": "^0.1.34",
     "mocha": "^10.0.0",
     "semantic-release": "^19.0.5"
+  },
+  "resolutions": {
+    "@dreamworld/dw-ripple": "^2.5.0"
   },
   "release": {
     "branches": [

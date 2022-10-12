@@ -936,10 +936,10 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@dreamworld/dw-dialog@^4.2.0-development.1":
-  version "4.2.0-development.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-dialog/-/dw-dialog-4.2.0-development.1.tgz#b3290eacc0cab57a63c4c1b948db8fb34a132b04"
-  integrity sha512-ITBpnw3GkQO5xPtclMPUBBkMzE3SveyTULW+0gMQWoc1zie7qmimvANP/LPj59plzFV6HiRZooU9ssMlNS14RQ==
+"@dreamworld/dw-dialog@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-dialog/-/dw-dialog-4.1.2.tgz#c612c458f5a350bd5f22ddd113525911bebf2724"
+  integrity sha512-/G2dTPpDxL3ozyHBMVkEwlFuS2BmP45dptKljRoSfupq6WETBocXO1H0mhjBRMn0PVXtpnJ8EmMmn8MfG+KO0g==
   dependencies:
     "@dreamworld/material-styles" "^1.1.0"
     "@dreamworld/pwa-helpers" "^1.11.1"
@@ -970,36 +970,37 @@
     "@material/mwc-icon" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-list-item@^3.3.0-support-highlight.1":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-list-item/-/dw-list-item-3.4.0.tgz#0e720aa79855fbd75a0b0693057ef69245804f40"
-  integrity sha512-3+EJmmA0yMd3FX0m5e9ilLEkbQfmfLu4T7ogBKOcyKRrquQoSMvgPn/Vre60rhtfK8SGKJKmFJS2hfCPRmh0mw==
+"@dreamworld/dw-list-item@^3.7.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-list-item/-/dw-list-item-3.9.0.tgz#17da86c29039352989629368f0b1a63dd34d49dc"
+  integrity sha512-40xr6izq/luoLrrPf8k4UdhYTPTnGNdxJEs/YX6PQmsWYdnLbNrlf4EqseoDGa5cmZ2QzQbK9UuAE/lMMBxNqA==
   dependencies:
     "@dreamworld/dw-icon" "^2.3.0"
-    "@dreamworld/dw-ripple" "^2.3.0"
+    "@dreamworld/dw-ripple" "^2.5.0"
     "@dreamworld/dw-tooltip" "^2.3.0"
     "@dreamworld/flex-layout" "^1.1.0"
     "@dreamworld/material-styles" "^1.1.0"
     "@dreamworld/pwa-helpers" "^1.7.1"
     lit-element "^2.2.1"
+    lit-html "^1.1.1"
 
-"@dreamworld/dw-ripple@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.3.0.tgz#2f995f604dbfec5dcd3998b9bc4e83dd4fb33491"
-  integrity sha512-qU35HmCv44GfDUuKhrYbP/mucZ7dP0gq4LDw+j1UuhZbC4+Z6cnR247pyujfCCFnwiYB1QpuM6rRRp/Sd83WWw==
+"@dreamworld/dw-ripple@^2.3.0", "@dreamworld/dw-ripple@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.5.0.tgz#73815cb783fb0f4fea437e661681eea517cfe911"
+  integrity sha512-L1JVt397D+7vMZ2EzFydcU/bCMKne+anLehS4lQoBBNymu6HbUaeOpZ+CAU9uwTYwl/VtO7DyqHs6MUwjBpmgA==
   dependencies:
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-select@^4.0.0-development.9":
-  version "4.0.0-development.9"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.0.0-development.9.tgz#745394c328ec4e9020bba3f8d9895fdef0c54642"
-  integrity sha512-2GEVTHY/Ob8RdtCBOWHd9dm15MbB1+zlq6vTAS+vbgJfw2Zyf7m92ypU5lEthiQlhxrgkZ1JxjUNpmozurKJEQ==
+"@dreamworld/dw-select@^4.0.0-v2-init.6":
+  version "4.0.0-v2-init.6"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.0.0-v2-init.6.tgz#f585d87f58e2376bbca1cdf24d7527cfe892f013"
+  integrity sha512-gKc7X9mH3IBuLLZUpoKA82v9q1s61UdC0DUQRW2bK16jBl079zgfZ+2MUYqVg80Vz4KiQNiYqjiUMyJ1M2F03A==
   dependencies:
-    "@dreamworld/dw-dialog" "^4.2.0-development.1"
+    "@dreamworld/dw-dialog" "^4.1.2"
     "@dreamworld/dw-icon" "^2.3.1"
     "@dreamworld/dw-icon-button" "^2.4.0"
-    "@dreamworld/dw-list-item" "^3.3.0-support-highlight.1"
+    "@dreamworld/dw-list-item" "^3.7.0"
     "@dreamworld/dw-ripple" "^2.3.0"
     "@dreamworld/web-util" "^1.5.0"
     "@material/mwc-circular-progress" "^0.26.1"
