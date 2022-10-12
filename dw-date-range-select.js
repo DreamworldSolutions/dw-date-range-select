@@ -39,8 +39,8 @@ export class DwDateRangeSelect extends DwSelect {
     this.valueTextProvider = (item) => item.label;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  firstUpdated() {
+    super.firstUpdated();
     if (this.value) {
       const item = this.selectInputValue();
       if (item) {

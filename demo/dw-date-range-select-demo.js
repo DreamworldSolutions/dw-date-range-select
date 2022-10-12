@@ -83,7 +83,7 @@ export class DwDateRangeSelectDemo extends LitElement {
       <span>Input value does not matches with one of items</span>
       <dw-date-range-select
         .items=${DateRangeItems}
-        .value=${{ start: "2021-04-01", end: "2022-03-31" }}
+        .value=${{ start: "2021-04-01", end: "2022-03-30" }}
         @selected=${this._onSelected}
       >
       </dw-date-range-select>
