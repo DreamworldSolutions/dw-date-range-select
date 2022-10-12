@@ -34,6 +34,7 @@
   "dependencies": {
     "@dreamworld/dw-select": "^4.0.0-development.9",
     "lit": "^2.3.1",
+    "lodash-es": "^4.17.21",
     "moment": "^2.29.4"
   },
   "devDependencies": {

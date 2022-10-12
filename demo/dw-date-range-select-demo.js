@@ -1,5 +1,4 @@
 import { LitElement, html, css } from "lit";
-import moment from "moment";
 import "../dw-date-range-select.js";
 import { all, thisMonth, lastMonth } from "../value-provider";
 import {
@@ -8,6 +7,8 @@ import {
   lastQuarter,
   thisFinancialYear,
   lastFinancialYear,
+  beforeNDays,
+  lastNthMonth,
 } from "../value-provider-factory";
 
 const DateRangeItems = [
@@ -43,6 +44,14 @@ const DateRangeItems = [
     label: "Last 3 Months",
     valueProvider: lastNMonths(3),
   },
+  {
+    label: "Last 2nd month",
+    valueProvider: lastNthMonth(2),
+  },
+  {
+    label: "before 30 days",
+    valueProvider: beforeNDays(30),
+  },
 ];
 
 export class DwDateRangeSelectDemo extends LitElement {
@@ -56,13 +65,18 @@ export class DwDateRangeSelectDemo extends LitElement {
 
   render() {
     return html`
-      <span>Input Value Empty</span>
-      <dw-date-range-select .items=${DateRangeItems}> </dw-date-range-select>
+      <!-- <span>Input Value Empty</span>
+      <dw-date-range-select .items=${DateRangeItems}> </dw-date-range-select> -->
 
       <br />
 
       <span>Input value matches with one of items</span>
-      <dw-date-range-select .items=${DateRangeItems} .value=${thisMonth()}> </dw-date-range-select>
+      <dw-date-range-select
+        .items=${DateRangeItems}
+        .value=${lastMonth()}
+        @selected=${this._onSelected}
+      >
+      </dw-date-range-select>
 
       <br />
 
@@ -70,9 +84,14 @@ export class DwDateRangeSelectDemo extends LitElement {
       <dw-date-range-select
         .items=${DateRangeItems}
         .value=${{ start: "2022-09-12", end: "2022-10-12" }}
+        @selected=${this._onSelected}
       >
       </dw-date-range-select>
     `;
+  }
+
+  _onSelected(e) {
+    console.log({ event: e, detail: e.detail, valueProvider: e.detail.value.valueProvider() });
   }
 }
 
