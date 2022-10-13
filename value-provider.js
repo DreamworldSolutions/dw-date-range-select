@@ -32,3 +32,21 @@ export const lastMonth = () => {
     end: moment(currentDate).subtract(1, "months").endOf("month").format(DATE_FORMAT),
   };
 };
+
+/**
+ * returns an object whose end is the current month’s last date.
+ */
+export const endOfThisMonth = () => {
+  return {
+    end: moment(currentDate).endOf("month").format(DATE_FORMAT),
+  };
+};
+
+/**
+ * returns an object whose end is the last month’s last date.
+ */
+export const endOfLastMonth = () => {
+  return {
+    end: moment(currentDate).subtract(1, "months").endOf("month").format(DATE_FORMAT),
+  };
+};
