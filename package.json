@@ -32,7 +32,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@dreamworld/dw-select": "^4.0.0-v2-init.6",
+    "@dreamworld/dw-select": "^4.0.0",
     "lit": "^2.3.1",
     "lit-element": "^2.0.1",
     "lit-html": "^1.1.1",
