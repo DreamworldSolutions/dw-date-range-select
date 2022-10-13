@@ -41,7 +41,15 @@ export class DwDateRangeSelect extends DwSelect {
 
   firstUpdated() {
     super.firstUpdated();
-    if (this.value) {
+    const item = this.selectInputValue();
+    if (item) {
+      this.value = item;
+    }
+  }
+
+  willUpdate(_change) {
+    super.willUpdate(_change);
+    if (_change.has("value")) {
       const item = this.selectInputValue();
       if (item) {
         this.value = item;
