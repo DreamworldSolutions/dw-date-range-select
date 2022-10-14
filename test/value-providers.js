@@ -4,19 +4,20 @@ import { currentDate, thisMonthData, lastMonthData } from "./value-providers-dat
 
 describe("value-provider", function () {
   _setCurrentDate(currentDate);
-  describe("#all()", function () {
+
+  describe("#All()", function () {
     it("returns undefined", function () {
       strictEqual(all(), undefined);
     });
   });
 
-  describe("#thisMonth()", function () {
+  describe("#This Month()", function () {
     it("returns this month", function () {
       deepStrictEqual(thisMonth(), thisMonthData);
     });
   });
 
-  describe("#lastMonth()", function () {
+  describe("#Last Month()", function () {
     it("returns last month", function () {
       deepStrictEqual(lastMonth(), lastMonthData);
     });
