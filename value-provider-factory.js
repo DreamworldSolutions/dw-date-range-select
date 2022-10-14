@@ -6,6 +6,21 @@ export const _setCurrentDate = (timestamp) => {
   currentDate = timestamp;
 };
 
+export const nextMonth = (endDate = false) => {
+  return () => {
+    if (endDate) {
+      return {
+        end: moment(currentDate).add(1, "months").endOf("month").format(DATE_FORMAT),
+      };
+    }
+
+    return {
+      start: moment(currentDate).add(1, "months").startOf("month").format(DATE_FORMAT),
+      end: moment(currentDate).add(1, "months").endOf("month").format(DATE_FORMAT),
+    };
+  };
+};
+
 /**
  * factory function (valueProvider)
  * returns a function (which acts as valueProvider and returns last N months start and end date)
@@ -25,7 +40,7 @@ export const lastNMonths = (n) => {
  * returns a function (which acts as valueProvider and returns this Quarter start and end date)
  * @param {String} fyStartsFrom is String in the format “dd/mm”.
  * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the this quarter's end date.
-*/
+ */
 export const thisQuarter = (fyStartsFrom, endDate = false) => {
   return () => {
     if (endDate) {
@@ -158,6 +173,60 @@ export const beforeNDays = (n) => {
   return () => {
     return {
       end: moment(currentDate).subtract(n, "days").format(DATE_FORMAT),
+    };
+  };
+};
+
+/**
+ * This week's duration. Note: Week start with Monday.
+ * @param {Boolean} endDate only returns end date when `true`
+ * @returns {Object} returns this week's start and end date
+ */
+export const thisWeek = (endDate = false) => {
+  return () => {
+    if (endDate) {
+      return {
+        end: moment(currentDate).endOf("isoWeek").format(DATE_FORMAT),
+      };
+    }
+    return {
+      start: moment(currentDate).startOf("isoWeek").format(DATE_FORMAT),
+      end: moment(currentDate).endOf("isoWeek").format(DATE_FORMAT),
+    };
+  };
+};
+
+/**
+ * Next week's duration. Note: Week start with Monday.
+ * @param {Boolean} endDate only returns end date when `true`
+ * @returns returns next week's start and end date
+ */
+export const nextWeek = (endDate = false) => {
+  return () => {
+    if (endDate) {
+      return {
+        end: moment(currentDate).endOf("isoWeek").add(1, "w").format(DATE_FORMAT),
+      };
+    }
+
+    return {
+      start: moment(currentDate).startOf("isoWeek").add(1, "w").format(DATE_FORMAT),
+      end: moment(currentDate).endOf("isoWeek").add(1, "w").format(DATE_FORMAT),
+    };
+  };
+};
+
+export const lastWeek = (endDate = false) => {
+  return () => {
+    if (endDate) {
+      return {
+        end: moment(currentDate).endOf("isoWeek").subtract(1, "w").format(DATE_FORMAT),
+      };
+    }
+
+    return {
+      start: moment(currentDate).startOf("isoWeek").subtract(1, "w").format(DATE_FORMAT),
+      end: moment(currentDate).endOf("isoWeek").subtract(1, "w").format(DATE_FORMAT),
     };
   };
 };

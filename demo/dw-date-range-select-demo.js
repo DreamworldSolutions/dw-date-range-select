@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import "../dw-date-range-select.js";
-import { all, thisMonth, lastMonth } from "../value-provider";
+import { all, thisMonth, lastMonth, today } from "../value-provider";
 import {
   lastNMonths,
   thisQuarter,
@@ -9,6 +9,8 @@ import {
   lastFinancialYear,
   beforeNDays,
   lastNthMonth,
+  lastWeek,
+  nextMonth,
 } from "../value-provider-factory";
 
 const DateRangeItems = [
@@ -51,6 +53,22 @@ const DateRangeItems = [
   {
     label: "before 30 days",
     valueProvider: beforeNDays(30),
+  },
+  {
+    label: "today",
+    valueProvider: today,
+  },
+  {
+    label: "Last Week",
+    valueProvider: lastWeek(),
+  },
+  {
+    label: "End of Last Week",
+    valueProvider: lastWeek(true),
+  },
+  {
+    label: "End of Next Month",
+    valueProvider: nextMonth(true),
   },
 ];
 
