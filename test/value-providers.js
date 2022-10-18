@@ -1,6 +1,6 @@
 import { strictEqual, deepStrictEqual } from "assert";
-import { all, thisMonth, lastMonth, _setCurrentDate } from "../value-provider.js";
-import { currentDate, thisMonthData, lastMonthData } from "./value-providers-data.js";
+import { all, today, thisMonth, lastMonth, _setCurrentDate, yesterday, tomorrow } from "../value-provider.js";
+import { currentDate, thisMonthData, lastMonthData, todayData, yesterdayData, tomorrowData } from "./value-providers-data.js";
 
 describe("value-provider", function () {
   _setCurrentDate(currentDate);
@@ -8,6 +8,24 @@ describe("value-provider", function () {
   describe("#All()", function () {
     it("returns undefined", function () {
       strictEqual(all(), undefined);
+    });
+  });
+
+  describe("#Today()", function () {
+    it("returns Today Date", function () {
+      deepStrictEqual(today(), todayData);
+    });
+  });
+
+  describe("#Yesterday()", function () {
+    it("returns Yesterday Date", function () {
+      deepStrictEqual(yesterday(), yesterdayData);
+    });
+  });
+
+  describe("#Tomorrow()", function () {
+    it("returns tomorrow Date", function () {
+      deepStrictEqual(tomorrow(), tomorrowData);
     });
   });
 

@@ -58,9 +58,12 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   selectInputValue() {
-    return this.items && this.items.find((item) => {
-      return isEqual(this.value, item.valueProvider());
-    });
+    return (
+      this.items &&
+      this.items.find((item) => {
+        return isEqual(this.value, item.valueProvider());
+      })
+    );
   }
 }
 

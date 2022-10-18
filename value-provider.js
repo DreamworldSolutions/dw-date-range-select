@@ -14,6 +14,36 @@ export const _setCurrentDate = (timestamp) => {
 export const all = () => {};
 
 /**
+ *
+ * @returns {Object} today date in yyyy-mm-dd format
+ */
+export const today = () => {
+  return {
+    end: moment(currentDate).format(DATE_FORMAT),
+  };
+};
+
+/**
+ *
+ * @returns {Object} yesterday date in yyyy-mm-dd format
+ */
+export const yesterday = () => {
+  return {
+    end: moment(currentDate).subtract(1, "d").format(DATE_FORMAT),
+  };
+};
+
+/**
+ *
+ * @returns {Object} tomorrow date in yyyy-mm-dd format
+ */
+export const tomorrow = () => {
+  return {
+    end: moment(currentDate).add(1, "d").format(DATE_FORMAT),
+  };
+};
+
+/**
  * returns an object whose start & end is the current month’s first & last date.
  */
 export const thisMonth = () => {
