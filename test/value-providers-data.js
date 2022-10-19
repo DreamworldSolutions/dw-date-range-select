@@ -59,8 +59,8 @@ export const EndOfLastWeekData = {
 };
 
 export const lastNMonthisData = {
-  start: "2021-06-01",
-  end: "2021-09-30",
+  start: "2020-10-20",
+  end: "2021-10-19",
 };
 
 export const thisQuarterData = {
