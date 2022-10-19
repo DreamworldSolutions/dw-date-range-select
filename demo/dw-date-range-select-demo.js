@@ -90,6 +90,8 @@ export class DwDateRangeSelectDemo extends LitElement {
 
       <span>Input value matches with one of items</span>
       <dw-date-range-select
+        .heading=${"Select Duration"}
+        showClose
         .items=${DateRangeItems}
         .value=${lastMonth()}
         @selected=${this._onSelected}
