@@ -1,74 +1,62 @@
 import { LitElement, html, css } from "lit";
-import "../dw-date-range-select.js";
-import { all, thisMonth, lastMonth, today } from "../value-provider";
-import {
-  lastNMonths,
-  thisQuarter,
-  lastQuarter,
-  thisFinancialYear,
-  lastFinancialYear,
-  beforeNDays,
-  lastNthMonth,
-  lastWeek,
-  nextMonth,
-} from "../value-provider-factory";
+import { valueProvider, valueProviderFactory } from "../dw-date-range-select.js";
 
 const DateRangeItems = [
   {
     label: "All",
-    valueProvider: all,
+    valueProvider: valueProvider.all,
   },
   {
     label: "This Month",
-    valueProvider: thisMonth,
+    valueProvider: valueProvider.thisMonth,
   },
   {
     label: "Last Month",
-    valueProvider: lastMonth,
+    valueProvider: valueProvider.lastMonth,
   },
   {
     label: "This Quarter",
-    valueProvider: thisQuarter("01/04"),
+    valueProvider: valueProviderFactory.thisQuarter("01/04"),
   },
   {
     label: "Last Quarter",
-    valueProvider: lastQuarter("01/04"),
+    valueProvider: valueProviderFactory.lastQuarter("01/04"),
   },
   {
     label: "This Financial Year",
-    valueProvider: thisFinancialYear("01/04"),
+    valueProvider: valueProviderFactory.thisFinancialYear("01/04"),
   },
   {
     label: "Last Financial Year",
-    valueProvider: lastFinancialYear("01/04"),
+    valueProvider: valueProviderFactory.lastFinancialYear("01/04"),
   },
   {
     label: "Last 3 Months",
-    valueProvider: lastNMonths(3),
+    valueProvider: valueProviderFactory.lastNMonths(3),
   },
   {
     label: "Last 2nd month",
-    valueProvider: lastNthMonth(2),
+    valueProvider: valueProviderFactory.lastNthMonth(2),
   },
   {
     label: "before 30 days",
-    valueProvider: beforeNDays(30),
+    valueProvider: valueProviderFactory.beforeNDays(30),
   },
   {
     label: "today",
-    valueProvider: today,
+    valueProvider: valueProvider.today,
   },
   {
     label: "Last Week",
-    valueProvider: lastWeek(),
+    valueProvider: valueProviderFactory.lastWeek(),
   },
   {
     label: "End of Last Week",
-    valueProvider: lastWeek(true),
+    valueProvider: valueProviderFactory.lastWeek(true),
   },
   {
     label: "End of Next Month",
-    valueProvider: nextMonth(true),
+    valueProvider: valueProviderFactory.nextMonth(true),
   },
 ];
 
@@ -93,7 +81,7 @@ export class DwDateRangeSelectDemo extends LitElement {
         .heading=${"Select Duration"}
         showClose
         .items=${DateRangeItems}
-        .value=${lastMonth()}
+        .value=${valueProvider.lastMonth()}
         selectedTrailingIcon="done"
         @selected=${this._onSelected}
       >
