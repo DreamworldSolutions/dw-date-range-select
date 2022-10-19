@@ -92,6 +92,7 @@ export class DwDateRangeSelectDemo extends LitElement {
       <dw-date-range-select
         .items=${DateRangeItems}
         .value=${lastMonth()}
+        selectedTrailingIcon="done"
         @selected=${this._onSelected}
       >
       </dw-date-range-select>
