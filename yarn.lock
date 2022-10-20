@@ -992,10 +992,10 @@
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-select@^4.3.0-selected-item-trailing-icon.1":
-  version "4.3.0-selected-item-trailing-icon.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.3.0-selected-item-trailing-icon.1.tgz#3b3272652dc799fa0c0badf5dbef3ea244546245"
-  integrity sha512-kNH01oBef1zMk8T68cxpH7XOtRFjVXjGPFZoRaKUgKyvGFgAum4aVQtCqZBf2C5thALQcka+Ktdd9xJ3zqDS+A==
+"@dreamworld/dw-select@^4.6.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.6.0.tgz#496ed4c4ebdc91befed7d6809569a20865ffb01b"
+  integrity sha512-qniwXe3Ve6Ucqgazryqb98GbqhiJaGxQboB4RaL7SLcUQTcrPukumpQnDYplhx+Dax1Ur3JEMw9x1f0q7EK+YA==
   dependencies:
     "@dreamworld/dw-dialog" "^4.1.2"
     "@dreamworld/dw-icon" "^2.3.1"

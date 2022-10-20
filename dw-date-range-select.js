@@ -1,8 +1,8 @@
 import { DwSelect } from "@dreamworld/dw-select/dw-select.js";
 import isEqual from "lodash-es/isEqual";
 
-import * as _valueProvider from "./value-provider.js";
-import * as _valueProviderFactory from "./value-provider-factory.js";
+export * as valueProvider from "./value-provider.js";
+export * as valueProviderFactory from "./value-provider-factory.js";
 
 /**
  * Date range input control is used to input a custom duration.
@@ -71,6 +71,3 @@ export class DwDateRangeSelect extends DwSelect {
 }
 
 customElements.define("dw-date-range-select", DwDateRangeSelect);
-
-export const valueProvider = _valueProvider;
-export const valueProviderFactory = _valueProviderFactory;
