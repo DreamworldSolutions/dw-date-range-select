@@ -29,8 +29,8 @@ export const nextMonth = (endDate = false) => {
 export const lastNMonths = (n) => {
   return () => {
     return {
-      start: moment(currentDate).subtract(n, "months").startOf("month").format(DATE_FORMAT),
-      end: moment(currentDate).subtract(1, "months").endOf("month").format(DATE_FORMAT),
+      start: moment(currentDate).subtract(n, "months").add(1, 'days').format(DATE_FORMAT),
+      end: moment(currentDate).format(DATE_FORMAT),
     };
   };
 };

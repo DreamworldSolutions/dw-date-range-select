@@ -39,7 +39,7 @@ describe("value-provider-factory", function () {
 
   describe("#Last N Months(n)", function () {
     it("returns a function", function () {
-      deepStrictEqual(lastNMonths(4)(), lastNMonthisData);
+      deepStrictEqual(lastNMonths(12)(), lastNMonthisData);
     });
   });
 
