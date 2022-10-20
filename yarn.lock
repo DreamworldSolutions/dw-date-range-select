@@ -991,10 +991,10 @@
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-select@^4.8.0-safari-issue.1":
-  version "4.8.0-safari-issue.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.8.0-safari-issue.1.tgz#81bb74374332484b6dfd2973090d07b155d0b14d"
-  integrity sha512-nBLCN9DcBntZCyi32gpXlRJtJS1iUaIqbBvOxy/MO6IDhe3UJiBBsGMZVT57yHhh7ZrYrd6iin4Cky+pwcL3Ag==
+"@dreamworld/dw-select@^4.7.2":
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.7.2.tgz#ab0462f96a5dd91eb13bfd770525ba03a8cd96d5"
+  integrity sha512-/QmErpVvo47UkixhCrhjSqQtclZMFAsQH3C1Qbh72Kyt0lQzlQZqIpyPHHh8EWso1WSZS3wZNRMbcADnl1uBFg==
   dependencies:
     "@dreamworld/dw-dialog" "^4.2.0"
     "@dreamworld/dw-icon" "^2.3.1"
