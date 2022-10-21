@@ -970,12 +970,13 @@
     "@material/mwc-icon" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-list-item@git+https://github.com/DreamworldSolutions/dw-list-item.git#feature/safari-issue-for-gujarati-text":
-  version "0.0.0-development"
-  resolved "git+https://github.com/DreamworldSolutions/dw-list-item.git#0a163285453b301fef2e0dc5f353b1ccd17de2b5"
+"@dreamworld/dw-list-item@^3.10.0-hisab-list-item.2":
+  version "3.10.0-safari-issue-for-gujarati-text.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-list-item/-/dw-list-item-3.10.0-safari-issue-for-gujarati-text.1.tgz#3e8fd43a8459cfb6bd4dc6a9aec3f76224672611"
+  integrity sha512-95HJ30I0t1unX6H9PRh2Jtr59P867uTPZbu2Mh4Ut3gpUlbcoStZHEMSMI8njLTL29jkOqz39wJBe8t5B/1dMA==
   dependencies:
     "@dreamworld/dw-icon" "^2.3.0"
-    "@dreamworld/dw-ripple" "^2.3.0"
+    "@dreamworld/dw-ripple" "^2.5.0"
     "@dreamworld/dw-tooltip" "^2.3.0"
     "@dreamworld/flex-layout" "^1.1.0"
     "@dreamworld/material-styles" "^1.1.0"
@@ -983,7 +984,7 @@
     lit-element "^2.2.1"
     lit-html "^1.1.1"
 
-"@dreamworld/dw-ripple@^2.3.0", "@dreamworld/dw-ripple@^2.5.0":
+"@dreamworld/dw-ripple@^2.5.0", "@dreamworld/dw-ripple@^2.6.0-hisab-ripple.1":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.5.0.tgz#73815cb783fb0f4fea437e661681eea517cfe911"
   integrity sha512-L1JVt397D+7vMZ2EzFydcU/bCMKne+anLehS4lQoBBNymu6HbUaeOpZ+CAU9uwTYwl/VtO7DyqHs6MUwjBpmgA==
@@ -991,16 +992,16 @@
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-select@^4.7.2":
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.7.2.tgz#ab0462f96a5dd91eb13bfd770525ba03a8cd96d5"
-  integrity sha512-/QmErpVvo47UkixhCrhjSqQtclZMFAsQH3C1Qbh72Kyt0lQzlQZqIpyPHHh8EWso1WSZS3wZNRMbcADnl1uBFg==
+"@dreamworld/dw-select@^4.8.1":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.8.1.tgz#d16cf2942a7244517e72ad6886f1b1f5939f2574"
+  integrity sha512-4iluYq7VCgwKFs5l3sQKRa/yvWysWwO7FfGhILFYHRA3mfSU6XFZIZjbyVC/3hDJ+CYBYHUM762+SnUrrNlykg==
   dependencies:
     "@dreamworld/dw-dialog" "^4.2.0"
     "@dreamworld/dw-icon" "^2.3.1"
     "@dreamworld/dw-icon-button" "^2.4.0"
-    "@dreamworld/dw-list-item" "https://github.com/DreamworldSolutions/dw-list-item.git#feature/safari-issue-for-gujarati-text"
-    "@dreamworld/dw-ripple" "^2.3.0"
+    "@dreamworld/dw-list-item" "^3.10.0-hisab-list-item.2"
+    "@dreamworld/dw-ripple" "^2.6.0-hisab-ripple.1"
     "@dreamworld/web-util" "^1.5.0"
     "@material/mwc-circular-progress" "^0.26.1"
     "@material/mwc-textfield" "^0.26.1"
