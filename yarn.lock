@@ -992,16 +992,17 @@
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-select@^4.8.1":
-  version "4.8.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.8.1.tgz#d16cf2942a7244517e72ad6886f1b1f5939f2574"
-  integrity sha512-4iluYq7VCgwKFs5l3sQKRa/yvWysWwO7FfGhILFYHRA3mfSU6XFZIZjbyVC/3hDJ+CYBYHUM762+SnUrrNlykg==
+"@dreamworld/dw-select@^4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-4.10.0.tgz#58833b20aefa8982ab6a76c4a9635c48f471b5a9"
+  integrity sha512-j169GeQdCoEDUM4eZy/0tHlmxE/zdIEj7f+WP3LWZwMWipYBp6gwJXHSv3XWLlLSL6IelNy/JIXJOs4ERO5mEQ==
   dependencies:
     "@dreamworld/dw-dialog" "^4.2.0"
     "@dreamworld/dw-icon" "^2.3.1"
     "@dreamworld/dw-icon-button" "^2.4.0"
     "@dreamworld/dw-list-item" "^3.10.0-hisab-list-item.2"
     "@dreamworld/dw-ripple" "^2.6.0-hisab-ripple.1"
+    "@dreamworld/material-styles" "^3.1.0"
     "@dreamworld/web-util" "^1.5.0"
     "@material/mwc-circular-progress" "^0.26.1"
     "@material/mwc-textfield" "^0.26.1"
@@ -1041,6 +1042,13 @@
   dependencies:
     lit-element "^2.2.0"
 
+"@dreamworld/material-styles@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/material-styles/-/material-styles-3.1.0.tgz#2c1e40e14a94860448b72a3e0ff711ae107514c8"
+  integrity sha512-EaAeHrtYxNUtvNaVGBd7Bw+gWNM9B8GJoceEMeaUxLYJJG55JPqPYM7CW99qwgWm1yaNeG8OmEjYF/D08aqUdg==
+  dependencies:
+    "@dreamworld/pwa-helpers" "^1.13.1"
+
 "@dreamworld/pwa-helpers@^1.11.1", "@dreamworld/pwa-helpers@^1.7.1", "@dreamworld/pwa-helpers@^1.8.0":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@dreamworld/pwa-helpers/-/pwa-helpers-1.11.1.tgz#6ac8d465ff4e41a294c9a83bc9244f6397d7f197"
@@ -1049,6 +1057,17 @@
     bowser "^2.8.1"
     lit-element "^2.2.1"
     lodash-es "^4.17.15"
+    pwa-helpers "^0.9.1"
+
+"@dreamworld/pwa-helpers@^1.13.1":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/pwa-helpers/-/pwa-helpers-1.14.0.tgz#8f98663a19913123fa252672bb17847bf38bce8f"
+  integrity sha512-27ReDHmCvQsltjVba4DacXDxyczERNSFV9mCrwEdwfEM0nAqrE8rWo1FlYx1131uMit+azkJk+gOc6ylQzxDZA==
+  dependencies:
+    bowser "^2.8.1"
+    lit "^2.3.1"
+    lit-element "^3.2.2"
+    lodash-es "^4.17.21"
     pwa-helpers "^0.9.1"
 
 "@dreamworld/web-util@^1.2.0", "@dreamworld/web-util@^1.5.0":
@@ -4701,7 +4720,7 @@ lit-element@^2.0.1, lit-element@^2.1.0, lit-element@^2.2.0, lit-element@^2.2.1:
   dependencies:
     lit-html "^1.1.1"
 
-lit-element@^3.2.0:
+lit-element@^3.2.0, lit-element@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-3.2.2.tgz#d148ab6bf4c53a33f707a5168e087725499e5f2b"
   integrity sha512-6ZgxBR9KNroqKb6+htkyBwD90XGRiqKDHVrW/Eh0EZ+l+iC+u+v+w3/BA5NGi4nizAVHGYvQBHUDuSmLjPp7NQ==
