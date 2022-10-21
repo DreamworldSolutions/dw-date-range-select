@@ -32,7 +32,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@dreamworld/dw-select": "^4.7.2",
+    "@dreamworld/dw-select": "^4.9.0-safari-issue.1",
     "lit": "^2.3.1",
     "lit-element": "^2.0.1",
     "lit-html": "^1.1.1",
