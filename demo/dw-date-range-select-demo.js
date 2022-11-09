@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css } from "@dreamworld/pwa-helpers/lit.js";
 import { valueProvider, valueProviderFactory } from "../dw-date-range-select.js";
 
 const DateRangeItems = [
