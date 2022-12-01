@@ -32,7 +32,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@dreamworld/dw-select": "^5.5.2",
+    "@dreamworld/dw-select": "^5.6.0-introduce-new-prop-search-keys.4",
     "@dreamworld/pwa-helpers": "^1.14.0",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4"
