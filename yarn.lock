@@ -981,10 +981,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.6.0-introduce-new-prop-search-keys.5":
-  version "5.6.0-introduce-new-prop-search-keys.5"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.6.0-introduce-new-prop-search-keys.5.tgz#aea0141acf9278b3450eca00a51b250f5731c070"
-  integrity sha512-y3iUvqkiVQU8iTCUGJlpr6PCpEIwCtiSpuVJZ2e9VuKIiIHv3j0g7CUSX+VSn0tQaCX5aW/VSazHzm1MhlROfQ==
+"@dreamworld/dw-select@^5.6.0-introduce-new-prop-search-keys.6":
+  version "5.6.0-introduce-new-prop-search-keys.6"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.6.0-introduce-new-prop-search-keys.6.tgz#23a43c3b10c2fc36b1c19b045bb230be985f09e6"
+  integrity sha512-ec4MM0RUaXare0BKTGnL5PyUvNakFqmespRrWPDladUsb0uH4uvECyD0P5yfVBUGuz4rH+77Q/bveAh3D9SBZw==
   dependencies:
     "@dreamworld/dw-dialog" "^5.2.0"
     "@dreamworld/dw-icon" "^4.1.0"
