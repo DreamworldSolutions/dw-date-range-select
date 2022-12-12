@@ -62,4 +62,3 @@ Date range input control is used to input a custom duration.
 | --------------- | ---------- | ------------------------------------------------------------- |
 | `label`         | `string`   | Text to be shown in the list item and for the selected value. |
 | `valueProvider` | `function` | **Returns:** object which contains start and end date         |
-
