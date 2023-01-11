@@ -981,16 +981,17 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.12.0":
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.12.0.tgz#9be1badbba0df85d0fb7ca56357b5c3495b16e29"
-  integrity sha512-kQyuTjjKTjeb4kBU5R0mOyW1vafypzaukrMQ9lGG2qsbE9bt+HkKAhlBTNkEpfcl6Se/cawMCZ29FdU4nBDHeQ==
+"@dreamworld/dw-select@^5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.13.0.tgz#a3796fded15f01d1c5b975306c2d9cf1ecfc721a"
+  integrity sha512-M287Rr/sXXml6gv3IxZfCY1COxuYLm17TJ67Q7Olrpf21rJc0+vlU3yczBJr5dXGyJkmbugifRRCsM4/AEhK6g==
   dependencies:
     "@dreamworld/dw-dialog" "^5.3.0"
     "@dreamworld/dw-icon" "^4.1.0"
     "@dreamworld/dw-icon-button" "^3.0.0"
     "@dreamworld/dw-list-item" "^4.1.1"
     "@dreamworld/dw-ripple" "^3.1.0"
+    "@dreamworld/dw-tooltip" "^3.1.0"
     "@dreamworld/material-styles" "^3.1.0"
     "@dreamworld/pwa-helpers" "^1.14.0"
     "@lit-labs/virtualizer" "^0.7.2"
@@ -998,10 +999,10 @@
     "@material/mwc-textfield" "^0.27.0"
     lodash-es "^4.17.21"
 
-"@dreamworld/dw-tooltip@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-tooltip/-/dw-tooltip-3.0.0.tgz#0c4b7398bcf9c80146dbc8d0562c83b0402a5e70"
-  integrity sha512-TwnEQv7J2I85gCCHd+jbLyiz8dIaZInRCmUVx9+61WsasAsOXljY7pNVy9QnMMzHd4/HOr1iiVQdgVzIM7uSAg==
+"@dreamworld/dw-tooltip@^3.0.0", "@dreamworld/dw-tooltip@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-tooltip/-/dw-tooltip-3.1.0.tgz#6449b60f0e28897f293d363d271849c4c23c7f63"
+  integrity sha512-oDUh6dGLJiYYM6Flr5/GLdmyWX23fBl5JdWHZ6xwIJ4RvRMz+JNyjzAK48yyW4ZkOquFrFTfAp3c+H2OPt1Vew==
   dependencies:
     "@dreamworld/material-styles" "^3.0.0"
     "@dreamworld/pwa-helpers" "^1.13.1"
