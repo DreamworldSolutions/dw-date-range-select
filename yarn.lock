@@ -981,10 +981,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.13.0":
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.13.0.tgz#a3796fded15f01d1c5b975306c2d9cf1ecfc721a"
-  integrity sha512-M287Rr/sXXml6gv3IxZfCY1COxuYLm17TJ67Q7Olrpf21rJc0+vlU3yczBJr5dXGyJkmbugifRRCsM4/AEhK6g==
+"@dreamworld/dw-select@^5.14.0-input-text-should-computed-on-first-update.1":
+  version "5.14.0-input-text-should-computed-on-first-update.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.14.0-input-text-should-computed-on-first-update.1.tgz#d205d037365fb2f57a73c41e86724bb223cf99e7"
+  integrity sha512-/RJ1ZX6Jojm9l0oDToLXruFFphBTKQFgjJ8GRrWTZdae9KAQ0Uu6p80spdhizpATWwZ3XG3CC5gq86vYVU+H+w==
   dependencies:
     "@dreamworld/dw-dialog" "^5.3.0"
     "@dreamworld/dw-icon" "^4.1.0"
