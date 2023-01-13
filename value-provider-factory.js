@@ -1,4 +1,4 @@
-import moment from "moment/dist/moment";
+import moment from "moment";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 var currentDate;
@@ -29,7 +29,7 @@ export const nextMonth = (endDate = false) => {
 export const lastNMonths = (n) => {
   return () => {
     return {
-      start: moment(currentDate).subtract(n, "months").add(1, 'days').format(DATE_FORMAT),
+      start: moment(currentDate).subtract(n, "months").add(1, "days").format(DATE_FORMAT),
       end: moment(currentDate).format(DATE_FORMAT),
     };
   };
@@ -84,28 +84,23 @@ export const lastQuarter = (fyStartsFrom, endDate = false) => {
  * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the current financial year's end date.
  */
 export const thisFinancialYear = (startsFrom, endDate = false) => {
-  let startsFromDay = moment(startsFrom, "DD/MM").date();
-  let startsFromMonth = moment(startsFrom, "DD/MM").month();
+  const startsFromDay = moment(startsFrom, "DD/MM").date();
+  const startsFromMonth = moment(startsFrom, "DD/MM").month();
+
+  let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
+  if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
+    fyStartFrom = fyStartFrom.subtract(1, "y");
+  }
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate)
-          .month(startsFromMonth - 1)
-          .date(startsFromDay)
-          .add(1, "y")
-          .endOf("month")
-          .format(DATE_FORMAT),
+        end: fyStartFrom.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
       };
     }
 
     return {
-      start: moment(currentDate).month(startsFromMonth).date(startsFromDay).format(DATE_FORMAT),
-      end: moment(currentDate)
-        .month(startsFromMonth - 1)
-        .date(startsFromDay)
-        .add(1, "y")
-        .endOf("month")
-        .format(DATE_FORMAT),
+      start: fyStartFrom.format(DATE_FORMAT),
+      end: fyStartFrom.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
     };
   };
 };
@@ -117,34 +112,24 @@ export const thisFinancialYear = (startsFrom, endDate = false) => {
  * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the last financial year's end date.
  */
 export const lastFinancialYear = (startsFrom, endDate = false) => {
-  let startsFromDay = moment(startsFrom, "DD/MM").date();
-  let startsFromMonth = moment(startsFrom, "DD/MM").month();
+  const startsFromDay = moment(startsFrom, "DD/MM").date();
+  const startsFromMonth = moment(startsFrom, "DD/MM").month();
+
+  let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
+  if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
+    fyStartFrom = fyStartFrom.subtract(1, "y");
+  }
+  const start = fyStartFrom.subtract(1, "y");
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate)
-          .month(startsFromMonth - 1)
-          .date(startsFromDay)
-          .add(1, "y")
-          .endOf("month")
-          .subtract(1, "years")
-          .format(DATE_FORMAT),
+        end: start.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
       };
     }
 
     return {
-      start: moment(currentDate)
-        .month(startsFromMonth)
-        .date(startsFromDay)
-        .subtract(1, "years")
-        .format(DATE_FORMAT),
-      end: moment(currentDate)
-        .month(startsFromMonth - 1)
-        .date(startsFromDay)
-        .add(1, "y")
-        .endOf("month")
-        .subtract(1, "years")
-        .format(DATE_FORMAT),
+      start: start.format(DATE_FORMAT),
+      end: start.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
     };
   };
 };

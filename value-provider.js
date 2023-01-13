@@ -1,4 +1,4 @@
-import moment from "moment/dist/moment";
+import moment from "moment";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 var currentDate;
