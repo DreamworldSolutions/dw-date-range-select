@@ -87,11 +87,12 @@ export const thisFinancialYear = (startsFrom, endDate = false) => {
   const startsFromDay = moment(startsFrom, "DD/MM").date();
   const startsFromMonth = moment(startsFrom, "DD/MM").month();
 
-  let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
-  if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
-    fyStartFrom = fyStartFrom.subtract(1, "y");
-  }
   return () => {
+    let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
+    if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
+      fyStartFrom = fyStartFrom.subtract(1, "y");
+    }
+
     if (endDate) {
       return {
         end: fyStartFrom.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
@@ -115,12 +116,12 @@ export const lastFinancialYear = (startsFrom, endDate = false) => {
   const startsFromDay = moment(startsFrom, "DD/MM").date();
   const startsFromMonth = moment(startsFrom, "DD/MM").month();
 
-  let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
-  if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
-    fyStartFrom = fyStartFrom.subtract(1, "y");
-  }
-  const start = fyStartFrom.subtract(1, "y");
   return () => {
+    let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
+    if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
+      fyStartFrom = fyStartFrom.subtract(1, "y");
+    }
+    const start = fyStartFrom.subtract(1, "y");
     if (endDate) {
       return {
         end: start.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
