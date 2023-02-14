@@ -981,10 +981,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.15.0-filter-using-query-filter-only-when-searchable-is-true.1":
-  version "5.15.0-filter-using-query-filter-only-when-searchable-is-true.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.15.0-filter-using-query-filter-only-when-searchable-is-true.1.tgz#3fc1de6d50d34e7a9e75842f0ceae77f212ddbe4"
-  integrity sha512-Pp+uwtW4h5ctdiISwQyTEMfBqaM5h5MZ+0JTmGL6a0BE3eEkkwFmY+2QsCZOb1QC+8jAH3ehoFCNH5Ot+Cisfw==
+"@dreamworld/dw-select@^5.18.0-filter-using-query-filter-only-when-searchable-is-true.1":
+  version "5.18.0-filter-using-query-filter-only-when-searchable-is-true.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.18.0-filter-using-query-filter-only-when-searchable-is-true.1.tgz#6715c56c85ad91d4d590e58c6afc2c9ce6335e83"
+  integrity sha512-JPXbM4wB0d+YIg86vgsBZ2zq50V6H8dGl97/sKVMtdCr6q3VE6WKNmJXs3A84RSIOFWDoe0MsXsX5bn+RHOhgQ==
   dependencies:
     "@dreamworld/dw-dialog" "^5.3.0"
     "@dreamworld/dw-icon" "^4.1.0"
