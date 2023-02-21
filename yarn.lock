@@ -981,10 +981,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.18.0-activated-item-does-not-work-when-render-item-used.1":
-  version "5.18.0-activated-item-does-not-work-when-render-item-used.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.18.0-activated-item-does-not-work-when-render-item-used.1.tgz#d284997c021c371e70826b52d523d451c651726f"
-  integrity sha512-Mh9ycckGDWenbqurJ9vIkTtydAuQXJxV1f9dne+HXCIX0Va4xVtvXVW0OmEYjucDm18w+6rCjSc/Wz7z1FilhQ==
+"@dreamworld/dw-select@^5.19.0-activated-item-does-not-work-when-render-item-used.1":
+  version "5.19.0-activated-item-does-not-work-when-render-item-used.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.19.0-activated-item-does-not-work-when-render-item-used.1.tgz#d0098a8b4288b5528bc105949cb4762713705f6b"
+  integrity sha512-TXAnOaQQWiAmNUTtXPXDCyYI/gi4VBqbdly3K0tBZq4g0ZkDS+xbJQawL84YFVWXBqo5WI7U0I5fz14QdEV0og==
   dependencies:
     "@dreamworld/dw-dialog" "^5.3.0"
     "@dreamworld/dw-icon" "^4.1.0"
