@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "@dreamworld/pwa-helpers/lit.js";
 import { valueProvider, valueProviderFactory } from "../dw-date-range-select.js";
+import "@dreamworld/dw-form";
 
 const DateRangeItems = [
   {
@@ -77,15 +78,18 @@ export class DwDateRangeSelectDemo extends LitElement {
       <br />
 
       <span>Input value matches with one of items</span>
-      <dw-date-range-select
-        .heading=${"Select Duration"}
-        showClose
-        .items=${DateRangeItems}
-        .value=${valueProvider.lastMonth()}
-        selectedTrailingIcon="done"
-        @selected=${this._onSelected}
-      >
-      </dw-date-range-select>
+      <dw-form>
+        <dw-date-range-select
+          name="date"
+          .heading=${"Select Duration"}
+          showClose
+          .items=${DateRangeItems}
+          .value=${valueProvider.lastMonth()}
+          selectedTrailingIcon="done"
+          @selected=${this._onSelected}
+        >
+        </dw-date-range-select>
+      </dw-form>
 
       <br />
 
