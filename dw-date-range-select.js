@@ -41,10 +41,14 @@ export class DwDateRangeSelect extends DwSelect {
     super();
     this.valueTextProvider = (item) => item.label;
     this.valueEquator = (v1, v2) => {
-      if (v1.hasOwnProperty("valueProvider") && v2.hasOwnProperty("valueProvider")) {
+      if (!v1 && !v2) {
+        return v1 === v2;
+      }
+    
+      if (v1 && v2 && v1.hasOwnProperty("valueProvider") && v2.hasOwnProperty("valueProvider")) {
         return isEqual(v1.valueProvider(), v2.valueProvider());
       }
-      if (v1.hasOwnProperty("valueProvider")) {
+      if (v1 && v1.hasOwnProperty("valueProvider")) {
         return isEqual(v1.valueProvider(), v2);
       }
       return isEqual(v1, v2);
