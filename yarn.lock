@@ -981,10 +981,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.23.3":
-  version "5.23.3"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.23.3.tgz#76d1991b9dc639749d229a41b8551ab5a1f1cd8d"
-  integrity sha512-XgJDnPuSMRkhfMtDW1ZJKsWJyJhZuGW5EI8VDH/YGsQtt8/O8ObyecL6s1LS3Bo5867bHda3Nz8gyK+0Rg9jXg==
+"@dreamworld/dw-select@^5.26.0-use-value-equator.2":
+  version "5.26.0-use-value-equator.2"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.26.0-use-value-equator.2.tgz#64669c8110705a312a9062cb8d7952f4e85939f9"
+  integrity sha512-0RBIkoOR57DxnaEkObKr+vd0oKYFRfgfTHYXtV9cUaHp25MCvGXQ+INwBbY7xC/W08aaQrKqxNRZH+yG9vXB7w==
   dependencies:
     "@dreamworld/dw-dialog" "^5.3.0"
     "@dreamworld/dw-icon" "^4.1.0"
