@@ -40,33 +40,19 @@ export class DwDateRangeSelect extends DwSelect {
   constructor() {
     super();
     this.valueTextProvider = (item) => item.label;
-  }
-
-  firstUpdated() {
-    super.firstUpdated();
-    const item = this.selectInputValue();
-    if (item) {
-      this.value = item;
-    }
-  }
-
-  willUpdate(_change) {
-    if (_change.has("value")) {
-      const item = this.selectInputValue();
-      if (item) {
-        this.value = item;
+    this.valueEquator = (v1, v2) => {
+      if (!v1 && !v2) {
+        return v1 === v2;
       }
-    }
-    super.willUpdate(_change);
-  }
-
-  selectInputValue() {
-    return (
-      this.items &&
-      this.items.find((item) => {
-        return isEqual(this.value, item.valueProvider());
-      })
-    );
+    
+      if (v1 && v2 && v1.hasOwnProperty("valueProvider") && v2.hasOwnProperty("valueProvider")) {
+        return isEqual(v1.valueProvider(), v2.valueProvider());
+      }
+      if (v1 && v1.hasOwnProperty("valueProvider")) {
+        return isEqual(v1.valueProvider(), v2);
+      }
+      return isEqual(v1, v2);
+    };
   }
 }
 

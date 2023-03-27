@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "@dreamworld/pwa-helpers/lit.js";
 import { valueProvider, valueProviderFactory } from "../dw-date-range-select.js";
+import { isEqual } from "lodash-es";
 
 const DateRangeItems = [
   {
@@ -82,6 +83,7 @@ export class DwDateRangeSelectDemo extends LitElement {
         showClose
         .items=${DateRangeItems}
         .value=${valueProvider.lastMonth()}
+        .valueProvider=${(item) => item.valueProvider()}
         selectedTrailingIcon="done"
         @selected=${this._onSelected}
       >
@@ -100,7 +102,7 @@ export class DwDateRangeSelectDemo extends LitElement {
   }
 
   _onSelected(e) {
-    console.log({ event: e, detail: e.detail, valueProvider: e.detail.valueProvider() });
+    console.log(e.detail);
   }
 }
 
