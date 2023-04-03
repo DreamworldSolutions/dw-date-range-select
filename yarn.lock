@@ -894,6 +894,13 @@
   dependencies:
     regenerator-runtime "^0.13.10"
 
+"@babel/runtime@^7.20.6":
+  version "7.21.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
+  integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
+  dependencies:
+    regenerator-runtime "^0.13.11"
+
 "@babel/template@^7.18.10":
   version "7.18.10"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.18.10.tgz#6f9134835970d1dbf0835c0d100c9f38de0c5e71"
@@ -980,15 +987,14 @@
     "@dreamworld/pwa-helpers" "^1.13.1"
     "@material/mwc-icon" "0.27.0"
 
-"@dreamworld/dw-input@^3.3.0-dense-style-update.1":
-  version "3.3.0-warning-error-in-tooltip.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-input/-/dw-input-3.3.0-warning-error-in-tooltip.1.tgz#899120aedd748aed96b0837a8077fd943b3c0450"
-  integrity sha512-TEqbQX5vE8Izfx8hiMEUzoBW9aybX9Epeu7aYKzwu7hlrkYCHM1g2lZPf0HcniJzXcq8IFCn3N3Y7PzqvCj45A==
+"@dreamworld/dw-input@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-input/-/dw-input-3.2.1.tgz#fc429c19ecb4de7697051c680936a286124c9047"
+  integrity sha512-AleAEjiCB7H2yfM8pa8iYvylwFt1n/C1mjHyERvqUHYQla27n63IlNm8JVrs/QvlRoFg238dVMNauXkfEgo1cg==
   dependencies:
     "@dreamworld/dw-form" "^4.0.0"
     "@dreamworld/dw-icon" "^4.0.0"
     "@dreamworld/dw-icon-button" "^3.0.0"
-    "@dreamworld/dw-tooltip" "^3.1.1"
     "@material/textfield" "^14.0.0"
 
 "@dreamworld/dw-list-item@^4.1.1":
@@ -1009,16 +1015,16 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.27.0-select-readonly-state.1":
-  version "5.27.0-select-readonly-state.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.27.0-select-readonly-state.1.tgz#60a813dd7619d09ecf492747181449106c5e16b6"
-  integrity sha512-i4EIrTndE82zoAb2CtMWOZjKfbINBop5rBvvYwYKP6w8GghB3JlDr45u7FK/4o09yDLU0uz79XLiESKNUOK2Qw==
+"@dreamworld/dw-select@^5.28.0":
+  version "5.28.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.28.0.tgz#e7b875d6f7a18ffc8d4c825662b5050dc248de9e"
+  integrity sha512-dh66SyhlMjvULvcahSWWcRdlSupNrwbFUFoCmJHczT+3EQPFwsjTWN5ayYRPSrWNzi/v1cEqlUNpjdMkf9N3bg==
   dependencies:
     "@dreamworld/dw-button" "^3.0.3"
     "@dreamworld/dw-dialog" "^5.3.0"
     "@dreamworld/dw-icon" "^4.1.0"
     "@dreamworld/dw-icon-button" "^3.0.0"
-    "@dreamworld/dw-input" "^3.3.0-dense-style-update.1"
+    "@dreamworld/dw-input" "^3.2.1"
     "@dreamworld/dw-list-item" "^4.1.1"
     "@dreamworld/dw-ripple" "^3.1.0"
     "@dreamworld/dw-tooltip" "^3.1.0"
@@ -1028,7 +1034,7 @@
     "@material/mwc-circular-progress" "^0.27.0"
     lodash-es "^4.17.21"
 
-"@dreamworld/dw-tooltip@^3.0.0", "@dreamworld/dw-tooltip@^3.1.0", "@dreamworld/dw-tooltip@^3.1.1":
+"@dreamworld/dw-tooltip@^3.0.0", "@dreamworld/dw-tooltip@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@dreamworld/dw-tooltip/-/dw-tooltip-3.1.0.tgz#6449b60f0e28897f293d363d271849c4c23c7f63"
   integrity sha512-oDUh6dGLJiYYM6Flr5/GLdmyWX23fBl5JdWHZ6xwIJ4RvRMz+JNyjzAK48yyW4ZkOquFrFTfAp3c+H2OPt1Vew==
@@ -1050,6 +1056,18 @@
   integrity sha512-27ReDHmCvQsltjVba4DacXDxyczERNSFV9mCrwEdwfEM0nAqrE8rWo1FlYx1131uMit+azkJk+gOc6ylQzxDZA==
   dependencies:
     bowser "^2.8.1"
+    lit "^2.3.1"
+    lit-element "^3.2.2"
+    lodash-es "^4.17.21"
+    pwa-helpers "^0.9.1"
+
+"@dreamworld/pwa-helpers@^1.16.5":
+  version "1.16.5"
+  resolved "https://registry.yarnpkg.com/@dreamworld/pwa-helpers/-/pwa-helpers-1.16.5.tgz#e179e49c185509d9fb2152c1ae97d8dc7144df51"
+  integrity sha512-tEurYPifvwaadSWoIOeus745Opa2tZO8em2j/xa3cbTF62WP5sOex0DTAtnVsf4o22KrgErJfrPLlzkwjsCVWg==
+  dependencies:
+    bowser "^2.8.1"
+    i18next "^22.4.9"
     lit "^2.3.1"
     lit-element "^3.2.2"
     lodash-es "^4.17.21"
@@ -3940,6 +3958,13 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
+i18next@^22.4.9:
+  version "22.4.14"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.4.14.tgz#18dd94e9adc2618497c7de101a206e1ca3a18727"
+  integrity sha512-VtLPtbdwGn0+DAeE00YkiKKXadkwg+rBUV+0v8v0ikEjwdiJ0gmYChVE4GIa9HXymY6wKapkL93vGT7xpq6aTw==
+  dependencies:
+    "@babel/runtime" "^7.20.6"
+
 iconv-lite@^0.6.2:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.6.3.tgz#a52f80bf38da1952eb5c681790719871a1a72501"
@@ -5917,6 +5942,11 @@ regenerator-runtime@^0.13.10, regenerator-runtime@^0.13.7:
   version "0.13.10"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz#ed07b19616bcbec5da6274ebc75ae95634bfc2ee"
   integrity sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==
+
+regenerator-runtime@^0.13.11:
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
+  integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
 
 regenerator-transform@^0.15.0:
   version "0.15.0"

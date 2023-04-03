@@ -32,8 +32,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@dreamworld/dw-select": "^5.27.0-select-readonly-state.1",
-    "@dreamworld/pwa-helpers": "^1.14.0",
+    "@dreamworld/dw-select": "^5.28.0",
+    "@dreamworld/pwa-helpers": "^1.16.5",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4"
   },
