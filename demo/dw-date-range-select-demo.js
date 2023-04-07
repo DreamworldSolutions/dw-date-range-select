@@ -67,6 +67,10 @@ export class DwDateRangeSelectDemo extends LitElement {
       :host {
         display: block;
       }
+
+      dw-date-range-select {
+        margin-top: 16px;
+      }
     `,
   ];
 
@@ -77,8 +81,9 @@ export class DwDateRangeSelectDemo extends LitElement {
 
       <br />
 
-      <span>Input value matches with one of items</span>
+      <div>Input value matches with one of items</div>
       <dw-date-range-select
+        .label=${"Select Date"}
         .heading=${"Select Duration"}
         showClose
         .items=${DateRangeItems}
@@ -91,8 +96,9 @@ export class DwDateRangeSelectDemo extends LitElement {
 
       <br />
 
-      <span>Input value does not matches with one of items</span>
+      <div>Input value does not matches with one of items</div>
       <dw-date-range-select
+        .label=${"Select Date"}
         .items=${DateRangeItems}
         .value=${{ start: "2021-04-01", end: "2022-03-30" }}
         @selected=${this._onSelected}
