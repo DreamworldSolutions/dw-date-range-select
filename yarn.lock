@@ -1015,10 +1015,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.28.1-trigger-input-trailing-icon-style-update.1":
-  version "5.28.1-trigger-input-trailing-icon-style-update.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.28.1-trigger-input-trailing-icon-style-update.1.tgz#5352ebc33e7406a35a13f67e6fc51ba82f039b21"
-  integrity sha512-3HgmE1wJjTkT2WveP2nXPSg9h0zRZKckFyc5ay5GPCb4Qj7YrW8xkDYTpdS9iY4KEdpHjZQUT9X2O8ds7t1KNw==
+"@dreamworld/dw-select@^5.28.1":
+  version "5.28.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.28.1.tgz#264b7d78df4b2f13216dc630e35d08ecaff577c9"
+  integrity sha512-9VHaH5Ma9YrcV7jde/x2XIb0zrsBonnjuSF836ARRtWWCBqaRE8D6xcdniJnFE/O/4yxNy2tBT5LAVE3AhW9oQ==
   dependencies:
     "@dreamworld/dw-button" "^3.0.3"
     "@dreamworld/dw-dialog" "^5.3.0"
