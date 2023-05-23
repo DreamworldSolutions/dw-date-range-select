@@ -948,10 +948,10 @@
     "@dreamworld/pwa-helpers" "^1.13.1"
     "@material/mwc-button" "0.27.0"
 
-"@dreamworld/dw-dialog@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-dialog/-/dw-dialog-5.3.0.tgz#250ea4616de3a65b149981dc27995af799d5deaa"
-  integrity sha512-7mJ+GQFbQRIAcPYqLvQKeTDevfxaiklJ1iDQLXSw9Jp07lGwBJO/hXukut8FrWa/8DZuWxCxGuQtc6XXTeFjGA==
+"@dreamworld/dw-dialog@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-dialog/-/dw-dialog-5.6.1.tgz#15c6e4855357c0fb7aa9c2655d0456c0afefd1a4"
+  integrity sha512-vYFb+P+7kNt/2OD6Ee0oI4xV9KbIWco183F+oYfqlDnu28w7saeG4yDwylCFjQYoA5moUgIfKzGfDfL8VrIvrw==
   dependencies:
     "@dreamworld/material-styles" "^3.1.0"
     "@dreamworld/pwa-helpers" "^1.14.0"
@@ -959,7 +959,7 @@
     lodash-es "^4.17.15"
     tippy.js "^6.2.7"
 
-"@dreamworld/dw-form@^4.0.0":
+"@dreamworld/dw-form@^4.0.0", "@dreamworld/dw-form@^4.1.1":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@dreamworld/dw-form/-/dw-form-4.1.1.tgz#7fd27cd8aa5bd19ab4b80368b7998b198b6402f5"
   integrity sha512-sRUAEWzZWbODglBrVIxp7bKURIqcHIWSqbzTlpkokShIzUyRJSogSHUbzV2Z5kIfyUwJFz5uYc0+8ASfxkyjpQ==
@@ -1015,13 +1015,14 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.28.1":
-  version "5.28.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.28.1.tgz#264b7d78df4b2f13216dc630e35d08ecaff577c9"
-  integrity sha512-9VHaH5Ma9YrcV7jde/x2XIb0zrsBonnjuSF836ARRtWWCBqaRE8D6xcdniJnFE/O/4yxNy2tBT5LAVE3AhW9oQ==
+"@dreamworld/dw-select@^5.32.0":
+  version "5.32.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.32.0.tgz#ec71dd0418d38308515b6a86ae1b93f3389286f6"
+  integrity sha512-Xr9iuOjgNkajokU4yuTDDe+1dZYqkmI1sILVxV/g93q/8lqtKCZmbljrR5ABsypZWeDY9mARcoRsnPWhMM8IhQ==
   dependencies:
     "@dreamworld/dw-button" "^3.0.3"
-    "@dreamworld/dw-dialog" "^5.3.0"
+    "@dreamworld/dw-dialog" "^5.6.1"
+    "@dreamworld/dw-form" "^4.1.1"
     "@dreamworld/dw-icon" "^4.1.0"
     "@dreamworld/dw-icon-button" "^3.0.0"
     "@dreamworld/dw-input" "^3.2.1"

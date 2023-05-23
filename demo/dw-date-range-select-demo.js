@@ -76,8 +76,8 @@ export class DwDateRangeSelectDemo extends LitElement {
 
   render() {
     return html`
-      <!-- <span>Input Value Empty</span>
-      <dw-date-range-select .items=${DateRangeItems}> </dw-date-range-select> -->
+      <span>Input Value Empty</span>
+      <dw-date-range-select .items=${DateRangeItems}> </dw-date-range-select>
 
       <br />
 
@@ -88,7 +88,6 @@ export class DwDateRangeSelectDemo extends LitElement {
         showClose
         .items=${DateRangeItems}
         .value=${valueProvider.lastMonth()}
-        .valueProvider=${(item) => item.valueProvider()}
         selectedTrailingIcon="done"
         @selected=${this._onSelected}
       >
