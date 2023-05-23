@@ -1015,10 +1015,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.32.0":
-  version "5.32.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.32.0.tgz#ec71dd0418d38308515b6a86ae1b93f3389286f6"
-  integrity sha512-Xr9iuOjgNkajokU4yuTDDe+1dZYqkmI1sILVxV/g93q/8lqtKCZmbljrR5ABsypZWeDY9mARcoRsnPWhMM8IhQ==
+"@dreamworld/dw-select@^5.32.1":
+  version "5.32.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.32.1.tgz#7f626a9a597e3a8566c653dc2a3d298a00dc286a"
+  integrity sha512-Is4tDc0X3yhSxBXhKx2dCpIuyndBlk4dKyJjeG5dNl4rjwYL9/PpXVV0yjeIUUYATnsIhYGA5/xGXUZ7LQSQVw==
   dependencies:
     "@dreamworld/dw-button" "^3.0.3"
     "@dreamworld/dw-dialog" "^5.6.1"
