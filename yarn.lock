@@ -1015,10 +1015,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.33.0-add-way-to-costomize-header.2":
-  version "5.33.0-add-way-to-costomize-header.2"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.33.0-add-way-to-costomize-header.2.tgz#3529a5d44ccb317b4a388f0b85de396216d711c0"
-  integrity sha512-IsA/EX77dRVSwKDFPEalA4M6VZHvaDjQcZg08M66k1BkjSX59SMHdovtSnCu8An/b5asN2aMK8Q/C+1zYyM0Kg==
+"@dreamworld/dw-select@^5.32.5":
+  version "5.32.5"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.32.5.tgz#e54f7e67943bf97b1efeaf38cde4a5a4cdd17ccd"
+  integrity sha512-FPCAYg1sTT0fkN5bNQLQSVr/OOAMg07CQ/NS7fS+aTf5Pjf/Dv0wLRVpCPx5TJTcikljguGnXKu8eal2vuPfbg==
   dependencies:
     "@dreamworld/dw-button" "^3.0.3"
     "@dreamworld/dw-dialog" "^5.6.1"
