@@ -1024,10 +1024,10 @@
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.34.3":
-  version "5.34.3"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.34.3.tgz#bb4a69b69e944b47294e44955d676fc3f05b90e2"
-  integrity sha512-mBbc+EcY5kD66atHq53eVQjq+481LhYdYsVZJ1H/SohHSi4sTy4qjzj/Y6b8+VbrYCs73KBJ5f42XbqRuoLupw==
+"@dreamworld/dw-select@^5.34.4":
+  version "5.34.4"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.34.4.tgz#5dfca2ae6b67a92eef45f5fea084f4c8f05b53d1"
+  integrity sha512-1jCUQjYLiGF7wDHBBCVC1Gu5IsiZLsJzjCPSNu4hr6PhcsByqrJYmTgFYzId0A0Pd5/XcY7TtuKAQlGubFC2ZA==
   dependencies:
     "@dreamworld/device-info" "^1.3.0"
     "@dreamworld/dw-button" "^3.0.3"
