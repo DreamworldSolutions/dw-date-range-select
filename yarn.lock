@@ -1005,10 +1005,10 @@
     "@dreamworld/pwa-helpers" "^1.13.1"
     "@material/mwc-icon" "0.27.0"
 
-"@dreamworld/dw-input@3.6.4", "@dreamworld/dw-input@^3.6.4":
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-input/-/dw-input-3.6.4.tgz#df7937302d0a3e078aa0897d1a63f71ee876aa61"
-  integrity sha512-ooDrUiHITVFB5Lzf0wAnDxP8qwahGR1/6zEvPzGHW/bK/UPpxyRHmN+9JN0nrpsKj2VLVQWmo9NaWmZKzyaHVQ==
+"@dreamworld/dw-input@3.8.0-standardize-form-validation.4", "@dreamworld/dw-input@^3.8.0-standardize-form-validation.4":
+  version "3.8.0-standardize-form-validation.4"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-input/-/dw-input-3.8.0-standardize-form-validation.4.tgz#549b1dc799ad6aeca3d4101f2adfb21d7f7adf43"
+  integrity sha512-tff8NsL/KHU0Xd4XNX8mMK4qQBKxGkU4dq7a75SjBtVH7/X1I8Mdg03+R9mBa8Q0HnMDFpxiD9YFXjzFjOKD9Q==
   dependencies:
     "@dreamworld/dw-button" "^3.0.3"
     "@dreamworld/dw-form" "^4.0.0"
@@ -1016,6 +1016,7 @@
     "@dreamworld/dw-icon-button" "^3.0.0"
     "@dreamworld/dw-tooltip" "^3.1.1"
     "@material/textfield" "^14.0.0"
+    lodash-es "^4.17.21"
 
 "@dreamworld/dw-list-item@^4.3.1":
   version "4.3.1"
@@ -1036,10 +1037,10 @@
     "@dreamworld/pwa-helpers" "^1.16.5"
     "@material/mwc-ripple" "0.27.0"
 
-"@dreamworld/dw-select@^5.35.4":
-  version "5.35.4"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.35.4.tgz#97254b8b6bbc3c2eb34cc9e09800859f0162ea76"
-  integrity sha512-B9fSEU86tSaP2Opys29HeVvpoKjPZAMinCY3l0cyAVn7eap3iPPfeLFFiOhkUn5tL1x8lf4PMv+QUX1SA5U/1A==
+"@dreamworld/dw-select@^5.36.0-introduce-new-validation-framework.2":
+  version "5.36.0-introduce-new-validation-framework.2"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-select/-/dw-select-5.36.0-introduce-new-validation-framework.2.tgz#f6d70ce5f67dabf7e2caa16f61342280c67c1c50"
+  integrity sha512-9vr64HbDKSVooI3NO28DLKsi8uLl3yWoMUE8l/SUAmuMp3c2B9wyJHrCCwYaF2Z8lQW4Fm+kpYh/ZFjnaCOuKQ==
   dependencies:
     "@dreamworld/device-info" "^1.3.0"
     "@dreamworld/dw-button" "^3.0.4"
@@ -1047,7 +1048,7 @@
     "@dreamworld/dw-form" "^4.1.1"
     "@dreamworld/dw-icon" "^4.1.1"
     "@dreamworld/dw-icon-button" "^3.2.4"
-    "@dreamworld/dw-input" "^3.6.4"
+    "@dreamworld/dw-input" "^3.8.0-standardize-form-validation.4"
     "@dreamworld/dw-list-item" "^4.3.1"
     "@dreamworld/dw-ripple" "^3.1.4"
     "@dreamworld/dw-tooltip" "^3.1.1"
