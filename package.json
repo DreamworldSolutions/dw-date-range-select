@@ -32,7 +32,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@dreamworld/dw-select": "^6.0.1-clear-selection-enhancement.1",
+    "@dreamworld/dw-select": "^6.0.1",
     "@dreamworld/pwa-helpers": "^1.16.5",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4"
