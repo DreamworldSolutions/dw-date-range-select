@@ -1,9 +1,9 @@
-import moment from "moment/dist/moment";
+import dayjs from 'dayjs/esm/index.js';
 
-const DATE_FORMAT = "YYYY-MM-DD";
+const DATE_FORMAT = 'YYYY-MM-DD';
 var currentDate;
 
-export const _setCurrentDate = (timestamp) => {
+export const _setCurrentDate = timestamp => {
   currentDate = timestamp;
 };
 
@@ -18,9 +18,7 @@ export const all = () => {};
  * @returns {Object} today date in yyyy-mm-dd format
  */
 export const today = () => {
-  return {
-    end: moment(currentDate).format(DATE_FORMAT),
-  };
+  return { end: dayjs(currentDate).format(DATE_FORMAT) };
 };
 
 /**
@@ -28,9 +26,7 @@ export const today = () => {
  * @returns {Object} yesterday date in yyyy-mm-dd format
  */
 export const yesterday = () => {
-  return {
-    end: moment(currentDate).subtract(1, "d").format(DATE_FORMAT),
-  };
+  return { end: dayjs(currentDate).subtract(1, 'd').format(DATE_FORMAT) };
 };
 
 /**
@@ -39,7 +35,7 @@ export const yesterday = () => {
  */
 export const tomorrow = () => {
   return {
-    end: moment(currentDate).add(1, "d").format(DATE_FORMAT),
+    end: dayjs(currentDate).add(1, 'd').format(DATE_FORMAT),
   };
 };
 
@@ -48,8 +44,8 @@ export const tomorrow = () => {
  */
 export const thisMonth = () => {
   return {
-    start: moment(currentDate).startOf("month").format(DATE_FORMAT),
-    end: moment(currentDate).endOf("month").format(DATE_FORMAT),
+    start: dayjs(currentDate).startOf('month').format(DATE_FORMAT),
+    end: dayjs(currentDate).endOf('month').format(DATE_FORMAT),
   };
 };
 
@@ -58,8 +54,8 @@ export const thisMonth = () => {
  */
 export const lastMonth = () => {
   return {
-    start: moment(currentDate).subtract(1, "months").startOf("month").format(DATE_FORMAT),
-    end: moment(currentDate).subtract(1, "months").endOf("month").format(DATE_FORMAT),
+    start: dayjs(currentDate).subtract(1, 'months').startOf('month').format(DATE_FORMAT),
+    end: dayjs(currentDate).subtract(1, 'months').endOf('month').format(DATE_FORMAT),
   };
 };
 
@@ -68,7 +64,7 @@ export const lastMonth = () => {
  */
 export const endOfThisMonth = () => {
   return {
-    end: moment(currentDate).endOf("month").format(DATE_FORMAT),
+    end: dayjs(currentDate).endOf('month').format(DATE_FORMAT),
   };
 };
 
@@ -77,6 +73,6 @@ export const endOfThisMonth = () => {
  */
 export const endOfLastMonth = () => {
   return {
-    end: moment(currentDate).subtract(1, "months").endOf("month").format(DATE_FORMAT),
+    end: dayjs(currentDate).subtract(1, 'months').endOf('month').format(DATE_FORMAT),
   };
 };

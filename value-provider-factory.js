@@ -1,8 +1,10 @@
-import moment from "moment/dist/moment";
+import dayjs from 'dayjs/esm/index.js';
+import customParseFormat from 'dayjs/esm/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
-const DATE_FORMAT = "YYYY-MM-DD";
+const DATE_FORMAT = 'YYYY-MM-DD';
 var currentDate;
-export const _setCurrentDate = (timestamp) => {
+export const _setCurrentDate = timestamp => {
   currentDate = timestamp;
 };
 
@@ -10,13 +12,13 @@ export const nextMonth = (endDate = false) => {
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate).add(1, "months").endOf("month").format(DATE_FORMAT),
+        end: dayjs(currentDate).add(1, 'months').endOf('month').format(DATE_FORMAT),
       };
     }
 
     return {
-      start: moment(currentDate).add(1, "months").startOf("month").format(DATE_FORMAT),
-      end: moment(currentDate).add(1, "months").endOf("month").format(DATE_FORMAT),
+      start: dayjs(currentDate).add(1, 'months').startOf('month').format(DATE_FORMAT),
+      end: dayjs(currentDate).add(1, 'months').endOf('month').format(DATE_FORMAT),
     };
   };
 };
@@ -26,11 +28,11 @@ export const nextMonth = (endDate = false) => {
  * returns a function (which acts as valueProvider and returns last N months start and end date)
  * @param {Number} n is positive integer
  */
-export const lastNMonths = (n) => {
+export const lastNMonths = n => {
   return () => {
     return {
-      start: moment(currentDate).subtract(n, "months").add(1, "days").format(DATE_FORMAT),
-      end: moment(currentDate).format(DATE_FORMAT),
+      start: dayjs(currentDate).subtract(n, 'months').add(1, 'days').format(DATE_FORMAT),
+      end: dayjs(currentDate).format(DATE_FORMAT),
     };
   };
 };
@@ -45,13 +47,13 @@ export const thisQuarter = (fyStartsFrom, endDate = false) => {
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate).endOf("quarter").format(DATE_FORMAT),
+        end: dayjs(currentDate).endOf('quarter').format(DATE_FORMAT),
       };
     }
 
     return {
-      start: moment(currentDate).startOf("quarter").format(DATE_FORMAT),
-      end: moment(currentDate).endOf("quarter").format(DATE_FORMAT),
+      start: dayjs(currentDate).startOf('quarter').format(DATE_FORMAT),
+      end: dayjs(currentDate).endOf('quarter').format(DATE_FORMAT),
     };
   };
 };
@@ -66,13 +68,13 @@ export const lastQuarter = (fyStartsFrom, endDate = false) => {
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate).subtract(1, "Q").endOf("quarter").format(DATE_FORMAT),
+        end: dayjs(currentDate).subtract(1, 'Q').endOf('quarter').format(DATE_FORMAT),
       };
     }
 
     return {
-      start: moment(currentDate).subtract(1, "Q").startOf("quarter").format(DATE_FORMAT),
-      end: moment(currentDate).subtract(1, "Q").endOf("quarter").format(DATE_FORMAT),
+      start: dayjs(currentDate).subtract(1, 'Q').startOf('quarter').format(DATE_FORMAT),
+      end: dayjs(currentDate).subtract(1, 'Q').endOf('quarter').format(DATE_FORMAT),
     };
   };
 };
@@ -84,24 +86,24 @@ export const lastQuarter = (fyStartsFrom, endDate = false) => {
  * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the current financial year's end date.
  */
 export const thisFinancialYear = (startsFrom, endDate = false) => {
-  const startsFromDay = moment(startsFrom, "DD/MM").date();
-  const startsFromMonth = moment(startsFrom, "DD/MM").month();
+  const startsFromDay = dayjs(startsFrom, 'DD/MM').date();
+  const startsFromMonth = dayjs(startsFrom, 'DD/MM').month();
 
   return () => {
-    let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
-    if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
-      fyStartFrom = fyStartFrom.subtract(1, "y");
+    let fyStartFrom = dayjs(currentDate).month(startsFromMonth).date(startsFromDay);
+    if (dayjs(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
+      fyStartFrom = fyStartFrom.subtract(1, 'y');
     }
 
     if (endDate) {
       return {
-        end: fyStartFrom.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
+        end: fyStartFrom.add(1, 'y').subtract(1, 'd').format(DATE_FORMAT),
       };
     }
 
     return {
       start: fyStartFrom.format(DATE_FORMAT),
-      end: fyStartFrom.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
+      end: fyStartFrom.add(1, 'y').subtract(1, 'd').format(DATE_FORMAT),
     };
   };
 };
@@ -113,24 +115,24 @@ export const thisFinancialYear = (startsFrom, endDate = false) => {
  * @param {Boolean} endDate is boolen, default value is false. If true, it returns only the last financial year's end date.
  */
 export const lastFinancialYear = (startsFrom, endDate = false) => {
-  const startsFromDay = moment(startsFrom, "DD/MM").date();
-  const startsFromMonth = moment(startsFrom, "DD/MM").month();
+  const startsFromDay = dayjs(startsFrom, 'DD/MM').date();
+  const startsFromMonth = dayjs(startsFrom, 'DD/MM').month();
 
   return () => {
-    let fyStartFrom = moment(currentDate).month(startsFromMonth).date(startsFromDay);
-    if (moment(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
-      fyStartFrom = fyStartFrom.subtract(1, "y");
+    let fyStartFrom = dayjs(currentDate).month(startsFromMonth).date(startsFromDay);
+    if (dayjs(currentDate).isBefore(fyStartFrom.format(DATE_FORMAT))) {
+      fyStartFrom = fyStartFrom.subtract(1, 'y');
     }
-    const start = fyStartFrom.subtract(1, "y");
+    const start = fyStartFrom.subtract(1, 'y');
     if (endDate) {
       return {
-        end: start.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
+        end: start.add(1, 'y').subtract(1, 'd').format(DATE_FORMAT),
       };
     }
 
     return {
       start: start.format(DATE_FORMAT),
-      end: start.add(1, "y").subtract(1, "d").format(DATE_FORMAT),
+      end: start.add(1, 'y').subtract(1, 'd').format(DATE_FORMAT),
     };
   };
 };
@@ -140,11 +142,11 @@ export const lastFinancialYear = (startsFrom, endDate = false) => {
  * @param {Number} n last nth month
  * @returns {Function} function (which acts as valueProvider and returns last Nth Month start and end date)
  */
-export const lastNthMonth = (n) => {
+export const lastNthMonth = n => {
   return () => {
     return {
-      start: moment(currentDate).subtract(n, "months").startOf("month").format(DATE_FORMAT),
-      end: moment(currentDate).subtract(n, "months").endOf("month").format(DATE_FORMAT),
+      start: dayjs(currentDate).subtract(n, 'months').startOf('month').format(DATE_FORMAT),
+      end: dayjs(currentDate).subtract(n, 'months').endOf('month').format(DATE_FORMAT),
     };
   };
 };
@@ -155,10 +157,10 @@ export const lastNthMonth = (n) => {
  * @param {*} n last n days
  * @returns {Function} function (which acts as valueProvider and returns before N days (from today)
  */
-export const beforeNDays = (n) => {
+export const beforeNDays = n => {
   return () => {
     return {
-      end: moment(currentDate).subtract(n, "days").format(DATE_FORMAT),
+      end: dayjs(currentDate).subtract(n, 'days').format(DATE_FORMAT),
     };
   };
 };
@@ -172,12 +174,12 @@ export const thisWeek = (endDate = false) => {
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate).endOf("isoWeek").format(DATE_FORMAT),
+        end: dayjs(currentDate).endOf('isoWeek').format(DATE_FORMAT),
       };
     }
     return {
-      start: moment(currentDate).startOf("isoWeek").format(DATE_FORMAT),
-      end: moment(currentDate).endOf("isoWeek").format(DATE_FORMAT),
+      start: dayjs(currentDate).startOf('isoWeek').format(DATE_FORMAT),
+      end: dayjs(currentDate).endOf('isoWeek').format(DATE_FORMAT),
     };
   };
 };
@@ -191,13 +193,13 @@ export const nextWeek = (endDate = false) => {
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate).endOf("isoWeek").add(1, "w").format(DATE_FORMAT),
+        end: dayjs(currentDate).endOf('isoWeek').add(1, 'w').format(DATE_FORMAT),
       };
     }
 
     return {
-      start: moment(currentDate).startOf("isoWeek").add(1, "w").format(DATE_FORMAT),
-      end: moment(currentDate).endOf("isoWeek").add(1, "w").format(DATE_FORMAT),
+      start: dayjs(currentDate).startOf('isoWeek').add(1, 'w').format(DATE_FORMAT),
+      end: dayjs(currentDate).endOf('isoWeek').add(1, 'w').format(DATE_FORMAT),
     };
   };
 };
@@ -206,13 +208,13 @@ export const lastWeek = (endDate = false) => {
   return () => {
     if (endDate) {
       return {
-        end: moment(currentDate).endOf("isoWeek").subtract(1, "w").format(DATE_FORMAT),
+        end: dayjs(currentDate).endOf('isoWeek').subtract(1, 'w').format(DATE_FORMAT),
       };
     }
 
     return {
-      start: moment(currentDate).startOf("isoWeek").subtract(1, "w").format(DATE_FORMAT),
-      end: moment(currentDate).endOf("isoWeek").subtract(1, "w").format(DATE_FORMAT),
+      start: dayjs(currentDate).startOf('isoWeek').subtract(1, 'w').format(DATE_FORMAT),
+      end: dayjs(currentDate).endOf('isoWeek').subtract(1, 'w').format(DATE_FORMAT),
     };
   };
 };

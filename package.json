@@ -34,8 +34,8 @@
   "dependencies": {
     "@dreamworld/dw-select": "^6.0.1",
     "@dreamworld/pwa-helpers": "^1.16.5",
-    "lodash-es": "^4.17.21",
-    "moment": "^2.29.4"
+    "dayjs": "^1.11.10",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^2.0.2",
@@ -62,5 +62,10 @@
         "channel": "${name.replace(/^feature\\//g, \"\")}"
       }
     ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid",
+    "printWidth": 140
   }
 }
