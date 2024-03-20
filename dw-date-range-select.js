@@ -39,6 +39,7 @@ import * as _valueProviderFactory from "./value-provider-factory.js";
 export class DwDateRangeSelect extends DwSelect {
   constructor() {
     super();
+    this._onDateRangeSelected = this._onDateRangeSelected.bind(this);
     this.valueTextProvider = (item) => item.label;
     this.valueEquator = (v1, v2) => {
       if (!v1 && !v2) {
@@ -53,6 +54,23 @@ export class DwDateRangeSelect extends DwSelect {
       }
       return isEqual(v1, v2);
     };
+  }
+
+  connectedCallback() {
+    super.connectedCallback && super.connectedCallback();
+    this.addEventListener('selected', this._onDateRangeSelected);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('selected', this._onDateRangeSelected);
+    super.disconnectedCallback && super.disconnectedCallback();
+  }
+
+  _onDateRangeSelected(e) {
+    const showCustomRange = e?.detail?.showCustomRange || false;
+    if(showCustomRange) {
+      console.log("open date-range picker...!!!");
+    }
   }
 }
 
