@@ -23,41 +23,45 @@ const DateRangeItems = [
     label: "Last Quarter",
     valueProvider: valueProviderFactory.lastQuarter("01/04"),
   },
+  // {
+  //   label: "This Financial Year",
+  //   valueProvider: valueProviderFactory.thisFinancialYear("01/04"),
+  // },
+  // {
+  //   label: "Last Financial Year",
+  //   valueProvider: valueProviderFactory.lastFinancialYear("01/04"),
+  // },
+  // {
+  //   label: "Last 3 Months",
+  //   valueProvider: valueProviderFactory.lastNMonths(3),
+  // },
+  // {
+  //   label: "Last 2nd month",
+  //   valueProvider: valueProviderFactory.lastNthMonth(2),
+  // },
+  // {
+  //   label: "before 30 days",
+  //   valueProvider: valueProviderFactory.beforeNDays(30),
+  // },
+  // {
+  //   label: "today",
+  //   valueProvider: valueProvider.today,
+  // },
+  // {
+  //   label: "Last Week",
+  //   valueProvider: valueProviderFactory.lastWeek(),
+  // },
+  // {
+  //   label: "End of Last Week",
+  //   valueProvider: valueProviderFactory.lastWeek(true),
+  // },
+  // {
+  //   label: "End of Next Month",
+  //   valueProvider: valueProviderFactory.nextMonth(true),
+  // },
   {
-    label: "This Financial Year",
-    valueProvider: valueProviderFactory.thisFinancialYear("01/04"),
-  },
-  {
-    label: "Last Financial Year",
-    valueProvider: valueProviderFactory.lastFinancialYear("01/04"),
-  },
-  {
-    label: "Last 3 Months",
-    valueProvider: valueProviderFactory.lastNMonths(3),
-  },
-  {
-    label: "Last 2nd month",
-    valueProvider: valueProviderFactory.lastNthMonth(2),
-  },
-  {
-    label: "before 30 days",
-    valueProvider: valueProviderFactory.beforeNDays(30),
-  },
-  {
-    label: "today",
-    valueProvider: valueProvider.today,
-  },
-  {
-    label: "Last Week",
-    valueProvider: valueProviderFactory.lastWeek(),
-  },
-  {
-    label: "End of Last Week",
-    valueProvider: valueProviderFactory.lastWeek(true),
-  },
-  {
-    label: "End of Next Month",
-    valueProvider: valueProviderFactory.nextMonth(true),
+    label: "Select date",
+    showCustomRange: true
   },
 ];
 
