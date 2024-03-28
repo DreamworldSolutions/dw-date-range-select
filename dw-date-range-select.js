@@ -1,3 +1,4 @@
+import { html } from "@dreamworld/pwa-helpers/lit.js";
 import { DwSelect } from "@dreamworld/dw-select/dw-select.js";
 import isEqual from "lodash-es/isEqual";
 
@@ -56,20 +57,145 @@ export class DwDateRangeSelect extends DwSelect {
     };
   }
 
-  connectedCallback() {
-    super.connectedCallback && super.connectedCallback();
-    this.addEventListener('selected', this._onDateRangeSelected);
+  get _dialogTemplate() {
+    return html`
+      ${super._dialogTemplate}
+      ${this.dateRangePickerTemplate}
+      ${this.dateRangeInputDialogTemplate}
+    `;
   }
 
-  disconnectedCallback() {
-    this.removeEventListener('selected', this._onDateRangeSelected);
-    super.disconnectedCallback && super.disconnectedCallback();
+  get dateRangeInputDialogTemplate() {
+    return html`
+      <dw-date-input-dialog
+        date-picker="false"
+        .type=${"modal"}
+        .placement=${'center'}
+        .inputFormat="${this.inputFormat}"
+        .valueFormat=${this.valueFormat}
+        .dateRepresentationFormat="${this.dateRepresentationFormat}"
+        .label="${this.label}"
+        ?disabled="${this.disabled}"
+        .invalid=${this.invalid}
+        ?noLabel="${this.noLabel}"
+        ?required="${this.required}"
+        ?readOnly="${this.readOnly}"
+        ?autoSelect="${this.autoSelect}"
+        ?dense="${this.dense}"
+        ?hintPersistent="${this.hintPersistent}"
+        .placeholder="${this.placeholder}"
+        ?highlightChanged="${this.highlightChanged}"
+        ?noHintWrap="${this.noHintWrap}"
+        .value="${this.value}"
+        .originalDate="${this.originalValue}"
+        .name="${this.name}"
+        .hint="${this.hint}"
+        .minDate="${this.minDate}"
+        .maxDate="${this.maxDate}"
+        .showFutureWarning=${this.showFutureWarning}
+        .showFutureError=${this.showFutureError}
+        .warning=${this._warning}
+        .error=${this._error}
+        .hintInTooltip="${this.hintInTooltip}"
+        .errorInTooltip="${this.errorInTooltip}"
+        .warningInTooltip="${this.warningInTooltip}"
+        .hintTooltipActions="${this.hintTooltipActions}"
+        .errorTooltipActions="${this.errorTooltipActions}"
+        .warningTooltipActions="${this.warningTooltipActions}"
+        .tipPlacement="${this.tipPlacement}"
+        .errorMessages="${this._errorMessages}"
+        @dw-dialog-closed=${(e) => this._triggerDateInputDialogOpenedChanged(false)}
+        @dw-dialog-opened=${(e) => this._triggerDateInputDialogOpenedChanged(true)}
+        @mode-changed=${this._onDateInputDialogModeChanged}
+        @change=${this._onChange}
+      >
+      </dw-date-input-dialog>
+    `;
   }
 
-  _onDateRangeSelected(e) {
-    const showCustomRange = e?.detail?.showCustomRange || false;
-    if(showCustomRange) {
-      console.log("open date-range picker...!!!");
+  get dateRangePickerTemplate() {
+    return html`
+      <dw-date-picker
+        date-picker="false"
+        .type=${this.mobileMode ? "modal" : "popover"}
+        .popoverAnimation=${"expand"}
+        .placement=${'bottom'}
+        .mobileMode=${this.mobileMode}
+        .tabletMode=${this.tabletMode}
+        .showTrigger=${true}
+        .appendTo=${this.appendTo}
+        .zIndex=${this.zIndex}
+        .value=${this.value}
+        .minDate="${this.minDate}"
+        .maxDate="${this.maxDate}"
+        .inputFormat=${this.inputFormat}
+        .valueFormat=${this.valueFormat}
+        .dateRepresentationFormat="${this.dateRepresentationFormat}"
+        .triggerElement=${this.triggerElement}
+        @dw-dialog-closed=${(e) => this._triggerDatePickerOpenedChanged(false)}
+        @dw-dialog-opened=${(e) => this._triggerDatePickerOpenedChanged(true)}
+        @mode-changed=${this._onDatePickerModeChanged}
+        @change=${this._onDatePickerValueChanged}
+      >
+      </dw-date-picker>
+    `;
+  }
+
+  get datePicker() {
+    return this.renderRoot.querySelector("dw-date-picker");
+  }
+
+  get dateInputDialog() {
+    return this.renderRoot.querySelector("dw-date-input-dialog");
+  }
+
+  async _onSelect(e) {
+    const value = this.value;
+    const selectedItem = e.detail;
+    this.value = this._valueProvider(selectedItem);
+    this._selectedValueText = this._getValue(selectedItem);
+    if (!this._vkb && typeof this._triggerElement?.focus === 'function') {
+      this._triggerElement.focus();
+    }
+    this._query = undefined;
+    await this.updateComplete;
+
+    this.reportValidity();
+    
+    //TODO: this function called only when showCustomRange this is not fount or false
+    //Otherwise: open date range select dialog.
+    // this._dispatchSelected(value);
+  }
+
+  _triggerDateInputDialogOpenedChanged(opened) {
+    this.dispatchEvent(
+      new CustomEvent("date-range-input-dialog-opened-changed", {
+        detail: {
+          opened,
+        },
+      })
+    );
+  }
+
+  _triggerDatePickerOpenedChanged(opened) {
+    this.dispatchEvent(
+      new CustomEvent("date-range-picker-opened-changed", {
+        detail: {
+          opened,
+        },
+      })
+    );
+  }
+
+  _onDatePickerModeChanged(e) {
+    if (this.dateInputDialog) {
+      this.dateInputDialog.opened = true;
+    }
+  }
+
+  _onDateInputDialogModeChanged(e) {
+    if (this.datePicker) {
+      this.datePicker.opened = true;
     }
   }
 }

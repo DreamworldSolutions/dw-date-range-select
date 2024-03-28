@@ -145,9 +145,9 @@ export class DwDateRangePicker extends DwCompositeDialog {
   static get properties() {
     return {
       /**
-       * Current input value entered by user
+       * start and end date. e.g. { start: "2021-04-01", end: "2022-03-30" }
        */
-      value: { type: String },
+      value: { type: Object },
 
       /**
        * prefered date input format
@@ -305,7 +305,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
     const element = this.renderRoot.querySelector('#datepicker');
     return new Litepicker({
       element: element,
-      singleMode: true,
+      singleMode: false,
       allowRepick: false,
       numberOfColumns: 1,
       numberOfMonths: 1,
@@ -338,7 +338,9 @@ export class DwDateRangePicker extends DwCompositeDialog {
   
   _setPickerDate() {
     if(this.value && this._instance) {
+      //TODO: use setDateRange method because value: { start: "2021-04-01", end: "2022-03-30" }
       this._instance.setDate(this.value);
+      //TODO: goto on start date.
       this._goToDate(this.value);
     }
   }
@@ -370,6 +372,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
    * Invoked when user choose date from calender.
    */
   _onSelected(date) {
+    //TODO: get start and date and passed to trigger value
     this._trigerValueChanged(date);
     this.close();
   }
@@ -377,6 +380,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
   _trigerValueChanged(date) {
     date = date && date.dateInstance ? date.dateInstance : date;
     const value = date ? dayjs(date).startOf('day').format(this.valueFormat) : null;
+    //TODO: update condition based on startdate and enddate.
     if(value === this.value) {
       return;
     }

@@ -86,9 +86,9 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   static get properties() {
     return {
       /**
-       * Current input value entered by user
+       * start and end date. e.g. { start: "2021-04-01", end: "2022-03-30" }
        */
-      value: { type: String },
+      value: { type: Object },
 
       /**
        * The label for this element.
@@ -311,11 +311,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   get _headerTemplate() {
     return html`
       <div class="header" date-picker="false">
-        <div class="day">${this._getDayText()}</div>
-        <div class="date-container">
-          <div class="date">${this._getDateText()}</div>
-          <dw-icon-button date-picker="false" .buttonSize=${32} @click=${this._onIconClick} .icon=${'date_range'}></dw-icon-button>
-        </div>
+        <dw-icon-button date-picker="false" .buttonSize=${32} @click=${this._onIconClick} .icon=${'date_range'}></dw-icon-button>
       </div>
     `;
   }
@@ -401,6 +397,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   _onApply() {
     if(this.dateInput?.validate()) {
+      //TODO: set value to start and end date.
       this.value = this.dateInput?.value;
       this.dispatchEvent(new CustomEvent("change"));
       this.close();
@@ -416,22 +413,6 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
       })
     );
     this.close();
-  }
-
-  _getDayText() {
-    if(!this.value) {
-      return 'Selected Day'
-    }
-
-    return dayjs(this.value).format('dddd');
-  }
-
-  _getDateText() {
-    if(!this.value) {
-      return 'Selected Date'
-    }
-
-    return this.formatDateText(dayjs(this.value, this.valueFormat).format(this.inputFormat));
   }
 
   formatDateText(value) {
