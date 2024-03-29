@@ -10,6 +10,7 @@ import dayjs from 'dayjs/esm/index.js';
 import datePickerStyle from './dw-date-range-picker-style.js';
 
 import '@dreamworld/dw-icon-button';
+import './date-input';
 
 /**
  * Providing a solution to select date.
@@ -29,7 +30,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       css`
         :host {
           --dw-popover-width: 360px;
-          --dw-popover-min-width: 360px;
+          --dw-popover-min-width: 500px;
           --dw-popover-border-radius: 18px;
         }
 
@@ -44,10 +45,10 @@ export class DwDateRangePicker extends DwCompositeDialog {
         :host([type="modal"]:not([has-header])) .mdc-dialog.mdc-dialog--scrollable .mdc-dialog__surface {
           padding-top: 0px;
         }
-        
+
         .header {
           height: 88px;
-          padding: 16px 24px;
+          padding: 16px;
           box-sizing: border-box;
           border-bottom: 1px solid var(--mdc-theme-divider-color);
         }
@@ -87,12 +88,21 @@ export class DwDateRangePicker extends DwCompositeDialog {
           overflow: hidden;
         }
 
+        .pass {
+          padding: 0 12px;
+        }
+
         .litepicker .container__days .day-item {
           border-radius: 50%;
         }
 
         .litepicker .container__days .day-item.is-start-date.is-end-date {
           border-radius: 50%;
+        }
+
+        .litepicker .container__months,
+        .litepicker .container__months .month-item {
+          width: 100%;
         }
 
         :host([mobile-mode]) .litepicker,
@@ -130,14 +140,16 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         .date-container dw-icon-button {
-          height: 32px;
-          width: 32px;
+          height: 48px;
+          width: 48px;
+          padding-left: 12px;
+          --dw-icon-color: lightskyblue;
         }
-      `
-    ]
+      `,
+    ];
   }
 
-  constructor(){
+  constructor() {
     super();
     this._onSelected = this._onSelected.bind(this);
   }
@@ -187,7 +199,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
   get inputFormat() {
     return this._inputFormat && this._inputFormat.toUpperCase() || this._inputFormat;
   }
-  
+
   /**
    * Setter of `inputFormat` property.
    */
@@ -206,7 +218,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
   get valueFormat() {
     return this._valueFormat && this._valueFormat.toUpperCase() || this._valueFormat;
   }
-  
+
   /**
    * Setter of `valueFormat` property.
    */
@@ -230,12 +242,32 @@ export class DwDateRangePicker extends DwCompositeDialog {
     return html`
       <div>
         <div class="header" date-picker="false">
-          <div class="day">${this._getDayText()}</div>
           <div class="date-container">
-              <div class="date">${this._getDateText()}</div>
-              ${this.tabletMode || this.mobileMode ?  html`
-                <dw-icon-button date-picker="false" .iconFont=${'OUTLINED'} .buttonSize=${32} @click=${this._onIconClick} .icon=${'edit'}></dw-icon-button>
-              `: ''}
+            <date-input label="Start date" .value=${this.value} placeholder="DD / MM / YYYY"></date-input>
+            <div class="pass">-</div>
+            <date-input label="End date" .value=${this.value} placeholder="DD / MM / YYYY"></date-input>
+            ${!this.tabletMode || !this.mobileMode
+              ? html`
+                  <dw-icon-button
+                    date-picker="false"
+                    .buttonSize=${48}
+                    .iconSize=${32}
+                    @click=${this._onIconClick}
+                    .icon=${'arrow_circle_right'}
+                  ></dw-icon-button>
+                `
+              : ''}
+            ${this.tabletMode || this.mobileMode
+              ? html`
+                  <dw-icon-button
+                    date-picker="false"
+                    .iconFont=${'OUTLINED'}
+                    .buttonSize=${32}
+                    @click=${this._onIconClick}
+                    .icon=${'edit'}
+                  ></dw-icon-button>
+                `
+              : ''}
           </div>
         </div>
         <div id="datepicker" date-picker="false"></div>
@@ -335,7 +367,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       this._goToDate(this.minDate);
     }
   }
-  
+
   _setPickerDate() {
     if(this.value && this._instance) {
       //TODO: use setDateRange method because value: { start: "2021-04-01", end: "2022-03-30" }
