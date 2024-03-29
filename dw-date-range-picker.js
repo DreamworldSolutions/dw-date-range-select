@@ -10,7 +10,7 @@ import dayjs from 'dayjs/esm/index.js';
 import datePickerStyle from './dw-date-range-picker-style.js';
 
 import '@dreamworld/dw-icon-button';
-import './date-input';
+import '@dreamworld/dw-date-input';
 
 /**
  * Providing a solution to select date.
@@ -243,9 +243,9 @@ export class DwDateRangePicker extends DwCompositeDialog {
       <div>
         <div class="header" date-picker="false">
           <div class="date-container">
-            <date-input label="Start date" .value=${this.value} placeholder="DD / MM / YYYY"></date-input>
+            <dw-date-input label="Start date" .value=${this.value} placeholder="DD / MM / YYYY"></dw-date-input>
             <div class="pass">-</div>
-            <date-input label="End date" .value=${this.value} placeholder="DD / MM / YYYY"></date-input>
+            <dw-date-input label="End date" .value=${this.value} placeholder="DD / MM / YYYY"></dw-date-input>
             ${!this.tabletMode || !this.mobileMode
               ? html`
                   <dw-icon-button

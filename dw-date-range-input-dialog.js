@@ -10,7 +10,7 @@ import dayjs from 'dayjs/esm/index.js';
 
 import '@dreamworld/dw-icon-button';
 import '@dreamworld/dw-button';
-import './date-input';
+import '@dreamworld/dw-date-input';
 
 /**
  * Providing a solution to select date.
@@ -71,7 +71,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
           align-items: center;
         }
 
-        date-input {
+        dw-date-input {
           padding: 16px 0px;
         }
 
@@ -298,7 +298,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   constructor() {
     super();
-    this.autoFocusSelector = 'date-input';
+    this.autoFocusSelector = 'dw-date-input';
   }
 
   willUpdate(changedProps){
@@ -318,7 +318,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   get _contentTemplate() {
     return html`
-        <date-input
+        <dw-date-input
           .inputFormat="${this.inputFormat}"
           .valueFormat=${this.valueFormat}
           .label="${this.label}"
@@ -352,13 +352,13 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
           .tipPlacement="${this.tipPlacement}"
           .errorMessages="${this.errorMessages}"
           @change=${this._onChange}
-        ></date-input>
+        ></dw-date-input>
       </div>
     `;
   }
 
   get dateInput() {
-    return this.renderRoot.querySelector('date-input');
+    return this.renderRoot.querySelector('dw-date-input');
   }
 
   get _footerTemplate() {
