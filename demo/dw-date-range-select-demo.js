@@ -78,11 +78,6 @@ export class DwDateRangeSelectDemo extends LitElement {
     `,
   ];
 
-  constructor() {
-    super();
-    this.value = { start: '2021-04-01', end: '2022-03-30' };
-  }
-
   render() {
     return html`
       <span>Input Value Empty</span>

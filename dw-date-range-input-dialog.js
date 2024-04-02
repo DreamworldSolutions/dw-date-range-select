@@ -1,4 +1,4 @@
-import { html, css } from "@dreamworld/pwa-helpers/lit.js";
+import { html, css } from '@dreamworld/pwa-helpers/lit.js';
 import { DwCompositeDialog } from '@dreamworld/dw-dialog/dw-composite-dialog.js';
 
 // Litepicker element
@@ -27,25 +27,27 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
     return [
       super.styles,
       css`
-        :host([type="modal"]) .mdc-dialog__title {
+        :host([type='modal']) .mdc-dialog__title {
           padding: 0px;
         }
 
-        :host([type="modal"]) .mdc-dialog__title::before {
+        :host([type='modal']) .mdc-dialog__title::before {
           display: none;
         }
 
-        :host([type="modal"]) .mdc-dialog .mdc-dialog__surface {
+        :host([type='modal']) .mdc-dialog .mdc-dialog__surface {
           min-width: 328px;
         }
 
-        :host([type="modal"]) .mdc-dialog__actions {
+        :host([type='modal']) .mdc-dialog__actions {
           padding-right: 24px;
           height: 48px;
         }
 
         .header {
-          height: 88px;
+          display: flex;
+          justify-content: space-between;
+          height: 64px;
           padding: 16px 24px;
           box-sizing: border-box;
           border-bottom: 1px solid var(--mdc-theme-divider-color);
@@ -72,15 +74,27 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         }
 
         dw-date-input {
-          padding: 16px 0px;
+          padding: 8px 0 16px 0;
         }
 
         .date-container dw-icon-button {
           height: 32px;
           width: 32px;
         }
-      `
-    ]
+
+        .mdc-dialog__content {
+          display: flex;
+        }
+
+        :host([type='modal']) .mdc-dialog__content {
+          padding: 0 12px;
+        }
+
+        :host([type='modal']) .mdc-dialog__content > :first-child {
+          padding-right: 12px;
+        }
+      `,
+    ];
   }
 
   static get properties() {
@@ -255,16 +269,16 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
        * for more see tippyJs doc: https://atomiks.github.io/tippyjs/v6/all-props/#placement
        */
       tipPlacement: { type: String },
-    }
+    };
   }
 
   /**
    * Getter of `inputFormat` property.
    */
   get inputFormat() {
-    return this._inputFormat && this._inputFormat.toUpperCase() || this._inputFormat;
+    return (this._inputFormat && this._inputFormat.toUpperCase()) || this._inputFormat;
   }
-  
+
   /**
    * Setter of `inputFormat` property.
    */
@@ -274,16 +288,16 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
       return;
     }
     this._inputFormat = value;
-    this.requestUpdate("inputFormat", oldValue);
+    this.requestUpdate('inputFormat', oldValue);
   }
 
   /**
    * Getter of `valueFormat` property.
    */
   get valueFormat() {
-    return this._valueFormat && this._valueFormat.toUpperCase() || this._valueFormat;
+    return (this._valueFormat && this._valueFormat.toUpperCase()) || this._valueFormat;
   }
-  
+
   /**
    * Setter of `valueFormat` property.
    */
@@ -293,7 +307,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
       return;
     }
     this._valueFormat = value;
-    this.requestUpdate("valueFormat", oldValue);
+    this.requestUpdate('valueFormat', oldValue);
   }
 
   constructor() {
@@ -301,60 +315,94 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
     this.autoFocusSelector = 'dw-date-input';
   }
 
-  willUpdate(changedProps){
+  willUpdate(changedProps) {
     super.willUpdate(changedProps);
-    if (changedProps.has("inputFormat")) {
-      this.separator = this.inputFormat ? this.inputFormat.slice(2, 3): '/';
+    if (changedProps.has('inputFormat')) {
+      this.separator = this.inputFormat ? this.inputFormat.slice(2, 3) : '/';
     }
   }
 
   get _headerTemplate() {
     return html`
       <div class="header" date-picker="false">
+        <div>Select Range</div>
         <dw-icon-button date-picker="false" .buttonSize=${32} @click=${this._onIconClick} .icon=${'date_range'}></dw-icon-button>
       </div>
     `;
   }
 
   get _contentTemplate() {
-    return html`
-        <dw-date-input
-          .inputFormat="${this.inputFormat}"
-          .valueFormat=${this.valueFormat}
-          .label="${this.label}"
-          ?disabled="${this.disabled}"
-          .invalid=${this.invalid}
-          ?noLabel="${this.noLabel}"
-          ?required="${this.required}"
-          ?readOnly="${this.readOnly}"
-          ?autoSelect="${this.autoSelect}"
-          ?dense="${this.dense}"
-          ?hintPersistent="${this.hintPersistent}"
-          .placeholder="${this.placeholder}"
-          ?highlightChanged="${this.highlightChanged}"
-          ?noHintWrap="${this.noHintWrap}"
-          .date="${this.value}"
-          .originalDate="${this.originalValue}"
-          .name="${this.name}"
-          .hint="${this.hint}"
-          .minDate="${this.minDate}"
-          .maxDate="${this.maxDate}"
-          .showFutureWarning=${this.showFutureWarning}
-          .showFutureError=${this.showFutureError}
-          .warning=${this._warning}
-          .error=${this._error}
-          .hintInTooltip="${this.hintInTooltip}"
-          .errorInTooltip="${this.errorInTooltip}"
-          .warningInTooltip="${this.warningInTooltip}"
-          .hintTooltipActions="${this.hintTooltipActions}"
-          .errorTooltipActions="${this.errorTooltipActions}"
-          .warningTooltipActions="${this.warningTooltipActions}"
-          .tipPlacement="${this.tipPlacement}"
-          .errorMessages="${this.errorMessages}"
-          @change=${this._onChange}
-        ></dw-date-input>
-      </div>
-    `;
+    return html`<dw-date-input
+        .inputFormat="${this.inputFormat}"
+        .valueFormat=${this.valueFormat}
+        .label="Start date"
+        ?disabled="${this.disabled}"
+        .invalid=${this.invalid}
+        ?noLabel="${this.noLabel}"
+        ?required="${this.required}"
+        ?readOnly="${this.readOnly}"
+        ?autoSelect="${this.autoSelect}"
+        ?dense="${this.dense}"
+        ?hintPersistent="${this.hintPersistent}"
+        .placeholder="DD / MM / YYYY"
+        ?highlightChanged="${this.highlightChanged}"
+        ?noHintWrap="${this.noHintWrap}"
+        .value="${this.value?.start}"
+        .originalDate="${this.originalValue}"
+        .name="${this.name}"
+        .hint="${this.hint}"
+        .minDate="${this.minDate}"
+        .maxDate="${this.maxDate}"
+        .showFutureWarning=${this.showFutureWarning}
+        .showFutureError=${this.showFutureError}
+        .warning=${this._warning}
+        .error=${this._error}
+        .hintInTooltip="${this.hintInTooltip}"
+        .errorInTooltip="${this.errorInTooltip}"
+        .warningInTooltip="${this.warningInTooltip}"
+        .hintTooltipActions="${this.hintTooltipActions}"
+        .errorTooltipActions="${this.errorTooltipActions}"
+        .warningTooltipActions="${this.warningTooltipActions}"
+        .tipPlacement="${this.tipPlacement}"
+        .errorMessages="${this.errorMessages}"
+        @change=${this._onChange}
+      ></dw-date-input>
+
+      <dw-date-input
+        .inputFormat="${this.inputFormat}"
+        .valueFormat=${this.valueFormat}
+        .label="End date"
+        ?disabled="${this.disabled}"
+        .invalid=${this.invalid}
+        ?noLabel="${this.noLabel}"
+        ?required="${this.required}"
+        ?readOnly="${this.readOnly}"
+        ?autoSelect="${this.autoSelect}"
+        ?dense="${this.dense}"
+        ?hintPersistent="${this.hintPersistent}"
+        .placeholder="DD / MM / YYYY"
+        ?highlightChanged="${this.highlightChanged}"
+        ?noHintWrap="${this.noHintWrap}"
+        .value="${this.value?.end}"
+        .originalDate="${this.originalValue}"
+        .name="${this.name}"
+        .hint="${this.hint}"
+        .minDate="${this.minDate}"
+        .maxDate="${this.maxDate}"
+        .showFutureWarning=${this.showFutureWarning}
+        .showFutureError=${this.showFutureError}
+        .warning=${this._warning}
+        .error=${this._error}
+        .hintInTooltip="${this.hintInTooltip}"
+        .errorInTooltip="${this.errorInTooltip}"
+        .warningInTooltip="${this.warningInTooltip}"
+        .hintTooltipActions="${this.hintTooltipActions}"
+        .errorTooltipActions="${this.errorTooltipActions}"
+        .warningTooltipActions="${this.warningTooltipActions}"
+        .tipPlacement="${this.tipPlacement}"
+        .errorMessages="${this.errorMessages}"
+        @change=${this._onChange}
+      ></dw-date-input>`;
   }
 
   get dateInput() {
@@ -369,9 +417,9 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   _onChange(e) {
-    if(e && e.target) {
+    if (e && e.target) {
       const dateInputed = dayjs(e.target.value, this.inputFormat);
-      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat): "";
+      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
       this.value = date || this.value;
       this.validate();
     }
@@ -396,11 +444,18 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   _onApply() {
-    if(this.dateInput?.validate()) {
+    if (this.dateInput && this.dateInput.validate()) {
       //TODO: set value to start and end date.
-      this.value = this.dateInput?.value;
-      this.dispatchEvent(new CustomEvent("change"));
-      this.close();
+      const startDate = this.dateInput.value && this.dateInput.value.start;
+      const endDate = this.dateInput.value && this.dateInput.value.end;
+
+      if (startDate && endDate) {
+        this.value = {
+          start: startDate,
+          end: endDate,
+        };
+        this.dispatchEvent(new CustomEvent('change'));
+      }
     }
   }
 
@@ -408,7 +463,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
     this.dispatchEvent(
       new CustomEvent('mode-changed', {
         detail: {
-          mode: 'PICKER'
+          mode: 'PICKER',
         },
       })
     );
@@ -416,7 +471,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   formatDateText(value) {
-    return value && value.replace(/ /g, "").split(`${this.separator}`).join(` ${this.separator} `);
+    return value && value.replace(/ /g, '').split(`${this.separator}`).join(` ${this.separator} `);
   }
 }
 

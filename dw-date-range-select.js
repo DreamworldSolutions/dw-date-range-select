@@ -6,6 +6,7 @@ import * as _valueProvider from './value-provider.js';
 import * as _valueProviderFactory from './value-provider-factory.js';
 import './dw-date-range-picker.js';
 import './dw-date-range-input-dialog.js';
+import { flatMap } from 'lodash-es';
 
 /**
  * Date range input control is used to input a custom duration.
@@ -48,23 +49,41 @@ export class DwDateRangeSelect extends DwSelect {
         return v1 === v2;
       }
 
+      const showLog = (v1 && v1.showCustomRange) || (v2 && v2.showCustomRange) || false;
+
       if (v1 && v2 && v1.hasOwnProperty('valueProvider') && v2.hasOwnProperty('valueProvider')) {
         return isEqual(v1.valueProvider(), v2.valueProvider());
       }
       if (v1 && v1.hasOwnProperty('valueProvider')) {
         return isEqual(v1.valueProvider(), v2);
       }
-      return isEqual(v1, v2);
+
+      if(isEqual(v1, v2)) {
+        return true;
+      }
+
+      if(v1 && v1.showCustomRange && v1 && ((v2.start && v2.end) || v2.showCustomRange)) {
+        return true;
+      }
+
+      return false;
     };
 
     this.appendTo = 'parent';
     this.zIndex = 9999;
-    this.mobileMode = false;
+    this.mobileMode = true;
     this.tabletMode = false;
+    this.valueFormat = 'YYYY-MM-DD';
   }
 
   static get properties() {
     return {
+      /**
+       * date value format
+       * default `yyyy-mm-dd`.
+       */
+      valueFormat: { type: String },
+      
       // START: Date-picker properties
       /**
        * Date-picker
@@ -158,11 +177,12 @@ export class DwDateRangeSelect extends DwSelect {
     return html`
       <dw-date-range-picker
         date-picker="false"
-        .type=${this._dialogType}
+        .type=${this.mobileMode ? 'modal' : 'popover'}
         .popoverAnimation=${'expand'}
         .placement=${'bottom'}
         .mobileMode=${this.mobileMode}
         .tabletMode=${this.tabletMode}
+        .value="${this.value}"
         .showTrigger=${true}
         .appendTo=${this.appendTo}
         .zIndex=${this.zIndex}
@@ -181,6 +201,27 @@ export class DwDateRangeSelect extends DwSelect {
     `;
   }
 
+  _onDatePickerValueChanged(e) {
+    const value = e?.detail?.value || '';
+    if (value) {
+      this.value = value;
+      this._dispatchSelected(value);
+      setTimeout(() => {
+        this.validate();
+      }, 0);
+    }
+  }
+
+  _onChange(e) {
+    if(e && e.target) {
+      const dateInputed = dayjs(e.target.value, this.inputFormat);
+      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat): "";
+      this.value = date || this.value;
+      this.validate();
+      this.dispatchEvent(new CustomEvent("change", { detail: { value: date } }));
+    }
+  }
+
   firstUpdated(changeProps) {
     super.firstUpdated && super.firstUpdated(changeProps);
     if (!this.triggerElement) {
@@ -197,6 +238,12 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   async _onSelect(e) {
+    if (e?.detail?.showCustomRange) {
+      if (this.dateRangePicker) {
+        this.dateRangePicker.opened = true;
+      }
+      return;
+    }
     const value = this.value;
     const selectedItem = e.detail;
     this.value = this._valueProvider(selectedItem);
@@ -206,16 +253,8 @@ export class DwDateRangeSelect extends DwSelect {
     }
     this._query = undefined;
     await this.updateComplete;
-
     this.reportValidity();
-
-    if (e?.detail?.showCustomRange) {
-      if (this.dateRangePicker) {
-        this.dateRangePicker.opened = true;
-      }
-    } else {
-      this._dispatchSelected(value);
-    }
+    this._dispatchSelected(value);
   }
 
   _triggerDateRangeInputDialogOpenedChanged(opened) {
