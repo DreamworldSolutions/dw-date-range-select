@@ -44,13 +44,16 @@ import './dw-date-range-input-dialog.js';
 export class DwDateRangeSelect extends DwSelect {
   constructor() {
     super();
-    this.valueTextProvider = item => item.label;
+    this.valueTextProvider = (item, customLabel) => {
+      if (customLabel && item && item.showCustomRange && this.value && this.value.start && this.value.end) {
+        return `${dayjs(this.value.start).format(this.inputFormat)} - ${dayjs(this.value.end).format(this.inputFormat)}`;
+      }
+      return item.label;
+    };
     this.valueEquator = (v1, v2) => {
       if (!v1 && !v2) {
         return v1 === v2;
       }
-
-      const showLog = (v1 && v1.showCustomRange) || (v2 && v2.showCustomRange) || false;
 
       if (v1 && v2 && v1.hasOwnProperty('valueProvider') && v2.hasOwnProperty('valueProvider')) {
         return isEqual(v1.valueProvider(), v2.valueProvider());
@@ -215,6 +218,29 @@ export class DwDateRangeSelect extends DwSelect {
       >
       </dw-date-range-picker>
     `;
+  }
+
+  /**
+   * Returns String that represents current value
+   * @override
+   */
+  _getValue(value) {
+    var text;
+    try {
+      text = this.valueTextProvider(value, true);
+    } catch (e) {
+      text = '';
+    }
+
+    if (text) {
+      return text;
+    }
+
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    return '';
   }
 
   _onDatePickerValueChanged(e) {

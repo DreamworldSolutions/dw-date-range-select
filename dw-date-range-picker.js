@@ -112,12 +112,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
           border-radius: 50%;
         }
 
-        .litepicker .container__days .day-item.is-start-date.is-end-date,
-        .litepicker .container__days .day-item.is-end-date,
-        .litepicker .container__days .day-item.is-start-date {
-          border-radius: 50%;
-        }
-
         :host(:not([mobile-mode])) .litepicker .container__days .day-item.is-in-range {
           padding: 4px 35px;
           --litepicker-day-margin: 4px 0;
@@ -190,14 +184,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
         .date-container {
           display: flex;
           align-items: center;
-        }
-
-        .litepicker .container__days .day-item.is-start-date::before {
-          position: absolute;
-          background-color: #bbdefb;
-          content: '';
-          height: 40px;
-          width: 70px;
         }
       `,
     ];
@@ -569,7 +555,9 @@ export class DwDateRangePicker extends DwCompositeDialog {
   }
 
   _onSubmit() {
-    this._onSelected(this._inputStartDate, this._inputEndDate);
+    const start = this._inputStartDate || this.value?.start || '';
+    const end = this._inputEndDate || this.value?.end || '';
+    this._onSelected(start, end);
   }
 
   /**
