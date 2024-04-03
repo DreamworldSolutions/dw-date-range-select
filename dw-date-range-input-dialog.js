@@ -460,8 +460,8 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   _onApply() {
     if (this.reportValidity()) {
-      const date1 = this._inputStartDate;
-      const date2 = this._inputEndDate;
+      const date1 = this._inputStartDate || this.value?.start || '';
+      const date2 = this._inputEndDate || this.value?.end || '';
       const startDate = date1 ? dayjs(date1).format('YYYY-MM-DD') : null;
       const endDate = date2 ? dayjs(date2).format('YYYY-MM-DD') : null;
 

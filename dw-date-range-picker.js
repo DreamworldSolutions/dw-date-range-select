@@ -35,6 +35,10 @@ export class DwDateRangePicker extends DwCompositeDialog {
           --litepicker-day-margin: 0px;
         }
 
+        :host([type='modal']) .mdc-dialog {
+          z-index: 100;
+        }
+
         :host([type='modal']:not([has-footer]):not([custom-content-padding-applied])) .mdc-dialog .mdc-dialog__content {
           padding: 0px;
         }
@@ -66,7 +70,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         :host([mobile-mode]) .container .title {
-          color: rgba(0, 0, 0, 0.38);
+          color: var(--mdc-theme-text-disabled-on-background);
         }
 
         .header .day {
@@ -110,6 +114,10 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
         .litepicker .container__days .day-item {
           border-radius: 50%;
+        }
+
+        .litepicker .container__days .day-item.is-in-range {
+          --litepicker-is-in-range-color: var(--hisab-activated-background-color);
         }
 
         :host(:not([mobile-mode])) .litepicker .container__days .day-item.is-in-range {
@@ -168,16 +176,16 @@ export class DwDateRangePicker extends DwCompositeDialog {
           overflow-x: hidden;
         }
 
-        .container dw-icon-button {
+        .container .submit {
           height: 48px;
           width: 48px;
           padding-left: 12px;
-          --dw-icon-color: lightskyblue;
+          --dw-icon-color: var(--mdc-theme-primary);
         }
 
         :host([mobile-mode]) .container dw-icon-button {
-          height: 32px;
-          width: 32px;
+          height: 24px;
+          width: 24px;
           padding-left: 12px;
         }
 
@@ -362,6 +370,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
             ${!this.tabletMode && !this.mobileMode
               ? html`
                   <dw-icon-button
+                    class="submit"
                     date-picker="false"
                     .buttonSize=${48}
                     .iconSize=${32}
@@ -435,7 +444,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
     }
 
     const format = this.dateRepresentationFormat || this.inputFormat;
-    return dayjs(this.value.end, this.valueFormat).format(format);
+    return dayjs(this.value.end).format(format);
   }
 
   formatDateText(value) {
