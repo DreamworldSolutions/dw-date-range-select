@@ -310,6 +310,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
                 ? html`${this.value?.start ? html`<div>${this._getStartDateText()}</div>` : html` <div class="title">Start Date</div>`}`
                 : html`
                     <date-input
+                      id="start-date"
                       .inputFormat=${this.inputFormat}
                       .valueFormat=${this.valueFormat}
                       label="Start date"
@@ -435,6 +436,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
     if (changedProps.has('valueFormat')) {
       this._setOptions({ format: this.valueFormat });
     }
+    this._autoFocus();
   }
 
   _onIconClick() {
@@ -472,7 +474,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
     }
 
     const format = this.dateRepresentationFormat || this.inputFormat;
-    return dayjs(this.value.start, this.valueFormat).format(format);
+    return dayjs(this.value.end, this.valueFormat).format(format);
   }
 
   formatDateText(value) {
@@ -488,6 +490,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       element: element,
       singleMode: false,
       allowRepick: false,
+      autoApply: true,
       numberOfColumns: 1,
       numberOfMonths: 1,
       firstDay: 0,
@@ -566,9 +569,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
   }
 
   _onSubmit() {
-    const date1 = this._inputStartDate;
-    const date2 = this._inputEndDate;
-    this._onSelected(date1, date2);
+    this._onSelected(this._inputStartDate, this._inputEndDate);
   }
 
   /**
@@ -576,16 +577,27 @@ export class DwDateRangePicker extends DwCompositeDialog {
    */
   _onSelected(date1, date2) {
     this._trigerValueChanged(date1, date2);
-    this.close();
+    if (!this.__isCurrentDate(date1, date2)) {
+      this.close();
+    }
+  }
+
+  __isCurrentDate(date1, date2) {
+    const startDate = this.__getDateInValueFormat(date1);
+    const endDate = this.__getDateInValueFormat(date2);
+    return startDate === this.value?.start && endDate === this.value?.end;
+  }
+
+  __getDateInValueFormat(date) {
+    date = date && date.dateInstance ? date.dateInstance : date;
+    return date ? dayjs(date).format(this.valueFormat) : null;
   }
 
   _trigerValueChanged(date1, date2) {
-    date1 = date1 && date1.dateInstance ? date1.dateInstance : date1;
-    date2 = date2 && date2.dateInstance ? date2.dateInstance : date2;
-    const startDate = date1 ? dayjs(date1).startOf('day').format(this.valueFormat) : null;
-    const endDate = date2 ? dayjs(date2).endOf('day').format(this.valueFormat) : null;
+    const startDate = this.__getDateInValueFormat(date1);
+    const endDate = this.__getDateInValueFormat(date2);
 
-    if (startDate === this.value?.start && endDate === this.value?.end) {
+    if (this.__isCurrentDate(date1, date2)) {
       return;
     }
 
@@ -601,6 +613,11 @@ export class DwDateRangePicker extends DwCompositeDialog {
         },
       })
     );
+  }
+
+  _autoFocus() {
+    const el = this.renderRoot.querySelector('#start-date');
+    el && el.focus();
   }
 
   /**
