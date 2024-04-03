@@ -76,6 +76,7 @@ export class DwDateRangeSelect extends DwSelect {
     this.tabletMode = false;
     this.valueFormat = 'YYYY-MM-DD';
     this.inputFormat = 'DD/MM/YYYY';
+    this.dateRepresentationFormat = 'DD MMM YYYY';
   }
 
   static get properties() {
@@ -92,6 +93,12 @@ export class DwDateRangeSelect extends DwSelect {
        * default `yyyy-mm-dd`.
        */
       valueFormat: { type: String },
+
+      /**
+       * Date represent format
+       * default `dd mmm yyyy`
+       */
+      dateRepresentationFormat: { type: String },
 
       // START: Date-picker properties
       /**
@@ -233,13 +240,24 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   _onChange(e) {
-    console.log('value', e.target);
-    if (e && e.target) {
-      const dateInputed = dayjs(e.target.value, this.inputFormat);
-      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
-      this.value = date || this.value;
-      this.validate();
-      this.dispatchEvent(new CustomEvent('change', { detail: { value: date } }));
+    const value = e?.target?.value || {};
+    let selectedItem = find(this.items, 'showCustomRange');
+    selectedItem = this._valueProvider(selectedItem);
+    const DATE_FORMAT = 'YYYY-MM-DD';
+    if (value.start && value.end) {
+      this.value = {
+        ...selectedItem,
+        ...{
+          valueProvider: function () {
+            return { start: dayjs(value.start).format(DATE_FORMAT), end: dayjs(value.end).format(DATE_FORMAT) };
+          },
+        },
+      };
+      this._selectedValueText = this._getValue(selectedItem);
+      this._dispatchSelected(value);
+      setTimeout(() => {
+        this.validate();
+      }, 0);
     }
   }
 

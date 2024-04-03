@@ -312,6 +312,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   constructor() {
     super();
+    this.autoFocusSelector = '#start-date';
   }
 
   willUpdate(changedProps) {
@@ -331,7 +332,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   get _contentTemplate() {
-    return html`<date-input
+    return html` <date-input
         id="start-date"
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
@@ -454,17 +455,15 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   reportValidity() {
-    if (this.dateStartInput?.validate() || this.dateEndInput?.validate()) {
-      return;
-    }
+    return this.dateStartInput?.validate() && this.dateEndInput?.validate();
   }
 
   _onApply() {
-    if (this.dateStartInput?.validate() || this.dateEndInput?.validate()) {
-      const date1 = this.dateStartInput?.value;
-      const date2 = this.dateEndInput?.value;
-      const startDate = date1 ? dayjs(date1).format(this.valueFormat) : null;
-      const endDate = date2 ? dayjs(date2).format(this.valueFormat) : null;
+    if (this.reportValidity()) {
+      const date1 = this._inputStartDate;
+      const date2 = this._inputEndDate;
+      const startDate = date1 ? dayjs(date1).format('YYYY-MM-DD') : null;
+      const endDate = date2 ? dayjs(date2).format('YYYY-MM-DD') : null;
 
       if (startDate === this.value?.start && endDate === this.value?.end) {
         return;
@@ -472,7 +471,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
       this.value = { start: startDate, end: endDate };
       this.dispatchEvent(new CustomEvent('change'));
-      console.log('value', this.value);
+      this.close();
     }
   }
 

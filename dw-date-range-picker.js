@@ -245,6 +245,12 @@ export class DwDateRangePicker extends DwCompositeDialog {
       mobileMode: { type: Boolean, reflect: true, attribute: 'mobile-mode' },
 
       tabletMode: { type: Boolean, reflect: true, attribute: 'tablet-mode' },
+
+      /**
+       * Date represent format
+       * default `dd mmm yyyy`
+       */
+      dateRepresentationFormat: { type: String },
     };
   }
 
@@ -456,7 +462,8 @@ export class DwDateRangePicker extends DwCompositeDialog {
       return;
     }
 
-    return dayjs(this.value.start).format('DD MMM');
+    const format = this.dateRepresentationFormat || this.inputFormat;
+    return dayjs(this.value.start).format(format);
   }
 
   _getEndDateText() {
@@ -464,7 +471,8 @@ export class DwDateRangePicker extends DwCompositeDialog {
       return;
     }
 
-    return dayjs(this.value.end).format('DD MMM');
+    const format = this.dateRepresentationFormat || this.inputFormat;
+    return dayjs(this.value.start, this.valueFormat).format(format);
   }
 
   formatDateText(value) {
