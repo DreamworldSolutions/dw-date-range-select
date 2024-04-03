@@ -215,16 +215,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
       valueFormat: { type: String },
 
       /**
-       * The minimum allowed date (inclusively).
-       */
-      minDate: { type: String },
-
-      /**
-       * The maximum allowed date (inclusively).
-       */
-      maxDate: { type: String },
-
-      /**
        * Input property.
        * Display in mobile mode (full screen).
        */
@@ -315,8 +305,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
                       .originalDate="${this.originalValue}"
                       .name="${this.name}"
                       .hint="${this.hint}"
-                      .minDate="${this.minDate}"
-                      .maxDate="${this.maxDate}"
                       .showFutureWarning=${this.showFutureWarning}
                       .showFutureError=${this.showFutureError}
                       .warning=${this._warning}
@@ -355,8 +343,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
                       .originalDate="${this.originalValue}"
                       .name="${this.name}"
                       .hint="${this.hint}"
-                      .minDate="${this.minDate}"
-                      .maxDate="${this.maxDate}"
                       .showFutureWarning=${this.showFutureWarning}
                       .showFutureError=${this.showFutureError}
                       .warning=${this._warning}
@@ -406,17 +392,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
     super.updated && super.updated(changedProps);
     if (changedProps.has('value')) {
       this._setPickerDate();
-    }
-
-    if (changedProps.has('minDate')) {
-      this._setOptions({ minDate: this.minDate || null });
-      if (!this.value && this.minDate) {
-        this._goToDate(this.minDate);
-      }
-    }
-
-    if (changedProps.has('maxDate')) {
-      this._setOptions({ maxDate: this.maxDate || null });
     }
 
     if (changedProps.has('valueFormat')) {
@@ -483,8 +458,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
       inlineMode: true,
       format: this.valueFormat,
       scrollToDate: true,
-      minDate: this.minDate || null,
-      maxDate: this.maxDate || null,
       plugins: ['keyboardnav', 'mobilefriendly'],
       buttonText: {
         previousMonth:
@@ -503,9 +476,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
     this._instance.on('selected', this._onSelected);
     this._instance.show();
     this._setPickerDate();
-    if (!this.value && this.minDate) {
-      this._goToDate(this.minDate);
-    }
   }
 
   _setPickerDate() {
