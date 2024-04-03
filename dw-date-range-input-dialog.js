@@ -10,7 +10,7 @@ import dayjs from 'dayjs/esm/index.js';
 
 import '@dreamworld/dw-icon-button';
 import '@dreamworld/dw-button';
-import '@dreamworld/dw-date-input';
+import '@dreamworld/dw-date-input/date-input';
 
 /**
  * Providing a solution to select date.
@@ -73,8 +73,8 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
           align-items: center;
         }
 
-        dw-date-input {
-          padding: 8px 0 16px 0;
+        date-input {
+          padding: 21px 0 28px 0;
         }
 
         .date-container dw-icon-button {
@@ -312,7 +312,6 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   constructor() {
     super();
-    this.autoFocusSelector = 'dw-date-input';
   }
 
   willUpdate(changedProps) {
@@ -332,10 +331,11 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   get _contentTemplate() {
-    return html`<dw-date-input
-        .inputFormat="${this.inputFormat}"
+    return html`<date-input
+        id="start-date"
+        .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
-        .label="Start date"
+        label="Start date"
         ?disabled="${this.disabled}"
         .invalid=${this.invalid}
         ?noLabel="${this.noLabel}"
@@ -344,10 +344,10 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         ?autoSelect="${this.autoSelect}"
         ?dense="${this.dense}"
         ?hintPersistent="${this.hintPersistent}"
-        .placeholder="DD / MM / YYYY"
+        placeholder="DD/MM/YYYY"
         ?highlightChanged="${this.highlightChanged}"
         ?noHintWrap="${this.noHintWrap}"
-        .value="${this.value?.start}"
+        .date="${this.value?.start}"
         .originalDate="${this.originalValue}"
         .name="${this.name}"
         .hint="${this.hint}"
@@ -365,13 +365,14 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         .warningTooltipActions="${this.warningTooltipActions}"
         .tipPlacement="${this.tipPlacement}"
         .errorMessages="${this.errorMessages}"
-        @change=${this._onChange}
-      ></dw-date-input>
+        @change=${this._onStartDateChange}
+      ></date-input>
 
-      <dw-date-input
-        .inputFormat="${this.inputFormat}"
+      <date-input
+        id="end-date"
+        .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
-        .label="End date"
+        label="End date"
         ?disabled="${this.disabled}"
         .invalid=${this.invalid}
         ?noLabel="${this.noLabel}"
@@ -380,10 +381,10 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         ?autoSelect="${this.autoSelect}"
         ?dense="${this.dense}"
         ?hintPersistent="${this.hintPersistent}"
-        .placeholder="DD / MM / YYYY"
+        placeholder="DD/MM/YYYY"
         ?highlightChanged="${this.highlightChanged}"
         ?noHintWrap="${this.noHintWrap}"
-        .value="${this.value?.end}"
+        .date="${this.value?.end}"
         .originalDate="${this.originalValue}"
         .name="${this.name}"
         .hint="${this.hint}"
@@ -399,14 +400,18 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         .hintTooltipActions="${this.hintTooltipActions}"
         .errorTooltipActions="${this.errorTooltipActions}"
         .warningTooltipActions="${this.warningTooltipActions}"
-        .tipPlacement="${this.tipPlacement}"
+        tipPlacement="${this.tipPlacement}"
         .errorMessages="${this.errorMessages}"
-        @change=${this._onChange}
-      ></dw-date-input>`;
+        @change=${this._onEndDateChange}
+      ></date-input>`;
   }
 
-  get dateInput() {
-    return this.renderRoot.querySelector('dw-date-input');
+  get dateStartInput() {
+    return this.renderRoot.querySelector('#start-date');
+  }
+
+  get dateEndInput() {
+    return this.renderRoot.querySelector('#end-date');
   }
 
   get _footerTemplate() {
@@ -416,12 +421,19 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
     `;
   }
 
-  _onChange(e) {
+  _onStartDateChange(e) {
     if (e && e.target) {
       const dateInputed = dayjs(e.target.value, this.inputFormat);
       const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
-      this.value = date || this.value;
-      this.validate();
+      this._inputStartDate = date;
+    }
+  }
+
+  _onEndDateChange(e) {
+    if (e && e.target) {
+      const dateInputed = dayjs(e.target.value, this.inputFormat);
+      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
+      this._inputEndDate = date;
     }
   }
 
@@ -430,7 +442,9 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
    * Returns true if validation is passedisValid
    */
   checkValidity() {
-    return this.dateInput?.checkValidity();
+    if (this.dateStartInput?.checkValidity() || this.dateEndInput?.checkValidity()) {
+      return;
+    }
   }
 
   /* Call this to perform validation of the date input */
@@ -440,22 +454,25 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   reportValidity() {
-    return this.dateInput?.validate();
+    if (this.dateStartInput?.validate() || this.dateEndInput?.validate()) {
+      return;
+    }
   }
 
   _onApply() {
-    if (this.dateInput && this.dateInput.validate()) {
-      //TODO: set value to start and end date.
-      const startDate = this.dateInput.value && this.dateInput.value.start;
-      const endDate = this.dateInput.value && this.dateInput.value.end;
+    if (this.dateStartInput?.validate() || this.dateEndInput?.validate()) {
+      const date1 = this.dateStartInput?.value;
+      const date2 = this.dateEndInput?.value;
+      const startDate = date1 ? dayjs(date1).format(this.valueFormat) : null;
+      const endDate = date2 ? dayjs(date2).format(this.valueFormat) : null;
 
-      if (startDate && endDate) {
-        this.value = {
-          start: startDate,
-          end: endDate,
-        };
-        this.dispatchEvent(new CustomEvent('change'));
+      if (startDate === this.value?.start && endDate === this.value?.end) {
+        return;
       }
+
+      this.value = { start: startDate, end: endDate };
+      this.dispatchEvent(new CustomEvent('change'));
+      console.log('value', this.value);
     }
   }
 

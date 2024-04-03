@@ -1,12 +1,13 @@
 import { html } from '@dreamworld/pwa-helpers/lit.js';
 import { DwSelect } from '@dreamworld/dw-select/dw-select.js';
 import isEqual from 'lodash-es/isEqual';
+import find from 'lodash-es/find';
+import dayjs from 'dayjs/esm/index.js';
 
 import * as _valueProvider from './value-provider.js';
 import * as _valueProviderFactory from './value-provider-factory.js';
 import './dw-date-range-picker.js';
 import './dw-date-range-input-dialog.js';
-import { flatMap } from 'lodash-es';
 
 /**
  * Date range input control is used to input a custom duration.
@@ -58,11 +59,11 @@ export class DwDateRangeSelect extends DwSelect {
         return isEqual(v1.valueProvider(), v2);
       }
 
-      if(isEqual(v1, v2)) {
+      if (isEqual(v1, v2)) {
         return true;
       }
 
-      if(v1 && v1.showCustomRange && v1 && ((v2.start && v2.end) || v2.showCustomRange)) {
+      if (v1 && v1.showCustomRange && v1 && ((v2.start && v2.end) || v2.showCustomRange)) {
         return true;
       }
 
@@ -71,19 +72,27 @@ export class DwDateRangeSelect extends DwSelect {
 
     this.appendTo = 'parent';
     this.zIndex = 9999;
-    this.mobileMode = true;
+    this.mobileMode = false;
     this.tabletMode = false;
     this.valueFormat = 'YYYY-MM-DD';
+    this.inputFormat = 'DD/MM/YYYY';
   }
 
   static get properties() {
     return {
       /**
+       * Selected list item object.
+       * `object` in case of single selection;
+       * `object[]` in case of multiple selections.
+       */
+      value: { type: Object },
+
+      /**
        * date value format
        * default `yyyy-mm-dd`.
        */
       valueFormat: { type: String },
-      
+
       // START: Date-picker properties
       /**
        * Date-picker
@@ -202,9 +211,20 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   _onDatePickerValueChanged(e) {
-    const value = e?.detail?.value || '';
-    if (value) {
-      this.value = value;
+    const value = e?.detail || {};
+    let selectedItem = find(this.items, 'showCustomRange');
+    selectedItem = this._valueProvider(selectedItem);
+    const DATE_FORMAT = 'YYYY-MM-DD';
+    if (value.start && value.end) {
+      this.value = {
+        ...selectedItem,
+        ...{
+          valueProvider: function () {
+            return { start: dayjs(value.start).format(DATE_FORMAT), end: dayjs(value.end).format(DATE_FORMAT) };
+          },
+        },
+      };
+      this._selectedValueText = this._getValue(selectedItem);
       this._dispatchSelected(value);
       setTimeout(() => {
         this.validate();
@@ -213,12 +233,13 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   _onChange(e) {
-    if(e && e.target) {
+    console.log('value', e.target);
+    if (e && e.target) {
       const dateInputed = dayjs(e.target.value, this.inputFormat);
-      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat): "";
+      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
       this.value = date || this.value;
       this.validate();
-      this.dispatchEvent(new CustomEvent("change", { detail: { value: date } }));
+      this.dispatchEvent(new CustomEvent('change', { detail: { value: date } }));
     }
   }
 
