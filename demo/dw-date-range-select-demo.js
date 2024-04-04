@@ -103,7 +103,7 @@ export class DwDateRangeSelectDemo extends LitElement {
       <dw-date-range-select
         .label=${"Select Date"}
         .items=${DateRangeItems}
-        .value=${{ start: "2021-04-01", end: "2022-03-30" }}
+        .value=${this.value}
         @selected=${this._onSelected}
       >
       </dw-date-range-select>

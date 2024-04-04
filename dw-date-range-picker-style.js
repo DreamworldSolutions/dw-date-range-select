@@ -344,36 +344,21 @@ export const dateRangePickerStyle = css`
   .litepicker .container__days .day-item.is-start-date {
     color: var(--litepicker-is-start-color);
     background-color: var(--litepicker-is-start-color-bg);
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 50%;
   }
   .litepicker .container__days .day-item.is-start-date.is-flipped {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 50%;
   }
   .litepicker .container__days .day-item.is-end-date {
     color: var(--litepicker-is-end-color);
     background-color: var(--litepicker-is-end-color-bg);
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 50%;
   }
   .litepicker .container__days .day-item.is-end-date.is-flipped {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 50%;
   }
   .litepicker .container__days .day-item.is-start-date.is-end-date {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 50%;
   }
   .litepicker .container__days .day-item.is-highlighted {
     color: var(--litepicker-highlighted-day-color);

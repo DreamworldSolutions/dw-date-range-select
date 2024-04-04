@@ -1,4 +1,4 @@
-import { html, css } from "@dreamworld/pwa-helpers/lit.js";
+import { html, css } from '@dreamworld/pwa-helpers/lit.js';
 import { DwCompositeDialog } from '@dreamworld/dw-dialog/dw-composite-dialog.js';
 
 // Litepicker element
@@ -10,6 +10,7 @@ import dayjs from 'dayjs/esm/index.js';
 import datePickerStyle from './dw-date-range-picker-style.js';
 
 import '@dreamworld/dw-icon-button';
+import '@dreamworld/dw-date-input/date-input.js';
 
 /**
  * Providing a solution to select date.
@@ -29,27 +30,47 @@ export class DwDateRangePicker extends DwCompositeDialog {
       css`
         :host {
           --dw-popover-width: 360px;
-          --dw-popover-min-width: 360px;
+          --dw-popover-min-width: 500px;
           --dw-popover-border-radius: 18px;
+          --litepicker-day-margin: 0px;
         }
 
-        :host([type="modal"]:not([has-footer]):not([custom-content-padding-applied])) .mdc-dialog .mdc-dialog__content {
+        :host([type='modal']) .mdc-dialog {
+          z-index: 100;
+        }
+
+        :host([type='modal']:not([has-footer]):not([custom-content-padding-applied])) .mdc-dialog .mdc-dialog__content {
           padding: 0px;
         }
 
-        :host([type="modal"]:not([has-footer])) .mdc-dialog.mdc-dialog--scrollable .mdc-dialog__surface {
+        :host([type='modal']:not([has-footer])) .mdc-dialog.mdc-dialog--scrollable .mdc-dialog__surface {
           padding-bottom: 0px;
         }
 
-        :host([type="modal"]:not([has-header])) .mdc-dialog.mdc-dialog--scrollable .mdc-dialog__surface {
+        :host([type='modal']:not([has-header])) .mdc-dialog.mdc-dialog--scrollable .mdc-dialog__surface {
           padding-top: 0px;
         }
-        
+
         .header {
           height: 88px;
-          padding: 16px 24px;
+          padding: 16px;
           box-sizing: border-box;
           border-bottom: 1px solid var(--mdc-theme-divider-color);
+        }
+
+        :host([mobile-mode]) .header {
+          height: auto;
+          padding: 24px 24px 16px 24px;
+        }
+
+        :host([mobile-mode]) .container {
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 32px;
+        }
+
+        :host([mobile-mode]) .container .title {
+          color: var(--mdc-theme-text-disabled-on-background);
         }
 
         .header .day {
@@ -67,7 +88,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
           letter-spacing: 0.15px;
         }
 
-        .header .date-container {
+        .header .container {
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -87,12 +108,26 @@ export class DwDateRangePicker extends DwCompositeDialog {
           overflow: hidden;
         }
 
+        .pass {
+          padding: 0 12px;
+        }
+
         .litepicker .container__days .day-item {
           border-radius: 50%;
         }
 
-        .litepicker .container__days .day-item.is-start-date.is-end-date {
-          border-radius: 50%;
+        .litepicker .container__days .day-item.is-in-range {
+          --litepicker-is-in-range-color: var(--hisab-activated-background-color);
+        }
+
+        :host(:not([mobile-mode])) .litepicker .container__days .day-item.is-in-range {
+          padding: 4px 35px;
+          --litepicker-day-margin: 4px 0;
+        }
+
+        .litepicker .container__months,
+        .litepicker .container__months .month-item {
+          width: 100%;
         }
 
         :host([mobile-mode]) .litepicker,
@@ -110,14 +145,26 @@ export class DwDateRangePicker extends DwCompositeDialog {
           --litepicker-day-margin: 0px;
         }
 
+        .litepicker .container__months .month-item-weekdays-row > div {
+          height: 40px;
+          width: 40px;
+          padding: 4px 14px;
+        }
+
+        :host(:not([mobile-mode])) .container__days > div {
+          --litepicker-day-width: 40px;
+          --litepicker-day-margin: 4px 15px;
+        }
+
         :host([mobile-mode]) .litepicker .container__days > div,
         :host([mobile-mode]) .litepicker .container__days > a {
-          max-width: 56px;
+          max-width: 53px;
           max-height: 56px;
+          --litepicker-day-margin: 4px 0;
         }
 
         :host([mobile-mode]) .litepicker .container__months .month-item-weekdays-row > div {
-          max-width: 56px;
+          max-width: 53px;
           max-height: 48px;
         }
 
@@ -129,17 +176,67 @@ export class DwDateRangePicker extends DwCompositeDialog {
           overflow-x: hidden;
         }
 
-        .date-container dw-icon-button {
-          height: 32px;
-          width: 32px;
+        .container .submit {
+          height: 48px;
+          width: 48px;
+          padding-left: 12px;
+          --dw-icon-color: var(--mdc-theme-primary);
         }
-      `
-    ]
+
+        :host([mobile-mode]) .container dw-icon-button {
+          height: 24px;
+          width: 24px;
+          padding-left: 12px;
+        }
+
+        .date-container {
+          display: flex;
+          align-items: center;
+        }
+
+        .litepicker .container__days .day-item::before {
+          background-color: var(--hisab-activated-background-color);
+        }
+
+        :host([mobile-mode]) .litepicker .container__days .day-item.is-start-date::before,
+        :host([mobile-mode]) .litepicker .container__days .day-item.is-end-date::before {
+          width: 53px;
+          height: 53px;
+          left: 0;
+        }
+
+        .litepicker .container__days .day-item.is-start-date::before {
+          height: 40px;
+          width: 55px;
+          background-color: var(--hisab-activated-background-color);
+          border-radius: 0;
+          opacity: 1;
+          border-top-left-radius: 28px;
+          border-bottom-left-radius: 28px;
+        }
+
+        .litepicker .container__days .day-item.is-end-date::before {
+          height: 40px;
+          width: 55px;
+          background-color: var(--hisab-activated-background-color);
+          border-radius: 0;
+          opacity: 1;
+          border-top-right-radius: 28px;
+          border-bottom-right-radius: 28px;
+          left: -15px;
+        }
+
+        .litepicker .container__days .day-item.is-start-date.is-end-date::before {
+          opacity: 0;
+        }
+      `,
+    ];
   }
 
-  constructor(){
+  constructor() {
     super();
     this._onSelected = this._onSelected.bind(this);
+    this._onSubmit = this._onSubmit.bind(this);
   }
 
   static get properties() {
@@ -162,32 +259,28 @@ export class DwDateRangePicker extends DwCompositeDialog {
       valueFormat: { type: String },
 
       /**
-       * The minimum allowed date (inclusively).
-       */
-      minDate: { type: String },
-
-      /**
-       * The maximum allowed date (inclusively).
-       */
-      maxDate: { type: String },
-
-      /**
        * Input property.
        * Display in mobile mode (full screen).
        */
       mobileMode: { type: Boolean, reflect: true, attribute: 'mobile-mode' },
 
       tabletMode: { type: Boolean, reflect: true, attribute: 'tablet-mode' },
-    }
+
+      /**
+       * Date represent format
+       * default `dd mmm yyyy`
+       */
+      dateRepresentationFormat: { type: String },
+    };
   }
 
   /**
    * Getter of `inputFormat` property.
    */
   get inputFormat() {
-    return this._inputFormat && this._inputFormat.toUpperCase() || this._inputFormat;
+    return (this._inputFormat && this._inputFormat.toUpperCase()) || this._inputFormat;
   }
-  
+
   /**
    * Setter of `inputFormat` property.
    */
@@ -197,16 +290,16 @@ export class DwDateRangePicker extends DwCompositeDialog {
       return;
     }
     this._inputFormat = value;
-    this.requestUpdate("inputFormat", oldValue);
+    this.requestUpdate('inputFormat', oldValue);
   }
 
   /**
    * Getter of `valueFormat` property.
    */
   get valueFormat() {
-    return this._valueFormat && this._valueFormat.toUpperCase() || this._valueFormat;
+    return (this._valueFormat && this._valueFormat.toUpperCase()) || this._valueFormat;
   }
-  
+
   /**
    * Setter of `valueFormat` property.
    */
@@ -216,13 +309,13 @@ export class DwDateRangePicker extends DwCompositeDialog {
       return;
     }
     this._valueFormat = value;
-    this.requestUpdate("valueFormat", oldValue);
+    this.requestUpdate('valueFormat', oldValue);
   }
 
-  willUpdate(changedProps){
+  willUpdate(changedProps) {
     super.willUpdate(changedProps);
-    if (changedProps.has("inputFormat")) {
-      this.separator = this.inputFormat ? this.inputFormat.slice(2, 3): '/';
+    if (changedProps.has('inputFormat')) {
+      this.separator = this.inputFormat ? this.inputFormat.slice(2, 3) : '/';
     }
   }
 
@@ -230,12 +323,109 @@ export class DwDateRangePicker extends DwCompositeDialog {
     return html`
       <div>
         <div class="header" date-picker="false">
-          <div class="day">${this._getDayText()}</div>
-          <div class="date-container">
-              <div class="date">${this._getDateText()}</div>
-              ${this.tabletMode || this.mobileMode ?  html`
-                <dw-icon-button date-picker="false" .iconFont=${'OUTLINED'} .buttonSize=${32} @click=${this._onIconClick} .icon=${'edit'}></dw-icon-button>
-              `: ''}
+          ${this.tabletMode || this.mobileMode ? html`<div>Select Range</div>` : ''}
+          <div class="container">
+            <div class="date-container">
+              ${this.tabletMode || this.mobileMode
+                ? html`${this.value?.start ? html`<div>${this._getStartDateText()}</div>` : html` <div class="title">Start Date</div>`}`
+                : html`
+                    <date-input
+                      id="start-date"
+                      .inputFormat=${this.inputFormat}
+                      .valueFormat=${this.valueFormat}
+                      label="Start date"
+                      ?disabled="${this.disabled}"
+                      .invalid=${this.invalid}
+                      ?noLabel="${this.noLabel}"
+                      ?required="${this.required}"
+                      ?readOnly="${this.readOnly}"
+                      ?autoSelect="${this.autoSelect}"
+                      ?dense="${this.dense}"
+                      ?hintPersistent="${this.hintPersistent}"
+                      placeholder="DD / MM / YYYY"
+                      ?highlightChanged="${this.highlightChanged}"
+                      ?noHintWrap="${this.noHintWrap}"
+                      .date="${this.value?.start}"
+                      .originalDate="${this.originalValue}"
+                      .name="${this.name}"
+                      .hint="${this.hint}"
+                      .showFutureWarning=${this.showFutureWarning}
+                      .showFutureError=${this.showFutureError}
+                      .warning=${this._warning}
+                      .error=${this._error}
+                      .hintInTooltip="${this.hintInTooltip}"
+                      .errorInTooltip="${this.errorInTooltip}"
+                      .warningInTooltip="${this.warningInTooltip}"
+                      .hintTooltipActions="${this.hintTooltipActions}"
+                      .errorTooltipActions="${this.errorTooltipActions}"
+                      .warningTooltipActions="${this.warningTooltipActions}"
+                      .tipPlacement="${this.tipPlacement}"
+                      .errorMessages="${this.errorMessages}"
+                      @change=${this._onStartDateChange}
+                    ></date-input>
+                  `}
+              <div class="pass">-</div>
+              ${this.tabletMode || this.mobileMode
+                ? html`${this.value?.end ? html`<div>${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}`
+                : html`
+                    <date-input
+                      .inputFormat=${this.inputFormat}
+                      .valueFormat=${this.valueFormat}
+                      label="End date"
+                      ?disabled="${this.disabled}"
+                      .invalid=${this.invalid}
+                      ?noLabel="${this.noLabel}"
+                      ?required="${this.required}"
+                      ?readOnly="${this.readOnly}"
+                      ?autoSelect="${this.autoSelect}"
+                      ?dense="${this.dense}"
+                      ?hintPersistent="${this.hintPersistent}"
+                      placeholder="DD / MM / YYYY"
+                      ?highlightChanged="${this.highlightChanged}"
+                      ?noHintWrap="${this.noHintWrap}"
+                      .date="${this.value?.end}"
+                      .originalDate="${this.originalValue}"
+                      .name="${this.name}"
+                      .hint="${this.hint}"
+                      .showFutureWarning=${this.showFutureWarning}
+                      .showFutureError=${this.showFutureError}
+                      .warning=${this._warning}
+                      .error=${this._error}
+                      .hintInTooltip="${this.hintInTooltip}"
+                      .errorInTooltip="${this.errorInTooltip}"
+                      .warningInTooltip="${this.warningInTooltip}"
+                      .hintTooltipActions="${this.hintTooltipActions}"
+                      .errorTooltipActions="${this.errorTooltipActions}"
+                      .warningTooltipActions="${this.warningTooltipActions}"
+                      tipPlacement="${this.tipPlacement}"
+                      .errorMessages="${this.errorMessages}"
+                      @change=${this._onEndDateChange}
+                    ></date-input>
+                  `}
+            </div>
+            ${!this.tabletMode && !this.mobileMode
+              ? html`
+                  <dw-icon-button
+                    class="submit"
+                    date-picker="false"
+                    .buttonSize=${48}
+                    .iconSize=${32}
+                    @click=${this._onSubmit}
+                    .icon=${'arrow_circle_right'}
+                  ></dw-icon-button>
+                `
+              : ''}
+            ${this.tabletMode || this.mobileMode
+              ? html`
+                  <dw-icon-button
+                    date-picker="false"
+                    .iconFont=${'OUTLINED'}
+                    .buttonSize=${24}
+                    @click=${this._onIconClick}
+                    .icon=${'edit'}
+                  ></dw-icon-button>
+                `
+              : ''}
           </div>
         </div>
         <div id="datepicker" date-picker="false"></div>
@@ -249,53 +439,52 @@ export class DwDateRangePicker extends DwCompositeDialog {
       this._setPickerDate();
     }
 
-    if(changedProps.has('minDate')) {
-      this._setOptions({minDate: this.minDate || null});
-      if(!this.value && this.minDate) {
-        this._goToDate(this.minDate);
-      }
+    if (changedProps.has('valueFormat')) {
+      this._setOptions({ format: this.valueFormat });
     }
-
-    if(changedProps.has('maxDate')) {
-      this._setOptions({maxDate: this.maxDate || null});
-    }
-
-    if(changedProps.has('valueFormat')) {
-      this._setOptions({format: this.valueFormat});
-    }
+    this._autoFocus();
   }
 
   _onIconClick() {
     this.dispatchEvent(
       new CustomEvent('mode-changed', {
         detail: {
-          mode: 'INPUT'
+          mode: 'INPUT',
         },
       })
     );
-
 
     this.close();
   }
 
   _getDayText() {
-    if(!this.value) {
-      return 'Selected Day'
+    if (!this.value) {
+      return 'Selected Day';
     }
 
     return dayjs(this.value).format('dddd');
   }
 
-  _getDateText() {
-    if(!this.value) {
-      return 'Selected Date'
+  _getStartDateText() {
+    if (!this.value.start) {
+      return;
     }
 
-    return this.formatDateText(dayjs(this.value, this.valueFormat).format(this.inputFormat));
+    const format = this.dateRepresentationFormat || this.inputFormat;
+    return dayjs(this.value.start).format(format);
+  }
+
+  _getEndDateText() {
+    if (!this.value.end) {
+      return;
+    }
+
+    const format = this.dateRepresentationFormat || this.inputFormat;
+    return dayjs(this.value.end).format(format);
   }
 
   formatDateText(value) {
-    return value && value.replace(/ /g, "").split(`${this.separator}`).join(` ${this.separator} `);
+    return value && value.replace(/ /g, '').split(`${this.separator}`).join(` ${this.separator} `);
   }
 
   /**
@@ -307,18 +496,20 @@ export class DwDateRangePicker extends DwCompositeDialog {
       element: element,
       singleMode: false,
       allowRepick: false,
+      autoApply: true,
       numberOfColumns: 1,
       numberOfMonths: 1,
       firstDay: 0,
       inlineMode: true,
       format: this.valueFormat,
       scrollToDate: true,
-      minDate: this.minDate || null,
-      maxDate: this.maxDate || null,
+      selectForward: true,
       plugins: ['keyboardnav', 'mobilefriendly'],
       buttonText: {
-        previousMonth: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15.705 7.41L14.295 6L8.29504 12L14.295 18L15.705 16.59L11.125 12L15.705 7.41Z"/></svg>',
-        nextMonth: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.70498 6L8.29498 7.41L12.875 12L8.29498 16.59L9.70498 18L15.705 12L9.70498 6Z"/></svg>',
+        previousMonth:
+          '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15.705 7.41L14.295 6L8.29504 12L14.295 18L15.705 16.59L11.125 12L15.705 7.41Z"/></svg>',
+        nextMonth:
+          '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.70498 6L8.29498 7.41L12.875 12L8.29498 16.59L9.70498 18L15.705 12L9.70498 6Z"/></svg>',
       },
     });
   }
@@ -331,28 +522,23 @@ export class DwDateRangePicker extends DwCompositeDialog {
     this._instance.on('selected', this._onSelected);
     this._instance.show();
     this._setPickerDate();
-    if(!this.value && this.minDate) {
-      this._goToDate(this.minDate);
-    }
   }
-  
+
   _setPickerDate() {
-    if(this.value && this._instance) {
-      //TODO: use setDateRange method because value: { start: "2021-04-01", end: "2022-03-30" }
-      this._instance.setDate(this.value);
-      //TODO: goto on start date.
-      this._goToDate(this.value);
+    if (this.value && this.value.start && this.value.end && this._instance) {
+      this._instance.setDateRange(this.value.start, this.value.end);
+      this._goToDate(this.value.start);
     }
   }
 
   _goToDate(value) {
-    if(value && this._instance) {
+    if (value && this._instance) {
       this._instance.gotoDate(value);
     }
   }
 
   _setOptions(options) {
-    if(options && this._instance) {
+    if (options && this._instance) {
       this._instance.setOptions(options);
     }
   }
@@ -368,30 +554,74 @@ export class DwDateRangePicker extends DwCompositeDialog {
     this._instance = undefined;
   }
 
+  _onStartDateChange(e) {
+    if (e && e.target) {
+      const dateInputed = dayjs(e.target.value, this.inputFormat);
+      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
+      this._inputStartDate = date;
+    }
+  }
+
+  _onEndDateChange(e) {
+    if (e && e.target) {
+      const dateInputed = dayjs(e.target.value, this.inputFormat);
+      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
+      this._inputEndDate = date;
+    }
+  }
+
+  _onSubmit() {
+    const start = this._inputStartDate || this.value?.start || '';
+    const end = this._inputEndDate || this.value?.end || '';
+    this._onSelected(start, end);
+  }
+
   /**
    * Invoked when user choose date from calender.
    */
-  _onSelected(date) {
-    //TODO: get start and date and passed to trigger value
-    this._trigerValueChanged(date);
-    this.close();
+  _onSelected(date1, date2) {
+    this._trigerValueChanged(date1, date2);
+    if (!this.__isCurrentDate(date1, date2)) {
+      this.close();
+    }
   }
 
-  _trigerValueChanged(date) {
+  __isCurrentDate(date1, date2) {
+    const startDate = this.__getDateInValueFormat(date1);
+    const endDate = this.__getDateInValueFormat(date2);
+    return startDate === this.value?.start && endDate === this.value?.end;
+  }
+
+  __getDateInValueFormat(date) {
     date = date && date.dateInstance ? date.dateInstance : date;
-    const value = date ? dayjs(date).startOf('day').format(this.valueFormat) : null;
-    //TODO: update condition based on startdate and enddate.
-    if(value === this.value) {
+    return date ? dayjs(date).format(this.valueFormat) : null;
+  }
+
+  _trigerValueChanged(date1, date2) {
+    const startDate = this.__getDateInValueFormat(date1);
+    const endDate = this.__getDateInValueFormat(date2);
+
+    if (this.__isCurrentDate(date1, date2)) {
+      return;
+    }
+
+    if (!dayjs(startDate).isValid() || !dayjs(endDate).isValid()) {
       return;
     }
 
     this.dispatchEvent(
       new CustomEvent('change', {
         detail: {
-          value
+          start: startDate,
+          end: endDate,
         },
       })
     );
+  }
+
+  _autoFocus() {
+    const el = this.renderRoot.querySelector('#start-date');
+    el && el.focus();
   }
 
   /**
@@ -399,7 +629,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
    */
   _onOpenedChanged(opened) {
     super._onOpenedChanged && super._onOpenedChanged(opened);
-    opened ? this._show(): this._hide();
+    opened ? this._show() : this._hide();
   }
 }
 
