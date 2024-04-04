@@ -32,9 +32,13 @@
     "access": "public"
   },
   "dependencies": {
+    "@dreamworld/dw-date-input": "^6.0.6",
+    "@dreamworld/dw-dialog": "^5.7.4",
+    "@dreamworld/dw-icon-button": "^3.2.5",
     "@dreamworld/dw-select": "^6.0.1",
     "@dreamworld/pwa-helpers": "^1.16.5",
     "dayjs": "^1.11.10",
+    "litepicker": "^2.0.12",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
@@ -48,8 +52,8 @@
     "@dreamworld/dw-tooltip": "3.1.1",
     "@dreamworld/dw-button": "3.0.4",
     "@dreamworld/dw-icon": "4.1.1",
-    "@dreamworld/dw-icon-button": "3.2.4",
-    "@dreamworld/dw-input": "4.0.0",
+    "@dreamworld/dw-icon-button": "3.2.5",
+    "@dreamworld/dw-input": "4.1.1",
     "@dreamworld/dw-ripple": "3.1.4"
   },
   "release": {
