@@ -193,6 +193,42 @@ export class DwDateRangePicker extends DwCompositeDialog {
           display: flex;
           align-items: center;
         }
+
+        .litepicker .container__days .day-item::before {
+          background-color: var(--hisab-activated-background-color);
+        }
+
+        :host([mobile-mode]) .litepicker .container__days .day-item.is-start-date::before,
+        :host([mobile-mode]) .litepicker .container__days .day-item.is-end-date::before {
+          width: 53px;
+          height: 53px;
+          left: 0;
+        }
+
+        .litepicker .container__days .day-item.is-start-date::before {
+          height: 40px;
+          width: 55px;
+          background-color: var(--hisab-activated-background-color);
+          border-radius: 0;
+          opacity: 1;
+          border-top-left-radius: 28px;
+          border-bottom-left-radius: 28px;
+        }
+
+        .litepicker .container__days .day-item.is-end-date::before {
+          height: 40px;
+          width: 55px;
+          background-color: var(--hisab-activated-background-color);
+          border-radius: 0;
+          opacity: 1;
+          border-top-right-radius: 28px;
+          border-bottom-right-radius: 28px;
+          left: -15px;
+        }
+
+        .litepicker .container__days .day-item.is-start-date.is-end-date::before {
+          opacity: 0;
+        }
       `,
     ];
   }
@@ -467,6 +503,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       inlineMode: true,
       format: this.valueFormat,
       scrollToDate: true,
+      selectForward: true,
       plugins: ['keyboardnav', 'mobilefriendly'],
       buttonText: {
         previousMonth:
