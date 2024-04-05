@@ -66,7 +66,7 @@ export class DwDateRangeSelect extends DwSelect {
         return true;
       }
 
-      if (v1 && v1.showCustomRange && v1 && ((v2.start && v2.end) || v2.showCustomRange)) {
+      if (v1 && v1.showCustomRange && v1 && ((v2.start && v2.end) && v2.showCustomRange)) {
         return true;
       }
 
