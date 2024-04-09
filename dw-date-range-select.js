@@ -109,6 +109,8 @@ export class DwDateRangeSelect extends DwSelect {
        */
       dateRepresentationFormat: { type: String },
 
+      hideCustomRange: {type: Boolean },
+
       // START: Date-picker properties
       /**
        * Date-picker
@@ -151,6 +153,9 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get dateRangeInputDialogTemplate() {
+    if (this.hideCustomRange) {
+      return;
+    }
     return html`
       <dw-date-range-input-dialog
         date-picker="false"
@@ -199,6 +204,9 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get dateRangePickerTemplate() {
+     if (this.hideCustomRange) {
+      return;
+    }
     return html`
       <dw-date-range-picker
         date-picker="false"
