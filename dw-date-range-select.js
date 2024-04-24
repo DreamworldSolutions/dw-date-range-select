@@ -3,6 +3,7 @@ import { DwSelect } from '@dreamworld/dw-select/dw-select.js';
 import isEqual from 'lodash-es/isEqual';
 import find from 'lodash-es/find';
 import dayjs from 'dayjs/esm/index.js';
+import without from 'lodash-es/without.js';
 
 import * as _valueProvider from './value-provider.js';
 import * as _valueProviderFactory from './value-provider-factory.js';
@@ -45,11 +46,17 @@ export class DwDateRangeSelect extends DwSelect {
   constructor() {
     super();
     this.valueTextProvider = (item, customLabel) => {
-      if (customLabel && item && item.showCustomRange && this.value && this.value.start && this.value.end) {
-        return `${dayjs(this.value.start).format(this.inputFormat)} - ${dayjs(this.value.end).format(this.inputFormat)}`;
+      if (customLabel) {
+        const value = (this.value && this.value.valueProvider && this.value.valueProvider()) || this.value;
+        if ((!item || item.showCustomRange || item === 'SELECT_DATE') && value && value.start && value.end) {
+          const text = `${dayjs(value.start).format(this.inputFormat)} - ${dayjs(value.end).format(this.inputFormat)}`;
+          return text;
+        }
+        return item.label;
       }
       return item.label;
     };
+
     this.valueEquator = (v1, v2) => {
       if (!v1 && !v2) {
         return v1 === v2;
@@ -66,7 +73,7 @@ export class DwDateRangeSelect extends DwSelect {
         return true;
       }
 
-      if (v1 && v1.showCustomRange && v1 && (v2 && ((v2.start && v2.end) || v2.showCustomRange))) {
+      if (v1 === 'SELECT_DATE' || (v1 && v1.showCustomRange && v1 && v2 && ((v2.start && v2.end) || v2.showCustomRange))) {
         return true;
       }
 
@@ -102,6 +109,8 @@ export class DwDateRangeSelect extends DwSelect {
        * default `dd mmm yyyy`
        */
       dateRepresentationFormat: { type: String },
+
+      hideCustomRange: { type: Boolean },
 
       // START: Date-picker properties
       /**
@@ -145,6 +154,9 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get dateRangeInputDialogTemplate() {
+    if (this.hideCustomRange) {
+      return;
+    }
     return html`
       <dw-date-range-input-dialog
         date-picker="false"
@@ -193,6 +205,9 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get dateRangePickerTemplate() {
+    if (this.hideCustomRange) {
+      return;
+    }
     return html`
       <dw-date-range-picker
         date-picker="false"
@@ -245,16 +260,16 @@ export class DwDateRangeSelect extends DwSelect {
 
   _onDatePickerValueChanged(e) {
     const value = e?.detail || {};
-    let selectedItem = find(this.items, 'showCustomRange');
-    selectedItem = this._valueProvider(selectedItem);
+    const selectedItem = find(this.items, 'showCustomRange');
     const DATE_FORMAT = 'YYYY-MM-DD';
     if (value.start && value.end) {
+      const valueProvider = function () {
+        return { start: dayjs(value.start).format(DATE_FORMAT), end: dayjs(value.end).format(DATE_FORMAT) };
+      };
       this.value = {
         ...selectedItem,
         ...{
-          valueProvider: function () {
-            return { start: dayjs(value.start).format(DATE_FORMAT), end: dayjs(value.end).format(DATE_FORMAT) };
-          },
+          valueProvider,
         },
       };
       this._selectedValueText = this._getValue(selectedItem);
@@ -267,16 +282,16 @@ export class DwDateRangeSelect extends DwSelect {
 
   _onChange(e) {
     const value = e?.target?.value || {};
-    let selectedItem = find(this.items, 'showCustomRange');
-    selectedItem = this._valueProvider(selectedItem);
+    const selectedItem = find(this.items, 'showCustomRange');
     const DATE_FORMAT = 'YYYY-MM-DD';
     if (value.start && value.end) {
+      const valueProvider = function () {
+        return { start: dayjs(value.start).format(DATE_FORMAT), end: dayjs(value.end).format(DATE_FORMAT) };
+      };
       this.value = {
         ...selectedItem,
         ...{
-          valueProvider: function () {
-            return { start: dayjs(value.start).format(DATE_FORMAT), end: dayjs(value.end).format(DATE_FORMAT) };
-          },
+          valueProvider,
         },
       };
       this._selectedValueText = this._getValue(selectedItem);
@@ -292,6 +307,19 @@ export class DwDateRangeSelect extends DwSelect {
     if (!this.triggerElement) {
       this.triggerElement = this;
     }
+  }
+
+  willUpdate(changedProperties) {
+    super.willUpdate && super.willUpdate(changedProperties);
+    if (this.hideCustomRange === true) {
+      this._hideCustomRange();
+    }
+  }
+
+  _hideCustomRange() {
+    const selectedItem = find(this.items, 'showCustomRange');
+    const value = this.items;
+    this.items = value && value.includes(selectedItem) ? without(value, selectedItem) : value;
   }
 
   get dateRangePicker() {
