@@ -48,6 +48,11 @@ export class DwDateRangeSelect extends DwSelect {
     this.valueTextProvider = (item, customLabel) => {
       if (customLabel) {
         const value = (this.value && this.value.valueProvider && this.value.valueProvider()) || this.value;
+        if ((!item || item.showCustomRange || item === 'SELECT_DATE') && value && value.start === value.end) {
+          const text = `${dayjs(value.start).format(this.inputFormat)}`;
+          return text;
+        }
+
         if ((!item || item.showCustomRange || item === 'SELECT_DATE') && value && value.start && value.end) {
           const text = `${dayjs(value.start).format(this.inputFormat)} - ${dayjs(value.end).format(this.inputFormat)}`;
           return text;

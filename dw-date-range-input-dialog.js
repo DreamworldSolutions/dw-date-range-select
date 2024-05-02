@@ -93,6 +93,11 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         :host([type='modal']) .mdc-dialog__content > :first-child {
           padding-right: 12px;
         }
+
+        .start-date {
+          display: flex;
+          flex: 1;
+        }
       `,
     ];
   }
@@ -332,6 +337,46 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   get _contentTemplate() {
+    if(this.value.start === this.value.end) {
+        return html `<date-input
+        class="start-date"
+        id="start-date"
+        .inputFormat=${this.inputFormat}
+        .valueFormat=${this.valueFormat}
+        label="Start date"
+        ?disabled="${this.disabled}"
+        .invalid=${this.invalid}
+        ?noLabel="${this.noLabel}"
+        ?required="${this.required}"
+        ?readOnly="${this.readOnly}"
+        ?autoSelect="${this.autoSelect}"
+        ?dense="${this.dense}"
+        ?hintPersistent="${this.hintPersistent}"
+        placeholder="DD/MM/YYYY"
+        ?highlightChanged="${this.highlightChanged}"
+        ?noHintWrap="${this.noHintWrap}"
+        .date="${this.value?.start}"
+        .originalDate="${this.originalValue}"
+        .name="${this.name}"
+        .hint="${this.hint}"
+        .minDate="${this.minDate}"
+        .maxDate="${this.maxDate}"
+        .showFutureWarning=${this.showFutureWarning}
+        .showFutureError=${this.showFutureError}
+        .warning=${this._warning}
+        .error=${this._error}
+        .hintInTooltip="${this.hintInTooltip}"
+        .errorInTooltip="${this.errorInTooltip}"
+        .warningInTooltip="${this.warningInTooltip}"
+        .hintTooltipActions="${this.hintTooltipActions}"
+        .errorTooltipActions="${this.errorTooltipActions}"
+        .warningTooltipActions="${this.warningTooltipActions}"
+        .tipPlacement="${this.tipPlacement}"
+        .errorMessages="${this.errorMessages}"
+        @change=${this._onStartDateChange}
+      ></date-input>`
+    } 
+
     return html` <date-input
         id="start-date"
         .inputFormat=${this.inputFormat}
