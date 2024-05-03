@@ -94,7 +94,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
           padding-right: 12px;
         }
 
-        #start-date[onlyStartDate] {
+        #start-date[only-start-date] {
           display: flex;
           flex: 1;
         }
