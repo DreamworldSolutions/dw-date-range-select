@@ -93,6 +93,19 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         :host([type='modal']) .mdc-dialog__content > :first-child {
           padding-right: 12px;
         }
+
+        #start-date[only-start-date] {
+          display: flex;
+          flex: 1;
+        }
+
+        #end-date[hidden] {
+          display: none
+        }
+
+        :host([dark-theme][type='modal']) .mdc-dialog .mdc-dialog__surface {
+          box-shadow: none;
+        }
       `,
     ];
   }
@@ -269,6 +282,15 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
        * for more see tippyJs doc: https://atomiks.github.io/tippyjs/v6/all-props/#placement
        */
       tipPlacement: { type: String },
+
+      /**
+       * It's representing app's current theme is dark or not.
+       */
+      darkTheme: {
+        type: Boolean,
+        reflect: true,
+        attribute: 'dark-theme',
+      },
     };
   }
 
@@ -334,6 +356,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   get _contentTemplate() {
     return html` <date-input
         id="start-date"
+        ?only-start-date=${this.value?.start === this.value?.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="Start date"
@@ -371,6 +394,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
       <date-input
         id="end-date"
+        ?hidden=${this.value?.start === this.value?.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="End date"
