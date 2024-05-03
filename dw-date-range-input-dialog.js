@@ -356,7 +356,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   get _contentTemplate() {
     return html` <date-input
         id="start-date"
-        ?onlyStartDate=${this.value.start === this.value.end}
+        ?onlyStartDate=${this.value?.start === this.value?.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="Start date"
@@ -394,7 +394,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
       <date-input
         id="end-date"
-        ?hidden=${this.value.start === this.value.end}
+        ?hidden=${this.value?.start === this.value?.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="End date"

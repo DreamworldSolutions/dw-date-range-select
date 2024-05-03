@@ -326,7 +326,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
           ${this.tabletMode || this.mobileMode ? html`<div>Select Range</div>` : ''}
           <div class="container">
             <div class="date-container">
-            ${(this.tabletMode || this.mobileMode) && (this.value.start === this.value.end)  ? html `<div> ${this._getStartEndEndDateText()}</div>` : html `
+            ${(this.tabletMode || this.mobileMode) && (this.value?.start === this.value?.end)  ? html `<div> ${this._getStartEndEndDateText()}</div>` : html `
               ${this.tabletMode || this.mobileMode
                 ? html`${this.value?.start ? html`<div>${this._getStartDateText()}</div>` : html` <div class="title">Start Date</div>`}`
                 : html`
@@ -384,7 +384,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
                       placeholder="DD / MM / YYYY"
                       ?highlightChanged="${this.highlightChanged}"
                       ?noHintWrap="${this.noHintWrap}"
-                      .date="${this.value.start !== this.value.end ? this.value?.end : ''}"
+                      .date="${this.value?.start !== this.value?.end ? this.value?.end : ''}"
                       .originalDate="${this.originalValue}"
                       .name="${this.name}"
                       .hint="${this.hint}"
