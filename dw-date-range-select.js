@@ -150,6 +150,15 @@ export class DwDateRangeSelect extends DwSelect {
        * Display in tablet mode.
        */
       tabletMode: { type: Boolean, reflect: true, attribute: 'tablet-mode' },
+
+       /**
+       * It's representing app's current theme is dark or not.
+       */
+       darkTheme: {
+        type: Boolean,
+        reflect: true,
+        attribute: "dark-theme",
+      },
       // END: Date-picker properties
     };
   }
@@ -192,6 +201,7 @@ export class DwDateRangeSelect extends DwSelect {
         .showFutureError=${this.showFutureError}
         .warning=${this._warning}
         .error=${this._error}
+        .darkTheme=${this.darkTheme}
         .hintInTooltip="${this.hintInTooltip}"
         .errorInTooltip="${this.errorInTooltip}"
         .warningInTooltip="${this.warningInTooltip}"

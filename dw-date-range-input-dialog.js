@@ -94,9 +94,17 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
           padding-right: 12px;
         }
 
-        .start-date {
+        #start-date[hidden] {
           display: flex;
           flex: 1;
+        }
+
+        #end-date[hidden] {
+          display: none;
+        }
+
+        :host([dark-theme][type='modal']) .mdc-dialog .mdc-dialog__surface {
+          box-shadow: none;
         }
       `,
     ];
@@ -274,6 +282,15 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
        * for more see tippyJs doc: https://atomiks.github.io/tippyjs/v6/all-props/#placement
        */
       tipPlacement: { type: String },
+
+      /**
+       * It's representing app's current theme is dark or not.
+       */
+      darkTheme: {
+        type: Boolean,
+        reflect: true,
+        attribute: 'dark-theme',
+      },
     };
   }
 
@@ -337,48 +354,9 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   }
 
   get _contentTemplate() {
-    if(this.value.start === this.value.end) {
-        return html `<date-input
-        class="start-date"
-        id="start-date"
-        .inputFormat=${this.inputFormat}
-        .valueFormat=${this.valueFormat}
-        label="Start date"
-        ?disabled="${this.disabled}"
-        .invalid=${this.invalid}
-        ?noLabel="${this.noLabel}"
-        ?required="${this.required}"
-        ?readOnly="${this.readOnly}"
-        ?autoSelect="${this.autoSelect}"
-        ?dense="${this.dense}"
-        ?hintPersistent="${this.hintPersistent}"
-        placeholder="DD/MM/YYYY"
-        ?highlightChanged="${this.highlightChanged}"
-        ?noHintWrap="${this.noHintWrap}"
-        .date="${this.value?.start}"
-        .originalDate="${this.originalValue}"
-        .name="${this.name}"
-        .hint="${this.hint}"
-        .minDate="${this.minDate}"
-        .maxDate="${this.maxDate}"
-        .showFutureWarning=${this.showFutureWarning}
-        .showFutureError=${this.showFutureError}
-        .warning=${this._warning}
-        .error=${this._error}
-        .hintInTooltip="${this.hintInTooltip}"
-        .errorInTooltip="${this.errorInTooltip}"
-        .warningInTooltip="${this.warningInTooltip}"
-        .hintTooltipActions="${this.hintTooltipActions}"
-        .errorTooltipActions="${this.errorTooltipActions}"
-        .warningTooltipActions="${this.warningTooltipActions}"
-        .tipPlacement="${this.tipPlacement}"
-        .errorMessages="${this.errorMessages}"
-        @change=${this._onStartDateChange}
-      ></date-input>`
-    } 
-
     return html` <date-input
         id="start-date"
+        ?hidden=${this.value.start === this.value.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="Start date"
@@ -416,6 +394,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
       <date-input
         id="end-date"
+        ?hidden=${this.value.start === this.value.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="End date"
