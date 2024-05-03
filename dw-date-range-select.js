@@ -49,12 +49,14 @@ export class DwDateRangeSelect extends DwSelect {
       if (customLabel) {
         const value = (this.value && this.value.valueProvider && this.value.valueProvider()) || this.value;
         if ((!item || item.showCustomRange || item === 'SELECT_DATE') && value && value.start === value.end) {
-          const text = `${dayjs(value.start).format(this.inputFormat)}`;
+          const text = `${dayjs(value.start).format(this.dateRepresentationFormat)}`;
           return text;
         }
 
         if ((!item || item.showCustomRange || item === 'SELECT_DATE') && value && value.start && value.end) {
-          const text = `${dayjs(value.start).format(this.inputFormat)} - ${dayjs(value.end).format(this.inputFormat)}`;
+          const text = `${dayjs(value.start).format(this.dateRepresentationFormat)} - ${dayjs(value.end).format(
+            this.dateRepresentationFormat
+          )}`;
           return text;
         }
         return item.label;
@@ -92,6 +94,7 @@ export class DwDateRangeSelect extends DwSelect {
     this.valueFormat = 'YYYY-MM-DD';
     this.inputFormat = 'DD/MM/YYYY';
     this.dateRepresentationFormat = 'DD MMM YYYY';
+    this.dateInputFormat = 'dd/mm/yyyy';
   }
 
   static get properties() {
@@ -151,14 +154,20 @@ export class DwDateRangeSelect extends DwSelect {
        */
       tabletMode: { type: Boolean, reflect: true, attribute: 'tablet-mode' },
 
-       /**
+      /**
        * It's representing app's current theme is dark or not.
        */
-       darkTheme: {
+      darkTheme: {
         type: Boolean,
         reflect: true,
         attribute: "dark-theme",
       },
+
+      /**
+       * Represents current company's date input format.
+       */
+      dateInputFormat: { type: String },
+      
       // END: Date-picker properties
     };
   }
@@ -176,7 +185,7 @@ export class DwDateRangeSelect extends DwSelect {
         date-picker="false"
         .type=${'modal'}
         .placement=${'center'}
-        .inputFormat="${this.inputFormat}"
+        .inputFormat="${this.dateInputFormat ? this.dateInputFormat : this.inputFormat}"
         .valueFormat=${this.valueFormat}
         .dateRepresentationFormat="${this.dateRepresentationFormat}"
         .label="${this.label}"
@@ -237,7 +246,7 @@ export class DwDateRangeSelect extends DwSelect {
         .zIndex=${this.zIndex}
         .minDate="${this.minDate}"
         .maxDate="${this.maxDate}"
-        .inputFormat=${this.inputFormat}
+        .inputFormat="${this.dateInputFormat ? this.dateInputFormat : this.inputFormat}"
         .valueFormat=${this.valueFormat}
         .dateRepresentationFormat="${this.dateRepresentationFormat}"
         .triggerElement=${this.triggerElement}

@@ -94,13 +94,13 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
           padding-right: 12px;
         }
 
-        #start-date[hidden] {
+        #start-date[onlyStartDate] {
           display: flex;
           flex: 1;
         }
 
         #end-date[hidden] {
-          display: none;
+          display: none
         }
 
         :host([dark-theme][type='modal']) .mdc-dialog .mdc-dialog__surface {
@@ -356,7 +356,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   get _contentTemplate() {
     return html` <date-input
         id="start-date"
-        ?hidden=${this.value.start === this.value.end}
+        ?onlyStartDate=${this.value.start === this.value.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="Start date"
