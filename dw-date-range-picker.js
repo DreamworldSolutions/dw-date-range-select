@@ -473,7 +473,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
     }
 
     const format = this.dateRepresentationFormat || this.inputFormat;
-    return dayjs(this.value.start).format(format);
+    return dayjs(this.value?.start).format(format);
   }
 
   _getEndDateText() {
@@ -482,13 +482,13 @@ export class DwDateRangePicker extends DwCompositeDialog {
     }
 
     const format = this.dateRepresentationFormat || this.inputFormat;
-    return dayjs(this.value.end).format(format);
+    return dayjs(this.value?.end).format(format);
   }
 
   _getStartEndEndDateText() {
-    if (this.value.start === this.value.end) {
+    if (this.value?.start === this.value?.end) {
       const format = this.dateRepresentationFormat || this.inputFormat;
-      return dayjs(this.value.start).format(format);
+      return dayjs(this.value?.start).format(format);
     }
   }
 
