@@ -1,5 +1,7 @@
 import dayjs from 'dayjs/esm/index.js';
 import customParseFormat from 'dayjs/esm/plugin/customParseFormat';
+import quarterOfYear from 'dayjs/esm/plugin/quarterOfYear';
+dayjs.extend(quarterOfYear);
 dayjs.extend(customParseFormat);
 
 const DATE_FORMAT = 'YYYY-MM-DD';
