@@ -52,7 +52,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         .header {
-          height: 88px;
           padding: 16px;
           box-sizing: border-box;
           border-bottom: 1px solid var(--mdc-theme-divider-color);
