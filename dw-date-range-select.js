@@ -250,6 +250,7 @@ export class DwDateRangeSelect extends DwSelect {
         .valueFormat=${this.valueFormat}
         .dateRepresentationFormat="${this.dateRepresentationFormat}"
         .triggerElement=${this.triggerElement}
+        .errorMessages="${this._errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
         @mode-changed=${this._onDateRangePickerModeChanged}

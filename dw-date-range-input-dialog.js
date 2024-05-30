@@ -418,7 +418,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         .showFutureWarning=${this.showFutureWarning}
         .showFutureError=${this.showFutureError}
         .warning=${this._warning}
-        .error=${this._error}
+        .error=${this._validateEndDate.bind(this)}
         .hintInTooltip="${this.hintInTooltip}"
         .errorInTooltip="${this.errorInTooltip}"
         .warningInTooltip="${this.warningInTooltip}"
@@ -444,6 +444,14 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
       <dw-button dismiss>Cancel</dw-button>
       <dw-button @click=${this._onApply}>Apply</dw-button>
     `;
+  }
+
+  _validateEndDate() {
+    if (this._inputEndDate < this._inputStartDate) {
+      return this.errorMessages?.endNotLowerThanStart || "End date can't be lower than start date";
+    }
+
+    return this._error;
   }
 
   _onStartDateChange(e) {
