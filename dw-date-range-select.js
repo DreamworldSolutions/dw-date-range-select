@@ -218,7 +218,7 @@ export class DwDateRangeSelect extends DwSelect {
         .errorTooltipActions="${this.errorTooltipActions}"
         .warningTooltipActions="${this.warningTooltipActions}"
         .tipPlacement="${this.tipPlacement}"
-        .errorMessages="${this._errorMessages}"
+        .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangeInputDialogOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangeInputDialogOpenedChanged(true)}
         @mode-changed=${this._onDateRangeInputDialogModeChanged}
@@ -250,7 +250,7 @@ export class DwDateRangeSelect extends DwSelect {
         .valueFormat=${this.valueFormat}
         .dateRepresentationFormat="${this.dateRepresentationFormat}"
         .triggerElement=${this.triggerElement}
-        .errorMessages="${this._errorMessages}"
+        .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
         @mode-changed=${this._onDateRangePickerModeChanged}

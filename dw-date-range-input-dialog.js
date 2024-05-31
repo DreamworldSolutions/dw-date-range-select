@@ -448,7 +448,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   _validateEndDate() {
     if (this._inputEndDate < this._inputStartDate) {
-      return this.errorMessages?.endNotLowerThanStart || "End date can't be lower than start date";
+      return this.errorMessages?.endBeforeStart || "End date can't be lower than start date";
     }
 
     return this._error;
