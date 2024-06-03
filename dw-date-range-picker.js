@@ -52,7 +52,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         .header {
-          height: 88px;
           padding: 16px;
           box-sizing: border-box;
           border-bottom: 1px solid var(--mdc-theme-divider-color);
@@ -191,7 +190,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
         .date-container {
           display: flex;
-          align-items: center;
+          align-items: baseline;
         }
 
         .litepicker .container__days .day-item::before {
@@ -326,83 +325,88 @@ export class DwDateRangePicker extends DwCompositeDialog {
           ${this.tabletMode || this.mobileMode ? html`<div>Select Range</div>` : ''}
           <div class="container">
             <div class="date-container">
-            ${(this.tabletMode || this.mobileMode) && (this.value?.start === this.value?.end)  ? html `<div> ${this._getStartEndEndDateText()}</div>` : html `
-              ${this.tabletMode || this.mobileMode
-                ? html`${this.value?.start ? html`<div>${this._getStartDateText()}</div>` : html` <div class="title">Start Date</div>`}`
+              ${(this.tabletMode || this.mobileMode) && this.value?.start === this.value?.end
+                ? html`<div>${this._getStartEndEndDateText()}</div>`
                 : html`
-                    <date-input
-                      id="start-date"
-                      .inputFormat=${this.inputFormat}
-                      .valueFormat=${this.valueFormat}
-                      label="Start date"
-                      ?disabled="${this.disabled}"
-                      .invalid=${this.invalid}
-                      ?noLabel="${this.noLabel}"
-                      ?required="${this.required}"
-                      ?readOnly="${this.readOnly}"
-                      ?autoSelect="${this.autoSelect}"
-                      ?dense="${this.dense}"
-                      ?hintPersistent="${this.hintPersistent}"
-                      placeholder="DD / MM / YYYY"
-                      ?highlightChanged="${this.highlightChanged}"
-                      ?noHintWrap="${this.noHintWrap}"
-                      .date="${this.value?.start}"
-                      .originalDate="${this.originalValue}"
-                      .name="${this.name}"
-                      .hint="${this.hint}"
-                      .showFutureWarning=${this.showFutureWarning}
-                      .showFutureError=${this.showFutureError}
-                      .warning=${this._warning}
-                      .error=${this._error}
-                      .hintInTooltip="${this.hintInTooltip}"
-                      .errorInTooltip="${this.errorInTooltip}"
-                      .warningInTooltip="${this.warningInTooltip}"
-                      .hintTooltipActions="${this.hintTooltipActions}"
-                      .errorTooltipActions="${this.errorTooltipActions}"
-                      .warningTooltipActions="${this.warningTooltipActions}"
-                      .tipPlacement="${this.tipPlacement}"
-                      .errorMessages="${this.errorMessages}"
-                      @change=${this._onStartDateChange}
-                    ></date-input>
-                  `}
-              <div class="pass">-</div>
-              ${this.tabletMode || this.mobileMode
-                ? html`${this.value?.end ? html`<div>${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}`
-                : html`
-                    <date-input
-                      .inputFormat=${this.inputFormat}
-                      .valueFormat=${this.valueFormat}
-                      label="End date"
-                      ?disabled="${this.disabled}"
-                      .invalid=${this.invalid}
-                      ?noLabel="${this.noLabel}"
-                      ?required="${this.required}"
-                      ?readOnly="${this.readOnly}"
-                      ?autoSelect="${this.autoSelect}"
-                      ?dense="${this.dense}"
-                      ?hintPersistent="${this.hintPersistent}"
-                      placeholder="DD / MM / YYYY"
-                      ?highlightChanged="${this.highlightChanged}"
-                      ?noHintWrap="${this.noHintWrap}"
-                      .date="${this.value?.start !== this.value?.end ? this.value?.end : ''}"
-                      .originalDate="${this.originalValue}"
-                      .name="${this.name}"
-                      .hint="${this.hint}"
-                      .showFutureWarning=${this.showFutureWarning}
-                      .showFutureError=${this.showFutureError}
-                      .warning=${this._warning}
-                      .error=${this._error}
-                      .hintInTooltip="${this.hintInTooltip}"
-                      .errorInTooltip="${this.errorInTooltip}"
-                      .warningInTooltip="${this.warningInTooltip}"
-                      .hintTooltipActions="${this.hintTooltipActions}"
-                      .errorTooltipActions="${this.errorTooltipActions}"
-                      .warningTooltipActions="${this.warningTooltipActions}"
-                      tipPlacement="${this.tipPlacement}"
-                      .errorMessages="${this.errorMessages}"
-                      @change=${this._onEndDateChange}
-                    ></date-input>
-                  `}
+                    ${this.tabletMode || this.mobileMode
+                      ? html`${this.value?.start
+                          ? html`<div>${this._getStartDateText()}</div>`
+                          : html` <div class="title">Start Date</div>`}`
+                      : html`
+                          <date-input
+                            id="start-date"
+                            .inputFormat=${this.inputFormat}
+                            .valueFormat=${this.valueFormat}
+                            label="Start date"
+                            ?disabled="${this.disabled}"
+                            .invalid=${this.invalid}
+                            ?noLabel="${this.noLabel}"
+                            ?required="${this.required}"
+                            ?readOnly="${this.readOnly}"
+                            ?autoSelect="${this.autoSelect}"
+                            ?dense="${this.dense}"
+                            ?hintPersistent="${this.hintPersistent}"
+                            placeholder="DD / MM / YYYY"
+                            ?highlightChanged="${this.highlightChanged}"
+                            ?noHintWrap="${this.noHintWrap}"
+                            .date="${this.value?.start}"
+                            .originalDate="${this.originalValue}"
+                            .name="${this.name}"
+                            .hint="${this.hint}"
+                            .showFutureWarning=${this.showFutureWarning}
+                            .showFutureError=${this.showFutureError}
+                            .warning=${this._warning}
+                            .error=${this._error}
+                            .hintInTooltip="${this.hintInTooltip}"
+                            .errorInTooltip="${this.errorInTooltip}"
+                            .warningInTooltip="${this.warningInTooltip}"
+                            .hintTooltipActions="${this.hintTooltipActions}"
+                            .errorTooltipActions="${this.errorTooltipActions}"
+                            .warningTooltipActions="${this.warningTooltipActions}"
+                            .tipPlacement="${this.tipPlacement}"
+                            .errorMessages="${this.errorMessages}"
+                            @change=${this._onStartDateChange}
+                          ></date-input>
+                        `}
+                    <div class="pass">-</div>
+                    ${this.tabletMode || this.mobileMode
+                      ? html`${this.value?.end ? html`<div>${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}`
+                      : html`
+                          <date-input
+                            id="end-date"
+                            .inputFormat=${this.inputFormat}
+                            .valueFormat=${this.valueFormat}
+                            label="End date"
+                            ?disabled="${this.disabled}"
+                            .invalid=${this.invalid}
+                            ?noLabel="${this.noLabel}"
+                            ?required="${this.required}"
+                            ?readOnly="${this.readOnly}"
+                            ?autoSelect="${this.autoSelect}"
+                            ?dense="${this.dense}"
+                            ?hintPersistent="${this.hintPersistent}"
+                            placeholder="DD / MM / YYYY"
+                            ?highlightChanged="${this.highlightChanged}"
+                            ?noHintWrap="${this.noHintWrap}"
+                            .date="${this.value?.start !== this.value?.end ? this.value?.end : ''}"
+                            .originalDate="${this.originalValue}"
+                            .name="${this.name}"
+                            .hint="${this.hint}"
+                            .showFutureWarning=${this.showFutureWarning}
+                            .showFutureError=${this.showFutureError}
+                            .warning=${this._warning}
+                            .error=${this._validateEndDate.bind(this)}
+                            .hintInTooltip="${this.hintInTooltip}"
+                            .errorInTooltip="${this.errorInTooltip}"
+                            .warningInTooltip="${this.warningInTooltip}"
+                            .hintTooltipActions="${this.hintTooltipActions}"
+                            .errorTooltipActions="${this.errorTooltipActions}"
+                            .warningTooltipActions="${this.warningTooltipActions}"
+                            tipPlacement="${this.tipPlacement}"
+                            .errorMessages="${this.errorMessages}"
+                            @change=${this._onEndDateChange}
+                          ></date-input>
+                        `}
                   `}
             </div>
             ${!this.tabletMode && !this.mobileMode
@@ -445,6 +449,14 @@ export class DwDateRangePicker extends DwCompositeDialog {
       this._setOptions({ format: this.valueFormat });
     }
     this._autoFocus();
+  }
+
+  _validateEndDate() {
+    if (this._inputEndDate < this._inputStartDate) {
+      return this.errorMessages?.endBeforeStart || "End date can't be lower than start date";
+    }
+
+    return this._error;
   }
 
   _onIconClick() {
@@ -580,9 +592,13 @@ export class DwDateRangePicker extends DwCompositeDialog {
   }
 
   _onSubmit() {
-    const start = this._inputStartDate || this.value?.start || '';
-    const end = this._inputEndDate || this.value?.end || '';
-    this._onSelected(start, end);
+    const isEndDateValid = this.renderRoot.querySelector('#end-date')?.validate();
+
+    if (isEndDateValid) {
+      const start = this._inputStartDate || this.value?.start || '';
+      const end = this._inputEndDate || this.value?.end || '';
+      this._onSelected(start, end);
+    }
   }
 
   /**
