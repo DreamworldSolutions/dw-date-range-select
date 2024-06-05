@@ -167,7 +167,7 @@ export class DwDateRangeSelect extends DwSelect {
        * Represents current company's date input format.
        */
       dateInputFormat: { type: String },
-      
+
       // END: Date-picker properties
     };
   }
@@ -254,7 +254,7 @@ export class DwDateRangeSelect extends DwSelect {
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
         @mode-changed=${this._onDateRangePickerModeChanged}
-        @change=${this._onDatePickerValueChanged}
+        @preselect-change=${this._onDatePickerValueChanged}
       >
       </dw-date-range-picker>
     `;

@@ -234,7 +234,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
   constructor() {
     super();
-    this._onSelected = this._onSelected.bind(this);
+    this._onPreselect = this._onPreselect.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
   }
 
@@ -346,7 +346,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
                             ?autoSelect="${this.autoSelect}"
                             ?dense="${this.dense}"
                             ?hintPersistent="${this.hintPersistent}"
-                            placeholder="DD / MM / YYYY"
+                            placeholder=${this.inputFormat}
                             ?highlightChanged="${this.highlightChanged}"
                             ?noHintWrap="${this.noHintWrap}"
                             .date="${this.value?.start}"
@@ -385,7 +385,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
                             ?autoSelect="${this.autoSelect}"
                             ?dense="${this.dense}"
                             ?hintPersistent="${this.hintPersistent}"
-                            placeholder="DD / MM / YYYY"
+                            placeholder=${this.inputFormat}
                             ?highlightChanged="${this.highlightChanged}"
                             ?noHintWrap="${this.noHintWrap}"
                             .date="${this.value?.start !== this.value?.end ? this.value?.end : ''}"
@@ -540,7 +540,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       this._instance = this._create();
     }
 
-    this._instance.on('selected', this._onSelected);
+    this._instance.on('preselect', this._onPreselect);
     this._instance.show();
     this._setPickerDate();
   }
@@ -569,7 +569,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       return;
     }
 
-    this._instance && this._instance.off('selected', this._onSelected);
+    this._instance && this._instance.off('preselect', this._onPreselect);
     this._instance && this._instance.hide();
     this._instance && this._instance.destroy();
     this._instance = undefined;
@@ -597,14 +597,14 @@ export class DwDateRangePicker extends DwCompositeDialog {
     if (isEndDateValid) {
       const start = this._inputStartDate || this.value?.start || '';
       const end = this._inputEndDate || this.value?.end || '';
-      this._onSelected(start, end);
+      this._onPreselect(start, end);
     }
   }
 
   /**
    * Invoked when user choose date from calender.
    */
-  _onSelected(date1, date2) {
+  _onPreselect(date1, date2) {
     this._trigerValueChanged(date1, date2);
     if (!this.__isCurrentDate(date1, date2)) {
       this.close();
@@ -630,18 +630,21 @@ export class DwDateRangePicker extends DwCompositeDialog {
       return;
     }
 
+    this.value = { ...this.value, start: startDate, end: endDate };
+
     if (!dayjs(startDate).isValid() || !dayjs(endDate).isValid()) {
       return;
     }
 
     this.dispatchEvent(
-      new CustomEvent('change', {
+      new CustomEvent('preselect-change', {
         detail: {
           start: startDate,
           end: endDate,
         },
       })
     );
+    this.close();
   }
 
   _autoFocus() {
