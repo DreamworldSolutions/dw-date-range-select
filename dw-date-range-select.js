@@ -254,7 +254,7 @@ export class DwDateRangeSelect extends DwSelect {
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
         @mode-changed=${this._onDateRangePickerModeChanged}
-        @preselect-change=${this._onDatePickerValueChanged}
+        @change=${this._onDatePickerValueChanged}
       >
       </dw-date-range-picker>
     `;
