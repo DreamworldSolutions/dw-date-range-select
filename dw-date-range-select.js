@@ -167,7 +167,7 @@ export class DwDateRangeSelect extends DwSelect {
        * Represents current company's date input format.
        */
       dateInputFormat: { type: String },
-      
+
       // END: Date-picker properties
     };
   }
