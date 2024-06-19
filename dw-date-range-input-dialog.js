@@ -446,6 +446,16 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
     `;
   }
 
+  /**
+   * Tirggers `dw-dialog-opened` event when dialog is opened
+   * @override
+   */
+  _onDialogOpened(e) {
+    super._onDialogOpened && super._onDialogOpened(e);
+    this.dateStartInput && this.dateStartInput.layout && this.dateStartInput.layout();
+    this.dateEndInput && this.dateEndInput.layout && this.dateEndInput.layout();
+  }
+
   _validateEndDate() {
     if (this._inputEndDate < this._inputStartDate) {
       return this.errorMessages?.endBeforeStart || "End date can't be lower than start date";
