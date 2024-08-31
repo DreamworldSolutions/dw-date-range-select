@@ -291,6 +291,10 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         reflect: true,
         attribute: 'dark-theme',
       },
+
+      _inputEndDate: { type: String},
+
+      _inputStartDate: { type: String},
     };
   }
 
@@ -356,19 +360,18 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   get _contentTemplate() {
     return html` <date-input
         id="start-date"
-        ?only-start-date=${this.value?.start === this.value?.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="Start date"
         ?disabled="${this.disabled}"
         .invalid=${this.invalid}
         ?noLabel="${this.noLabel}"
-        ?required="${this.required}"
+        ?required="${this._inputEndDate}"
         ?readOnly="${this.readOnly}"
         ?autoSelect="${this.autoSelect}"
         ?dense="${this.dense}"
         ?hintPersistent="${this.hintPersistent}"
-        placeholder="DD/MM/YYYY"
+        placeholder="${this.inputFormat}"
         ?highlightChanged="${this.highlightChanged}"
         ?noHintWrap="${this.noHintWrap}"
         .date="${this.value?.start}"
@@ -394,19 +397,18 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
       <date-input
         id="end-date"
-        ?hidden=${this.value?.start === this.value?.end}
         .inputFormat=${this.inputFormat}
         .valueFormat=${this.valueFormat}
         label="End date"
         ?disabled="${this.disabled}"
         .invalid=${this.invalid}
         ?noLabel="${this.noLabel}"
-        ?required="${this.required}"
+        ?required="${this._inputStartDate}"
         ?readOnly="${this.readOnly}"
         ?autoSelect="${this.autoSelect}"
         ?dense="${this.dense}"
         ?hintPersistent="${this.hintPersistent}"
-        placeholder="DD/MM/YYYY"
+        placeholder="${this.inputFormat}"
         ?highlightChanged="${this.highlightChanged}"
         ?noHintWrap="${this.noHintWrap}"
         .date="${this.value?.end}"
@@ -498,6 +500,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
       const endDate = date2 ? dayjs(date2).format('YYYY-MM-DD') : null;
 
       if (startDate === this.value?.start && endDate === this.value?.end) {
+        this.close();
         return;
       }
 
