@@ -290,6 +290,13 @@ export class DwDateRangeSelect extends DwSelect {
     return '';
   }
 
+  _onDialogOpenToggle() {
+    super._onDialogOpenToggle();
+    if (this.dateRangePicker.opened) {
+      this._dialogMode = 'null';
+    }
+  }
+
   _onDatePickerValueChanged(e) {
     const value = e?.detail || {};
     const selectedItem = find(this.items, 'showCustomRange');
