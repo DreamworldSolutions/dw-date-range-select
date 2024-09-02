@@ -100,7 +100,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         }
 
         #end-date[hidden] {
-          display: none
+          display: none;
         }
 
         :host([dark-theme][type='modal']) .mdc-dialog .mdc-dialog__surface {
@@ -292,9 +292,9 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         attribute: 'dark-theme',
       },
 
-      _inputEndDate: { type: String},
+      _inputEndDate: { type: String },
 
-      _inputStartDate: { type: String},
+      _inputStartDate: { type: String },
     };
   }
 

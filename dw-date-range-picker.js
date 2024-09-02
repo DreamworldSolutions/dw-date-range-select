@@ -259,7 +259,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
        * start and end date. e.g. { start: "2021-04-01", end: "2022-03-30" }
        */
       value: { type: Object },
-      
+
       /**
        * prefered date input format
        * it should be `dd/mm/yyyy`(default) or `mm/dd/yyyy`
@@ -286,7 +286,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
        */
       dateRepresentationFormat: { type: String },
 
-      tabindex: { type: String, reflect: true }
+      tabindex: { type: String, reflect: true },
     };
   }
 
@@ -341,19 +341,15 @@ export class DwDateRangePicker extends DwCompositeDialog {
         <div class="header" date-picker="false">
           <div class="range-title">Select Range</div>
           <div class="container">
-                <div class="date-container">
-                  ${this.value?.start
-                    ? html`<div class="date">${this._getStartDateText()}</div>`
-                    : html` <div class="title">Start Date</div>`}
+            <div class="date-container">
+              ${this.value?.start ? html`<div class="date">${this._getStartDateText()}</div>` : html` <div class="title">Start Date</div>`}
 
-                  <div class="pass">-</div>
-                  ${this.value?.end
-                    ? html`<div class="date">${this._getEndDateText()}</div>`
-                    : html` <div class="title">End Date</div>`}
-                </div>
+              <div class="pass">-</div>
+              ${this.value?.end ? html`<div class="date">${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}
+            </div>
 
-                <dw-icon-button date-picker="false" .iconFont=${'OUTLINED'} @click=${this._onIconClick} .icon=${'edit'}></dw-icon-button>
-              </div>
+            <dw-icon-button date-picker="false" .iconFont=${'OUTLINED'} @click=${this._onIconClick} .icon=${'edit'}></dw-icon-button>
+          </div>
         </div>
         <div id="datepicker" date-picker="false"></div>
       </div>
@@ -372,15 +368,15 @@ export class DwDateRangePicker extends DwCompositeDialog {
   }
 
   _onIconClick() {
-      this.dispatchEvent(
-        new CustomEvent('mode-changed', {
-          detail: {
-            mode: 'INPUT',
-          },
-        })
-      );
-      this.close();
-    }
+    this.dispatchEvent(
+      new CustomEvent('mode-changed', {
+        detail: {
+          mode: 'INPUT',
+        },
+      })
+    );
+    this.close();
+  }
 
   _getStartDateText() {
     if (!this.value?.start) {
@@ -398,13 +394,13 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
     const today = dayjs();
     const format = this._dateFormat(this.value?.end);
-    
+
     return dayjs(this.value?.end).format(format);
   }
 
   _dateFormat(date) {
     if (!date) return;
-    
+
     const today = dayjs();
     const represenatationFormat = this.dateRepresentationFormat || this.inputFormat;
     return today.year() === dayjs(date).year() ? currentYearFormat[represenatationFormat] : represenatationFormat;
@@ -479,7 +475,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
   }
 
   _onPreselect(date1, date2) {
-    
     const startDate = this.__getDateInValueFormat(date1);
     const endDate = this.__getDateInValueFormat(date2);
 

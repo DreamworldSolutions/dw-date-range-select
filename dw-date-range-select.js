@@ -160,7 +160,7 @@ export class DwDateRangeSelect extends DwSelect {
       darkTheme: {
         type: Boolean,
         reflect: true,
-        attribute: "dark-theme",
+        attribute: 'dark-theme',
       },
 
       /**
@@ -227,7 +227,9 @@ export class DwDateRangeSelect extends DwSelect {
         .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangeInputDialogOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangeInputDialogOpenedChanged(true)}
-        @mode-changed=${() => {this._changeDialogMode('PICKER')}}
+        @mode-changed=${() => {
+          this._changeDialogMode('PICKER');
+        }}
         @change=${this._onChange}
       >
       </dw-date-range-input-dialog>
@@ -260,7 +262,9 @@ export class DwDateRangeSelect extends DwSelect {
         .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
-        @mode-changed=${() => {this._changeDialogMode('INPUT')}}
+        @mode-changed=${() => {
+          this._changeDialogMode('INPUT');
+        }}
         @change=${this._onDatePickerValueChanged}
       >
       </dw-date-range-picker>
@@ -388,13 +392,13 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   _triggerDateRangeInputDialogOpenedChanged(opened) {
-    if(!opened) {
+    if (!opened) {
       this._dialogMode = null;
     }
   }
 
   _triggerDateRangePickerOpenedChanged(opened) {
-    if(!opened) {
+    if (!opened) {
       this._dialogMode = null;
     }
   }
