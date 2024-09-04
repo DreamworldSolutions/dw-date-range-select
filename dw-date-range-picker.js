@@ -250,7 +250,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
     super();
     this._onSelected = this._onSelected.bind(this);
     this._onPreselect = this._onPreselect.bind(this);
-    this._onSubmit = this._onSubmit.bind(this);
     this.tabindex = -1;
   }
 
@@ -439,7 +438,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
       this._instance = this._create();
     }
 
-    this._instance.on('preselect', this._onPreselect);
     this._instance.on('selected', this._onSelected);
     this._instance.on('preselect', this._onPreselect);
     this._instance.show();
@@ -475,14 +473,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
     this._instance && this._instance.hide();
     this._instance && this._instance.destroy();
     this._instance = undefined;
-  }
-
-  _onPreselect(date1, date2) {
-    const startDate = this.__getDateInValueFormat(date1);
-    const endDate = this.__getDateInValueFormat(date2);
-
-    this.value = { ...this.value, start: startDate, end: endDate };
-    this._preselectValue = { start: startDate, end: endDate };
   }
 
   _onPreselect(date1, date2) {
