@@ -8,9 +8,11 @@ import 'litepicker/dist/plugins/mobilefriendly';
 
 import dayjs from 'dayjs/esm/index.js';
 import datePickerStyle from './dw-date-range-picker-style.js';
+import { subtitle1, headline5 } from '@hisab/ui-components/typography.js';
 
 import '@dreamworld/dw-icon-button';
 import '@dreamworld/dw-date-input/date-input.js';
+import { currentYearFormat } from '@dreamworld/dw-date-input/constants.js';
 
 /**
  * Providing a solution to select date.
@@ -30,7 +32,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       css`
         :host {
           --dw-popover-width: 360px;
-          --dw-popover-min-width: 500px;
+          --dw-popover-min-width: 360px;
           --dw-popover-border-radius: 18px;
           --litepicker-day-margin: 0px;
         }
@@ -69,6 +71,20 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         :host([mobile-mode]) .container .title {
+          color: var(--mdc-theme-text-disabled-on-background);
+        }
+
+        .range-title {
+          ${subtitle1};
+          color: var(--mdc-theme-text-secondary-on-background);
+        }
+
+        .date,
+        .title {
+          ${headline5};
+        }
+
+        .title {
           color: var(--mdc-theme-text-disabled-on-background);
         }
 
@@ -183,8 +199,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         :host([mobile-mode]) .container dw-icon-button {
-          height: 24px;
-          width: 24px;
           padding-left: 12px;
         }
 
@@ -236,7 +250,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
     super();
     this._onSelected = this._onSelected.bind(this);
     this._onPreselect = this._onPreselect.bind(this);
-    this._onSubmit = this._onSubmit.bind(this);
+    this.tabindex = -1;
   }
 
   static get properties() {
@@ -247,7 +261,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
       value: { type: Object },
 
       /**
-       * prefered date input format
+       * preferred date input format
        * it should be `dd/mm/yyyy`(default) or `mm/dd/yyyy`
        */
       inputFormat: { type: String },
@@ -271,6 +285,8 @@ export class DwDateRangePicker extends DwCompositeDialog {
        * default `dd mmm yyyy`
        */
       dateRepresentationFormat: { type: String },
+
+      tabindex: { type: String, reflect: true },
     };
   }
 
@@ -323,116 +339,16 @@ export class DwDateRangePicker extends DwCompositeDialog {
     return html`
       <div>
         <div class="header" date-picker="false">
-          ${this.tabletMode || this.mobileMode ? html`<div>Select Range</div>` : ''}
+          <div class="range-title">Select Range</div>
           <div class="container">
             <div class="date-container">
-              ${(this.tabletMode || this.mobileMode) && this.value?.start === this.value?.end
-                ? html`<div>${this._getStartEndEndDateText()}</div>`
-                : html`
-                    ${this.tabletMode || this.mobileMode
-                      ? html`${this.value?.start
-                          ? html`<div>${this._getStartDateText()}</div>`
-                          : html` <div class="title">Start Date</div>`}`
-                      : html`
-                          <date-input
-                            id="start-date"
-                            .inputFormat=${this.inputFormat}
-                            .valueFormat=${this.valueFormat}
-                            label="Start date"
-                            ?disabled="${this.disabled}"
-                            .invalid=${this.invalid}
-                            ?noLabel="${this.noLabel}"
-                            ?required="${this.required}"
-                            ?readOnly="${this.readOnly}"
-                            ?autoSelect="${this.autoSelect}"
-                            ?dense="${this.dense}"
-                            ?hintPersistent="${this.hintPersistent}"
-                            placeholder=${this.inputFormat}
-                            ?highlightChanged="${this.highlightChanged}"
-                            ?noHintWrap="${this.noHintWrap}"
-                            .date="${this.value?.start}"
-                            .originalDate="${this.originalValue}"
-                            .name="${this.name}"
-                            .hint="${this.hint}"
-                            .showFutureWarning=${this.showFutureWarning}
-                            .showFutureError=${this.showFutureError}
-                            .warning=${this._warning}
-                            .error=${this._error}
-                            .hintInTooltip="${this.hintInTooltip}"
-                            .errorInTooltip="${this.errorInTooltip}"
-                            .warningInTooltip="${this.warningInTooltip}"
-                            .hintTooltipActions="${this.hintTooltipActions}"
-                            .errorTooltipActions="${this.errorTooltipActions}"
-                            .warningTooltipActions="${this.warningTooltipActions}"
-                            .tipPlacement="${this.tipPlacement}"
-                            .errorMessages="${this.errorMessages}"
-                            @change=${this._onStartDateChange}
-                          ></date-input>
-                        `}
-                    <div class="pass">-</div>
-                    ${this.tabletMode || this.mobileMode
-                      ? html`${this.value?.end ? html`<div>${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}`
-                      : html`
-                          <date-input
-                            id="end-date"
-                            .inputFormat=${this.inputFormat}
-                            .valueFormat=${this.valueFormat}
-                            label="End date"
-                            ?disabled="${this.disabled}"
-                            .invalid=${this.invalid}
-                            ?noLabel="${this.noLabel}"
-                            ?required="${this.required}"
-                            ?readOnly="${this.readOnly}"
-                            ?autoSelect="${this.autoSelect}"
-                            ?dense="${this.dense}"
-                            ?hintPersistent="${this.hintPersistent}"
-                            placeholder=${this.inputFormat}
-                            ?highlightChanged="${this.highlightChanged}"
-                            ?noHintWrap="${this.noHintWrap}"
-                            .date="${this.value?.start !== this.value?.end ? this.value?.end : ''}"
-                            .originalDate="${this.originalValue}"
-                            .name="${this.name}"
-                            .hint="${this.hint}"
-                            .showFutureWarning=${this.showFutureWarning}
-                            .showFutureError=${this.showFutureError}
-                            .warning=${this._warning}
-                            .error=${this._validateEndDate.bind(this)}
-                            .hintInTooltip="${this.hintInTooltip}"
-                            .errorInTooltip="${this.errorInTooltip}"
-                            .warningInTooltip="${this.warningInTooltip}"
-                            .hintTooltipActions="${this.hintTooltipActions}"
-                            .errorTooltipActions="${this.errorTooltipActions}"
-                            .warningTooltipActions="${this.warningTooltipActions}"
-                            tipPlacement="${this.tipPlacement}"
-                            .errorMessages="${this.errorMessages}"
-                            @change=${this._onEndDateChange}
-                          ></date-input>
-                        `}
-                  `}
+              ${this.value?.start ? html`<div class="date">${this._getStartDateText()}</div>` : html` <div class="title">Start Date</div>`}
+
+              <div class="pass">-</div>
+              ${this.value?.end ? html`<div class="date">${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}
             </div>
-            ${!this.tabletMode && !this.mobileMode
-              ? html`
-                  <dw-icon-button
-                    class="submit"
-                    date-picker="false"
-                    .buttonSize=${48}
-                    .iconSize=${32}
-                    @click=${this._onSubmit}
-                    .icon=${'arrow_circle_right'}
-                  ></dw-icon-button>
-                `
-              : ''}
-            ${this.tabletMode || this.mobileMode
-              ? html`
-                  <dw-icon-button
-                    date-picker="false"
-                    .iconFont=${'OUTLINED'}
-                    .buttonSize=${24}
-                    @click=${this._onIconClick}
-                    .icon=${'edit'}
-                  ></dw-icon-button>
-                `
-              : ''}
+
+            <dw-icon-button date-picker="false" .iconFont=${'OUTLINED'} @click=${this._onIconClick} .icon=${'edit'}></dw-icon-button>
           </div>
         </div>
         <div id="datepicker" date-picker="false"></div>
@@ -449,15 +365,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
     if (changedProps.has('valueFormat')) {
       this._setOptions({ format: this.valueFormat });
     }
-    this._autoFocus();
-  }
-
-  _validateEndDate() {
-    if (this._inputEndDate < this._inputStartDate) {
-      return this.errorMessages?.endBeforeStart || "End date can't be lower than start date";
-    }
-
-    return this._error;
   }
 
   _onIconClick() {
@@ -468,45 +375,35 @@ export class DwDateRangePicker extends DwCompositeDialog {
         },
       })
     );
-
     this.close();
   }
 
-  _getDayText() {
-    if (!this.value) {
-      return 'Selected Day';
-    }
-
-    return dayjs(this.value).format('dddd');
-  }
-
   _getStartDateText() {
-    if (!this.value.start) {
+    if (!this.value?.start) {
       return;
     }
 
-    const format = this.dateRepresentationFormat || this.inputFormat;
+    const format = this._dateFormat(this.value?.start);
     return dayjs(this.value?.start).format(format);
   }
 
   _getEndDateText() {
-    if (!this.value.end) {
+    if (!this.value?.end) {
       return;
     }
 
-    const format = this.dateRepresentationFormat || this.inputFormat;
+    const today = dayjs();
+    const format = this._dateFormat(this.value?.end);
+
     return dayjs(this.value?.end).format(format);
   }
 
-  _getStartEndEndDateText() {
-    if (this.value?.start === this.value?.end) {
-      const format = this.dateRepresentationFormat || this.inputFormat;
-      return dayjs(this.value?.start).format(format);
-    }
-  }
+  _dateFormat(date) {
+    if (!date) return;
 
-  formatDateText(value) {
-    return value && value.replace(/ /g, '').split(`${this.separator}`).join(` ${this.separator} `);
+    const today = dayjs();
+    const representationFormat = this.dateRepresentationFormat || this.inputFormat;
+    return today.year() === dayjs(date).year() ? currentYearFormat[representationFormat] : representationFormat;
   }
 
   /**
@@ -541,8 +438,8 @@ export class DwDateRangePicker extends DwCompositeDialog {
       this._instance = this._create();
     }
 
-    this._instance.on('preselect', this._onPreselect);
     this._instance.on('selected', this._onSelected);
+    this._instance.on('preselect', this._onPreselect);
     this._instance.show();
     this._setPickerDate();
   }
@@ -576,32 +473,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
     this._instance && this._instance.hide();
     this._instance && this._instance.destroy();
     this._instance = undefined;
-  }
-
-  _onStartDateChange(e) {
-    if (e && e.target) {
-      const dateInputed = dayjs(e.target.value, this.inputFormat);
-      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
-      this._inputStartDate = date;
-    }
-  }
-
-  _onEndDateChange(e) {
-    if (e && e.target) {
-      const dateInputed = dayjs(e.target.value, this.inputFormat);
-      const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
-      this._inputEndDate = date;
-    }
-  }
-
-  _onSubmit() {
-    const isEndDateValid = this.renderRoot.querySelector('#end-date')?.validate();
-
-    if (isEndDateValid) {
-      const start = this._inputStartDate || this.value?.start || '';
-      const end = this._inputEndDate || this.value?.end || '';
-      this._onSelected(start, end);
-    }
   }
 
   _onPreselect(date1, date2) {
@@ -659,11 +530,6 @@ export class DwDateRangePicker extends DwCompositeDialog {
         },
       })
     );
-  }
-
-  _autoFocus() {
-    const el = this.renderRoot.querySelector('#start-date');
-    el && el.focus();
   }
 
   /**

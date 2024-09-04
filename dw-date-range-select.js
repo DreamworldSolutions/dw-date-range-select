@@ -14,7 +14,7 @@ import './dw-date-range-input-dialog.js';
  * Date range input control is used to input a custom duration.
  *
  * ## Behaviour
- * - It overrides all the beahviors of dw-select input control.
+ * - It overrides all the behaviours of dw-select input control.
  * - Default Input
  *  - Dates to render “Last 12 months” are set in End date and Start date.
  * - Pre - set input
@@ -129,7 +129,7 @@ export class DwDateRangeSelect extends DwSelect {
 
       /**
        * Date-picker
-       * Element in which content will be appened. Default is parent element of trigger element.
+       * Element in which content will be appended. Default is parent element of trigger element.
        */
       appendTo: { type: Object },
 
@@ -160,13 +160,18 @@ export class DwDateRangeSelect extends DwSelect {
       darkTheme: {
         type: Boolean,
         reflect: true,
-        attribute: "dark-theme",
+        attribute: 'dark-theme',
       },
 
       /**
        * Represents current company's date input format.
        */
       dateInputFormat: { type: String },
+
+      /**
+       * Possible values: 'PICKER' & 'INPUT'
+       */
+      _dialogMode: { type: String },
 
       // END: Date-picker properties
     };
@@ -177,11 +182,12 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get dateRangeInputDialogTemplate() {
-    if (this.hideCustomRange) {
+    if (this.hideCustomRange || this._dialogMode !== 'INPUT') {
       return;
     }
     return html`
       <dw-date-range-input-dialog
+        .opened=${true}
         date-picker="false"
         .type=${'modal'}
         .placement=${'center'}
@@ -221,7 +227,9 @@ export class DwDateRangeSelect extends DwSelect {
         .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangeInputDialogOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangeInputDialogOpenedChanged(true)}
-        @mode-changed=${this._onDateRangeInputDialogModeChanged}
+        @mode-changed=${() => {
+          this._changeDialogMode('PICKER');
+        }}
         @change=${this._onChange}
       >
       </dw-date-range-input-dialog>
@@ -229,11 +237,12 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get dateRangePickerTemplate() {
-    if (this.hideCustomRange) {
+    if (this.hideCustomRange || this._dialogMode !== 'PICKER') {
       return;
     }
     return html`
       <dw-date-range-picker
+        .opened=${true}
         date-picker="false"
         .type=${this.mobileMode ? 'modal' : 'popover'}
         .popoverAnimation=${'expand'}
@@ -253,7 +262,9 @@ export class DwDateRangeSelect extends DwSelect {
         .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
-        @mode-changed=${this._onDateRangePickerModeChanged}
+        @mode-changed=${() => {
+          this._changeDialogMode('INPUT');
+        }}
         @change=${this._onDatePickerValueChanged}
       >
       </dw-date-range-picker>
@@ -281,6 +292,16 @@ export class DwDateRangeSelect extends DwSelect {
     }
 
     return '';
+  }
+
+  _onTrigger() {
+    super._onTrigger();
+    this._dialogMode = 'null';
+  }
+
+  _onDialogOpenToggle() {
+    super._onDialogOpenToggle();
+    this._dialogMode = 'null';
   }
 
   _onDatePickerValueChanged(e) {
@@ -357,9 +378,7 @@ export class DwDateRangeSelect extends DwSelect {
 
   async _onSelect(e) {
     if (e?.detail?.showCustomRange) {
-      if (this.dateRangePicker) {
-        this.dateRangePicker.opened = true;
-      }
+      this._dialogMode = 'PICKER';
       return;
     }
     const value = this.value;
@@ -376,35 +395,19 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   _triggerDateRangeInputDialogOpenedChanged(opened) {
-    this.dispatchEvent(
-      new CustomEvent('date-range-input-dialog-opened-changed', {
-        detail: {
-          opened,
-        },
-      })
-    );
+    if (!opened) {
+      this._dialogMode = null;
+    }
   }
 
   _triggerDateRangePickerOpenedChanged(opened) {
-    this.dispatchEvent(
-      new CustomEvent('date-range-picker-opened-changed', {
-        detail: {
-          opened,
-        },
-      })
-    );
-  }
-
-  _onDateRangePickerModeChanged(e) {
-    if (this.dateRangeInputDialog) {
-      this.dateRangeInputDialog.opened = true;
+    if (!opened) {
+      this._dialogMode = null;
     }
   }
 
-  _onDateRangeInputDialogModeChanged(e) {
-    if (this.dateRangePicker) {
-      this.dateRangePicker.opened = true;
-    }
+  _changeDialogMode(mode) {
+    this._dialogMode = mode;
   }
 }
 
