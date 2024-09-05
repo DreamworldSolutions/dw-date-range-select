@@ -11,6 +11,7 @@ import dayjs from 'dayjs/esm/index.js';
 import '@dreamworld/dw-icon-button';
 import '@dreamworld/dw-button';
 import '@dreamworld/dw-date-input/date-input';
+import DeviceInfo from '@dreamworld/device-info';
 
 /**
  * Providing a solution to select date.
@@ -48,7 +49,7 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
           display: flex;
           justify-content: space-between;
           height: 64px;
-          padding: 16px 24px;
+          padding: 16px 16px 16px 24px;
           box-sizing: border-box;
           border-bottom: 1px solid var(--mdc-theme-divider-color);
         }
@@ -87,6 +88,10 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
         }
 
         :host([type='modal']) .mdc-dialog__content {
+          padding: 0 24px;
+        }
+
+        :host([type='modal'][layout='small']) .mdc-dialog__content {
           padding: 0 12px;
         }
 
@@ -105,6 +110,11 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
         :host([dark-theme][type='modal']) .mdc-dialog .mdc-dialog__surface {
           box-shadow: none;
+        }
+
+        :host([type='modal']) .mdc-dialog footer {
+          --dw-dialog-divider-color: transparent;
+          gap: 8px;
         }
       `,
     ];
@@ -295,6 +305,12 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
       _inputEndDate: { type: String },
 
       _inputStartDate: { type: String },
+
+      /**
+       * Represents current layout in String.
+       * An Enum: possible values - `small`, `medium`, `large`, `hd` and `fullhd`
+       */
+      _layout: { type: String, reflect: true, attribute: 'layout' },
     };
   }
 
@@ -339,6 +355,11 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
   constructor() {
     super();
     this.autoFocusSelector = '#start-date';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._layout = DeviceInfo.info().layout;
   }
 
   willUpdate(changedProps) {
