@@ -307,7 +307,6 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
       _inputStartDate: { type: String },
 
       /**
-       * Input property
        * Represents current layout in String.
        * An Enum: possible values - `small`, `medium`, `large`, `hd` and `fullhd`
        */
