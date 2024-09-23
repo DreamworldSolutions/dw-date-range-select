@@ -398,11 +398,23 @@ export class DwDateRangeSelect extends DwSelect {
     if (!opened) {
       this._dialogMode = null;
     }
+
+    if (opened) {
+      this.dispatchEvent(new CustomEvent('date-range-input-dialog-opened'));
+    } else {
+      this.dispatchEvent(new CustomEvent('date-range-input-dialog-closed'));
+    }
   }
 
   _triggerDateRangePickerOpenedChanged(opened) {
     if (!opened) {
       this._dialogMode = null;
+    }
+
+    if (opened) {
+      this.dispatchEvent(new CustomEvent('date-range-picker-opened'));
+    } else {
+      this.dispatchEvent(new CustomEvent('date-range-picker-closed'));
     }
   }
 
