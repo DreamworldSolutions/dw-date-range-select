@@ -355,11 +355,11 @@ export class DwDateRangeSelect extends DwSelect {
     }
   }
 
-  willUpdate(changedProperties) {
-    super.willUpdate && super.willUpdate(changedProperties);
+  willUpdate(props) {
     if (this.hideCustomRange === true) {
       this._hideCustomRange();
     }
+    super.willUpdate(props);
   }
 
   _hideCustomRange() {
