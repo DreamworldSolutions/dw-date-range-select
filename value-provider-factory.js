@@ -1,8 +1,10 @@
 import dayjs from 'dayjs/esm/index.js';
 import customParseFormat from 'dayjs/esm/plugin/customParseFormat';
 import quarterOfYear from 'dayjs/esm/plugin/quarterOfYear';
+import isoWeek from 'dayjs/esm/plugin/isoWeek';
 dayjs.extend(quarterOfYear);
 dayjs.extend(customParseFormat);
+dayjs.extend(isoWeek);
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 var currentDate;
