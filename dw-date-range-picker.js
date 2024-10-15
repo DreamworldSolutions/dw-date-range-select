@@ -168,7 +168,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
         :host(:not([mobile-mode])) .container__days > div {
           --litepicker-day-width: 40px;
-          --litepicker-day-margin: 4px 15px;
+          --litepicker-day-margin: 4px 5px;
         }
 
         :host([mobile-mode]) .litepicker .container__days > div,
