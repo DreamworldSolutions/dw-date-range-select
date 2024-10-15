@@ -136,7 +136,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         :host(:not([mobile-mode])) .litepicker .container__days .day-item.is-in-range {
-          padding: 4px 35px;
+          padding: 4px 25px;
           --litepicker-day-margin: 4px 0;
         }
 
@@ -174,7 +174,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         :host([mobile-mode]) .litepicker .container__days > div,
         :host([mobile-mode]) .litepicker .container__days > a {
           max-width: 53px;
-          max-height: 56px;
+          max-height: 53px;
           --litepicker-day-margin: 4px 0;
         }
 
@@ -220,7 +220,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
         .litepicker .container__days .day-item.is-start-date::before {
           height: 40px;
-          width: 55px;
+          width: 45px;
           background-color: var(--hisab-activated-background-color);
           border-radius: 0;
           opacity: 1;
@@ -230,13 +230,13 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
         .litepicker .container__days .day-item.is-end-date::before {
           height: 40px;
-          width: 55px;
+          width: 45px;
           background-color: var(--hisab-activated-background-color);
           border-radius: 0;
           opacity: 1;
           border-top-right-radius: 28px;
           border-bottom-right-radius: 28px;
-          left: -15px;
+          left: -5px;
         }
 
         .litepicker .container__days .day-item.is-start-date.is-end-date::before {
