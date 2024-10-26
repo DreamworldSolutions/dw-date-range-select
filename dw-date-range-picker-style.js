@@ -207,6 +207,7 @@ export const dateRangePickerStyle = css`
     fill: var(--litepicker-button-next-month-color-hover);
   }
   .litepicker .container__months .month-item-weekdays-row {
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
