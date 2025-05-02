@@ -95,6 +95,7 @@ export class DwDateRangeSelect extends DwSelect {
     this.inputFormat = 'DD/MM/YYYY';
     this.dateRepresentationFormat = 'DD MMM YYYY';
     this.dateInputFormat = 'dd/mm/yyyy';
+    this._inputDialogAutoFocusSelector = '#start-date';
   }
 
   static get properties() {
@@ -173,6 +174,12 @@ export class DwDateRangeSelect extends DwSelect {
        */
       _dialogMode: { type: String },
 
+      /**
+       * Selector for the element to auto-focus in input dialog
+       * @private
+       */
+      _inputDialogAutoFocusSelector: { type: String }
+
       // END: Date-picker properties
     };
   }
@@ -194,6 +201,7 @@ export class DwDateRangeSelect extends DwSelect {
         .inputFormat="${this.dateInputFormat ? this.dateInputFormat : this.inputFormat}"
         .valueFormat=${this.valueFormat}
         .dateRepresentationFormat="${this.dateRepresentationFormat}"
+        .autoFocusSelector="${this._inputDialogAutoFocusSelector}"
         .label="${this.label}"
         ?disabled="${this.disabled}"
         .invalid=${this.invalid}
@@ -262,8 +270,8 @@ export class DwDateRangeSelect extends DwSelect {
         .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
-        @mode-changed=${() => {
-          this._changeDialogMode('INPUT');
+        @mode-changed=${(e) => {
+          this._changeDialogMode('INPUT', e?.detail);
         }}
         @change=${this._onDatePickerValueChanged}
       >
@@ -418,8 +426,12 @@ export class DwDateRangeSelect extends DwSelect {
     }
   }
 
-  _changeDialogMode(mode) {
+  _changeDialogMode(mode, detail) {
     this._dialogMode = mode;
+    
+    if (mode === 'INPUT' && detail?.autoFocusSelector) {
+      this._inputDialogAutoFocusSelector = detail.autoFocusSelector;
+    }
   }
 }
 
