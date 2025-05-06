@@ -12,6 +12,7 @@ import { subtitle1, headline5 } from '@hisab/ui-components/typography.js';
 
 import '@dreamworld/dw-icon-button';
 import '@dreamworld/dw-date-input/date-input.js';
+import '@dreamworld/dw-surface/dw-surface.js';
 import { currentYearFormat } from '@dreamworld/dw-date-input/constants.js';
 
 /**
@@ -82,6 +83,12 @@ export class DwDateRangePicker extends DwCompositeDialog {
         .date,
         .title {
           ${headline5};
+        }
+
+        .start-date,
+        .end-date {
+          padding: 4px;
+          cursor: pointer;
         }
 
         .title {
@@ -342,13 +349,26 @@ export class DwDateRangePicker extends DwCompositeDialog {
           <div class="range-title">Select Range</div>
           <div class="container">
             <div class="date-container">
-              ${this.value?.start ? html`<div class="date">${this._getStartDateText()}</div>` : html` <div class="title">Start Date</div>`}
+              <dw-surface class="start-date" interactive @click=${() => this._switchToDateInputMode('start-date')}>
+                ${this.value?.start
+                  ? html`<div class="date">${this._getStartDateText()}</div>`
+                  : html` <div class="title">Start Date</div>`}
+              </dw-surface>
 
               <div class="pass">-</div>
-              ${this.value?.end ? html`<div class="date">${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}
+              <dw-surface class="end-date" interactive @click=${() => this._switchToDateInputMode('end-date')}>
+                ${this.value?.end ? html`<div class="date">${this._getEndDateText()}</div>` : html` <div class="title">End Date</div>`}
+              </dw-surface>
             </div>
 
-            <dw-icon-button date-picker="false" .iconFont=${'OUTLINED'} @click=${this._onIconClick} .icon=${'edit'}></dw-icon-button>
+            <dw-icon-button
+              date-picker="false"
+              .iconFont=${'OUTLINED'}
+              @click=${() => {
+                this._switchToDateInputMode();
+              }}
+              .icon=${'edit'}
+            ></dw-icon-button>
           </div>
         </div>
         <div id="datepicker" date-picker="false"></div>
@@ -367,11 +387,12 @@ export class DwDateRangePicker extends DwCompositeDialog {
     }
   }
 
-  _onIconClick() {
+  _switchToDateInputMode(dateType = 'start-date') {
     this.dispatchEvent(
       new CustomEvent('mode-changed', {
         detail: {
           mode: 'INPUT',
+          autoFocusSelector: `#${dateType}`,
         },
       })
     );
