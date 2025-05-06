@@ -352,6 +352,11 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
     this.requestUpdate('valueFormat', oldValue);
   }
 
+  constructor() {
+    super();
+    this.autoFocusSelector = '#start-date';
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this._layout = DeviceInfo.info().layout;
