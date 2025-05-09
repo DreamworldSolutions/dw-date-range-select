@@ -55,14 +55,13 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         .header {
-          padding: 16px;
+          padding: 16px 4px;
           box-sizing: border-box;
           border-bottom: 1px solid var(--mdc-theme-divider-color);
         }
 
         :host([mobile-mode]) .header {
           height: auto;
-          padding: 24px 24px 16px 24px;
         }
 
         :host([mobile-mode]) .container {
@@ -78,6 +77,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         .range-title {
           ${subtitle1};
           color: var(--mdc-theme-text-secondary-on-background);
+          padding: 0 12px;
         }
 
         .date,
@@ -87,7 +87,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
 
         .start-date,
         .end-date {
-          padding: 4px;
+          padding: 4px 12px;
           cursor: pointer;
         }
 
@@ -131,7 +131,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         .pass {
-          padding: 0 12px;
+          padding: 0 4px;
         }
 
         .litepicker .container__days .day-item {
