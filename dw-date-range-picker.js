@@ -8,7 +8,7 @@ import 'litepicker/dist/plugins/mobilefriendly';
 
 import dayjs from 'dayjs/esm/index.js';
 import datePickerStyle from './dw-date-range-picker-style.js';
-import { subtitle1, headline5 } from '@hisab/ui-components/typography.js';
+import { subtitle1, headline5 } from '@dreamworld/material-styles/typography-literals.js';
 
 import '@dreamworld/dw-icon-button';
 import '@dreamworld/dw-date-input/date-input.js';
@@ -139,7 +139,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         .litepicker .container__days .day-item.is-in-range {
-          --litepicker-is-in-range-color: var(--hisab-activated-background-color);
+          --litepicker-is-in-range-color: var(--activated-background-color, #02AFCD1F);
         }
 
         :host(:not([mobile-mode])) .litepicker .container__days .day-item.is-in-range {
@@ -215,7 +215,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         }
 
         .litepicker .container__days .day-item::before {
-          background-color: var(--hisab-activated-background-color);
+          background-color: var(--activated-background-color, #02AFCD1F);
         }
 
         :host([mobile-mode]) .litepicker .container__days .day-item.is-start-date::before,
@@ -228,7 +228,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         .litepicker .container__days .day-item.is-start-date::before {
           height: 40px;
           width: 45px;
-          background-color: var(--hisab-activated-background-color);
+          background-color: var(--activated-background-color, #02AFCD1F);
           border-radius: 0;
           opacity: 1;
           border-top-left-radius: 28px;
@@ -238,7 +238,7 @@ export class DwDateRangePicker extends DwCompositeDialog {
         .litepicker .container__days .day-item.is-end-date::before {
           height: 40px;
           width: 45px;
-          background-color: var(--hisab-activated-background-color);
+          background-color: var(--activated-background-color, #02AFCD1F);
           border-radius: 0;
           opacity: 1;
           border-top-right-radius: 28px;

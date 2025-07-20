@@ -36,6 +36,7 @@
     "@dreamworld/dw-dialog": "^5.7.4",
     "@dreamworld/dw-icon-button": "^3.2.5",
     "@dreamworld/dw-select": "^6.1.51",
+    "@dreamworld/material-styles": "^3.2.4",
     "@dreamworld/pwa-helpers": "^1.16.5",
     "dayjs": "^1.11.10",
     "litepicker": "^2.0.12",
