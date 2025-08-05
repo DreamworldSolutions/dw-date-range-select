@@ -9,6 +9,7 @@ import * as _valueProvider from './value-provider.js';
 import * as _valueProviderFactory from './value-provider-factory.js';
 import './dw-date-range-picker.js';
 import './dw-date-range-input-dialog.js';
+import '@dreamworld/dw-date-input/dw-date-picker.js';
 
 /**
  * Date range input control is used to input a custom duration.
@@ -53,11 +54,14 @@ export class DwDateRangeSelect extends DwSelect {
           return text;
         }
 
+        if ((!item || item.showUpToDate) && value && value.end && !value.start) {
+          return dayjs(value.end).format(this.dateRepresentationFormat);
+        }
+
         if ((!item || item.showCustomRange || item === 'SELECT_DATE') && value && value.start && value.end) {
-          const text = `${dayjs(value.start).format(this.dateRepresentationFormat)} - ${dayjs(value.end).format(
+          return `${dayjs(value.start).format(this.dateRepresentationFormat)} - ${dayjs(value.end).format(
             this.dateRepresentationFormat
           )}`;
-          return text;
         }
         return item.label;
       }
@@ -81,6 +85,10 @@ export class DwDateRangeSelect extends DwSelect {
       }
 
       if (v1 === 'SELECT_DATE' || (v1 && v1.showCustomRange && v1 && v2 && ((v2.start && v2.end) || v2.showCustomRange))) {
+        return true;
+      }
+
+      if (v1 && v1.showUpToDate && v2 && v2.end && !v2.start) {
         return true;
       }
 
@@ -178,14 +186,54 @@ export class DwDateRangeSelect extends DwSelect {
        * Selector for the element to auto-focus in input dialog
        * @private
        */
-      _inputDialogAutoFocusSelector: { type: String }
+      _inputDialogAutoFocusSelector: { type: String },
+
+       /**
+       * Whether to show custom upto date option or not.
+       * Default is false.
+       */
+      showCustomUpToDate: { type: Boolean },
 
       // END: Date-picker properties
     };
   }
 
   render() {
-    return html`${super.render()} ${this.dateRangePickerTemplate} ${this.dateRangeInputDialogTemplate}`;
+    return html`${super.render()} ${this.dateRangePickerTemplate} ${this.dateRangeInputDialogTemplate} ${this.upToDatePickerTemplate}`;
+  }
+
+  get upToDatePickerTemplate() {
+    if (this._dialogMode !== 'UP_TO_DATE_PICKER') {
+      return;
+    }
+
+    const value = this.value?.end || this.value?.valueProvider?.()?.end;
+
+    return html`
+      <dw-date-picker
+        .opened=${true}
+        date-picker="false"
+        .type=${this.mobileMode ? 'modal' : 'popover'}
+        .popoverAnimation=${'expand'}
+        .placement=${'bottom'}
+        .mobileMode=${this.mobileMode}
+        .tabletMode=${this.tabletMode}
+        .showTrigger=${true}
+        .appendTo=${this.appendTo}
+        .zIndex=${this.zIndex}
+        .value=${value}
+        .minDate="${this.minDate}"
+        .maxDate="${this.maxDate}"
+        .inputFormat=${this.dateInputFormat}
+        .valueFormat=${this.valueFormat}
+        .dateRepresentationFormat="${this.dateRepresentationFormat}"
+        .triggerElement=${this.triggerElement}
+        @dw-dialog-closed=${() => this._triggerUpToDatePickerOpenedChanged(false)}
+        @dw-dialog-opened=${() => this._triggerUpToDatePickerOpenedChanged(true)}
+        @change=${this._onUpToDateChanged}
+      >
+      </dw-date-picker>
+    `;
   }
 
   get dateRangeInputDialogTemplate() {
@@ -389,6 +437,12 @@ export class DwDateRangeSelect extends DwSelect {
       this._dialogMode = 'PICKER';
       return;
     }
+
+    if (e?.detail?.showUpToDate) {
+      this._dialogMode = 'UP_TO_DATE_PICKER';
+      return;
+    }
+
     const value = this.value;
     const selectedItem = e.detail;
     this.value = this._valueProvider(selectedItem);
@@ -432,6 +486,42 @@ export class DwDateRangeSelect extends DwSelect {
     if (mode === 'INPUT' && detail?.autoFocusSelector) {
       this._inputDialogAutoFocusSelector = detail.autoFocusSelector;
     }
+  }
+
+  _onUpToDateChanged(e) {
+    const value = e?.detail?.value || '';
+    const selectedItem = find(this.items, 'showUpToDate');
+    const DATE_FORMAT = 'YYYY-MM-DD';
+    if (value) {
+      const valueProvider = function () {
+        return { end: dayjs(value).format(DATE_FORMAT) };
+      };
+      this.value = {
+        ...selectedItem,
+        ...{
+          valueProvider,
+        },
+      };
+    }
+    this._selectedValueText = this._getValue(selectedItem);
+    this._dispatchSelected(this.value);
+    setTimeout(() => {
+      this.validate();
+    }, 0);
+  }
+
+  _triggerUpToDatePickerOpenedChanged(opened) {
+    if (!opened) {
+      this._dialogMode = null;
+    }
+
+    this.dispatchEvent(
+      new CustomEvent('up-to-date-picker-opened-changed', {
+        detail: {
+          opened,
+        },
+      })
+    );
   }
 }
 
