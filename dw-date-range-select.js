@@ -59,9 +59,7 @@ export class DwDateRangeSelect extends DwSelect {
         }
 
         if ((!item || item.showCustomRange || item === 'SELECT_DATE') && value && value.start && value.end) {
-          return `${dayjs(value.start).format(this.dateRepresentationFormat)} - ${dayjs(value.end).format(
-            this.dateRepresentationFormat
-          )}`;
+          return `${dayjs(value.start).format(this.dateRepresentationFormat)} - ${dayjs(value.end).format(this.dateRepresentationFormat)}`;
         }
         return item.label;
       }
@@ -188,11 +186,11 @@ export class DwDateRangeSelect extends DwSelect {
        */
       _inputDialogAutoFocusSelector: { type: String },
 
-       /**
-       * Whether to show custom upto date option or not.
+      /**
+       * Whether to show custom upto date item border.
        * Default is false.
        */
-      showCustomUpToDate: { type: Boolean },
+      showUpToDateDivider: { type: Boolean },
 
       // END: Date-picker properties
     };
@@ -318,7 +316,7 @@ export class DwDateRangeSelect extends DwSelect {
         .errorMessages="${this.errorMessages}"
         @dw-dialog-closed=${e => this._triggerDateRangePickerOpenedChanged(false)}
         @dw-dialog-opened=${e => this._triggerDateRangePickerOpenedChanged(true)}
-        @mode-changed=${(e) => {
+        @mode-changed=${e => {
           this._changeDialogMode('INPUT', e?.detail);
         }}
         @change=${this._onDatePickerValueChanged}
@@ -482,7 +480,7 @@ export class DwDateRangeSelect extends DwSelect {
 
   _changeDialogMode(mode, detail) {
     this._dialogMode = mode;
-    
+
     if (mode === 'INPUT' && detail?.autoFocusSelector) {
       this._inputDialogAutoFocusSelector = detail.autoFocusSelector;
     }
