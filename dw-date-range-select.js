@@ -277,13 +277,23 @@ export class DwDateRangeSelect extends DwSelect {
       return;
     }
 
+    // Bound exactly as `dateRangePickerTemplate` binds the picker, and for the same two reasons:
+    // - `showTrigger` decides the popover's offset. Without it `dw-popover-dialog` uses
+    //   `[0, -triggerEl.offsetHeight]`, which drags the dialog up over the dropdown it was opened from.
+    // - `placement` is read only by the modal styles, where `bottom` is what makes it a bottom sheet
+    //   (`align-items: flex-end`, full width, slide-up). `center` gives a floating centred box instead.
+    //   The popover path ignores it and uses `popoverPlacement`.
+
     return html`
       <dw-days-range-input-dialog
         .opened=${true}
         date-picker="false"
-        .type=${this._layout === 'small' ? 'modal' : 'popover'}
+        .type=${this.mobileMode || this._layout === 'small' ? 'modal' : 'popover'}
         .popoverAnimation=${'expand'}
-        .placement=${this._layout === 'small' ? 'center' : 'bottom'}
+        .placement=${'bottom'}
+        .mobileMode=${this.mobileMode}
+        .tabletMode=${this.tabletMode}
+        .showTrigger=${true}
         .appendTo=${this.appendTo}
         .zIndex=${this.zIndex}
         .triggerElement=${this.triggerElement}
