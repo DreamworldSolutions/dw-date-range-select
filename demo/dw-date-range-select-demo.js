@@ -63,7 +63,15 @@ const DateRangeItems = [
     label: "Select date",
     showCustomRange: true
   },
+  {
+    label: "Custom Days Range",
+    showDaysRange: true
+  },
 ];
+
+const DaysRangeErrorMessages = {
+  fromGreaterThanTo: "From Days must be less than or equal to To Days",
+};
 
 export class DwDateRangeSelectDemo extends LitElement {
   static styles = [
@@ -81,7 +89,17 @@ export class DwDateRangeSelectDemo extends LitElement {
   render() {
     return html`
       <span>Input Value Empty</span>
-      <dw-date-range-select .items=${DateRangeItems}> </dw-date-range-select>
+      <dw-date-range-select
+        .items=${DateRangeItems}
+        .daysRangeHeading=${"Select Days Range"}
+        .daysRangeFromLabel=${"From Days"}
+        .daysRangeToLabel=${"To Days"}
+        .daysRangeCancelLabel=${"Cancel"}
+        .daysRangeApplyLabel=${"Apply"}
+        .errorMessages=${DaysRangeErrorMessages}
+        @selected=${this._onSelected}
+      >
+      </dw-date-range-select>
 
       <br />
 
@@ -91,6 +109,10 @@ export class DwDateRangeSelectDemo extends LitElement {
         .heading=${"Select Duration"}
         showClose
         .items=${DateRangeItems}
+        .daysRangeHeading=${"Select Days Range"}
+        .daysRangeFromLabel=${"From Days"}
+        .daysRangeToLabel=${"To Days"}
+        .errorMessages=${DaysRangeErrorMessages}
         .value=${valueProvider.lastMonth()}
         selectedTrailingIcon="done"
         @selected=${this._onSelected}
@@ -103,6 +125,10 @@ export class DwDateRangeSelectDemo extends LitElement {
       <dw-date-range-select
         .label=${"Select Date"}
         .items=${DateRangeItems}
+        .daysRangeHeading=${"Select Days Range"}
+        .daysRangeFromLabel=${"From Days"}
+        .daysRangeToLabel=${"To Days"}
+        .errorMessages=${DaysRangeErrorMessages}
         .value=${this.value}
         @selected=${this._onSelected}
       >
@@ -111,7 +137,7 @@ export class DwDateRangeSelectDemo extends LitElement {
   }
 
   _onSelected(e) {
-    console.log(e.detail);
+    console.log(e.detail, e.detail?.valueProvider?.());
   }
 }
 

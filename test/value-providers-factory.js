@@ -1,5 +1,6 @@
 import {
   beforeNDays,
+  daysRange,
   lastFinancialYear,
   lastNMonths,
   lastNthMonth,
@@ -15,6 +16,9 @@ import {
 import {
   beforeNDaysData,
   currentDate,
+  daysRangeData,
+  daysRangeSingleDayData,
+  daysRangeTodayData,
   lastFinancialYearData,
   lastNMonthisData,
   lastNthMonthData,
@@ -136,6 +140,20 @@ describe("value-provider-factory", function () {
   describe("#End Of Next week", function () {
     it("Returns a function", function () {
       deepStrictEqual(lastWeek(true)(), EndOfLastWeekData);
+    });
+  });
+
+  describe("#Days Range (from, to)", function () {
+    it("returns the older bound as start and the newer bound as end", function () {
+      deepStrictEqual(daysRange(45, 120)(), daysRangeData);
+    });
+
+    it("returns a single day when from equals to", function () {
+      deepStrictEqual(daysRange(30, 30)(), daysRangeSingleDayData);
+    });
+
+    it("returns today to today when both bounds are 0", function () {
+      deepStrictEqual(daysRange(0, 0)(), daysRangeTodayData);
     });
   });
 });

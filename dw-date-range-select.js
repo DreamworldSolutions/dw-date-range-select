@@ -9,6 +9,7 @@ import * as _valueProvider from './value-provider.js';
 import * as _valueProviderFactory from './value-provider-factory.js';
 import './dw-date-range-picker.js';
 import './dw-date-range-input-dialog.js';
+import './dw-days-range-input-dialog.js';
 import '@dreamworld/dw-date-input/dw-date-picker.js';
 
 /**
@@ -43,6 +44,9 @@ import '@dreamworld/dw-date-input/dw-date-picker.js';
  *    - Dates greater than “end” date are disable for “START date” selection.
  */
 
+// An applied days window. Bounds may be numbers or strings - a consumer rebuilding from URL params has strings.
+const _hasDaysRange = v => !!v && typeof v === 'object' && v.daysFrom !== undefined && v.daysTo !== undefined;
+
 export class DwDateRangeSelect extends DwSelect {
   constructor() {
     super();
@@ -71,6 +75,12 @@ export class DwDateRangeSelect extends DwSelect {
         return v1 === v2;
       }
 
+      // Compared first: after a reload the value is rebuilt from page params with no `valueProvider`, so the
+      // branches below would miss it. Coerced, because those params arrive as strings.
+      if (_hasDaysRange(v1) && _hasDaysRange(v2)) {
+        return Number(v1.daysFrom) === Number(v2.daysFrom) && Number(v1.daysTo) === Number(v2.daysTo);
+      }
+
       if (v1 && v2 && v1.hasOwnProperty('valueProvider') && v2.hasOwnProperty('valueProvider')) {
         return isEqual(v1.valueProvider(), v2.valueProvider());
       }
@@ -87,6 +97,12 @@ export class DwDateRangeSelect extends DwSelect {
       }
 
       if (v1 && v1.showUpToDate && v2 && v2.end && !v2.start) {
+        return true;
+      }
+
+      // Matches the bare dropdown item against a value, which is how the list highlights the selected option.
+      // Two values that both carry a window are handled above.
+      if (v1 && v1.showDaysRange && v2 && (v2.showDaysRange || _hasDaysRange(v2))) {
         return true;
       }
 
@@ -176,9 +192,35 @@ export class DwDateRangeSelect extends DwSelect {
       dateInputFormat: { type: String },
 
       /**
-       * Possible values: 'PICKER' & 'INPUT'
+       * Possible values: 'PICKER', 'UP_TO_DATE_PICKER', 'INPUT', 'DAYS_RANGE_INPUT' & `null`
        */
       _dialogMode: { type: String },
+
+      /**
+       * Heading of the days-range dialog. Supplied by the consumer; this package holds no
+       * language-specific text.
+       */
+      daysRangeHeading: { type: String },
+
+      /**
+       * Label of the days-range dialog's `From` field.
+       */
+      daysRangeFromLabel: { type: String },
+
+      /**
+       * Label of the days-range dialog's `To` field.
+       */
+      daysRangeToLabel: { type: String },
+
+      /**
+       * Label of the days-range dialog's Cancel action.
+       */
+      daysRangeCancelLabel: { type: String },
+
+      /**
+       * Label of the days-range dialog's Apply action.
+       */
+      daysRangeApplyLabel: { type: String },
 
       /**
        * Selector for the element to auto-focus in input dialog
@@ -197,7 +239,8 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   render() {
-    return html`${super.render()} ${this.dateRangePickerTemplate} ${this.dateRangeInputDialogTemplate} ${this.upToDatePickerTemplate}`;
+    return html`${super.render()} ${this.dateRangePickerTemplate} ${this.dateRangeInputDialogTemplate} ${this.upToDatePickerTemplate}
+    ${this.daysRangeInputDialogTemplate}`;
   }
 
   get upToDatePickerTemplate() {
@@ -231,6 +274,46 @@ export class DwDateRangeSelect extends DwSelect {
         @change=${this._onUpToDateChanged}
       >
       </dw-date-picker>
+    `;
+  }
+
+  get daysRangeInputDialogTemplate() {
+    // The popover anchors only on the `opened` false-to-true transition, so gate on the trigger existing.
+    if (this._dialogMode !== 'DAYS_RANGE_INPUT' || !this.triggerElement) {
+      return;
+    }
+
+    // Bound exactly as the picker is:
+    // - `showTrigger` decides the popover offset; without it the dialog is dragged up over the dropdown.
+    // - `placement: bottom` is what makes the modal a bottom sheet. The popover path ignores it.
+
+    return html`
+      <dw-days-range-input-dialog
+        .opened=${true}
+        date-picker="false"
+        .type=${this.mobileMode || this._layout === 'small' ? 'modal' : 'popover'}
+        .popoverAnimation=${'expand'}
+        .placement=${'bottom'}
+        .mobileMode=${this.mobileMode}
+        .tabletMode=${this.tabletMode}
+        .showTrigger=${true}
+        .appendTo=${this.appendTo}
+        .zIndex=${this.zIndex}
+        .triggerElement=${this.triggerElement}
+        ._layout=${this._layout}
+        .heading=${this.daysRangeHeading}
+        .fromLabel=${this.daysRangeFromLabel}
+        .toLabel=${this.daysRangeToLabel}
+        .cancelLabel=${this.daysRangeCancelLabel}
+        .applyLabel=${this.daysRangeApplyLabel}
+        .darkTheme=${this.darkTheme}
+        .errorMessages=${this.errorMessages}
+        .value=${this.value}
+        @dw-dialog-closed=${() => this._triggerDaysRangeInputDialogOpenedChanged(false)}
+        @dw-dialog-opened=${() => this._triggerDaysRangeInputDialogOpenedChanged(true)}
+        @change=${this._onDaysRangeChanged}
+      >
+      </dw-days-range-input-dialog>
     `;
   }
 
@@ -430,6 +513,10 @@ export class DwDateRangeSelect extends DwSelect {
     return this.renderRoot.querySelector('dw-date-range-input-dialog');
   }
 
+  get daysRangeInputDialog() {
+    return this.renderRoot.querySelector('dw-days-range-input-dialog');
+  }
+
   async _onSelect(e) {
     if (e?.detail?.showCustomRange) {
       this._dialogMode = 'PICKER';
@@ -438,6 +525,11 @@ export class DwDateRangeSelect extends DwSelect {
 
     if (e?.detail?.showUpToDate) {
       this._dialogMode = 'UP_TO_DATE_PICKER';
+      return;
+    }
+
+    if (e?.detail?.showDaysRange) {
+      this._dialogMode = 'DAYS_RANGE_INPUT';
       return;
     }
 
@@ -463,6 +555,54 @@ export class DwDateRangeSelect extends DwSelect {
       this.dispatchEvent(new CustomEvent('date-range-input-dialog-opened'));
     } else {
       this.dispatchEvent(new CustomEvent('date-range-input-dialog-closed'));
+    }
+  }
+
+  _onDaysRangeChanged(e) {
+    const daysFrom = e?.detail?.daysFrom;
+    const daysTo = e?.detail?.daysTo;
+    if (daysFrom === undefined || daysTo === undefined) {
+      return;
+    }
+
+    const previousValue = this.value;
+    const selectedItem = find(this.items, 'showDaysRange');
+    this.value = {
+      ...selectedItem,
+      ...{
+        daysFrom,
+        daysTo,
+        valueProvider: _valueProviderFactory.daysRange(daysFrom, daysTo),
+      },
+    };
+    this._dispatchSelected(previousValue);
+    setTimeout(() => {
+      this.validate();
+    }, 0);
+  }
+
+  /**
+   * A days-range value carries its window; the item it matches does not, so render from the value.
+   * @override
+   */
+  _setSelectedValueText() {
+    if (_hasDaysRange(this.value)) {
+      this._selectedValueText = this._getValue(this.value);
+      return;
+    }
+
+    super._setSelectedValueText();
+  }
+
+  _triggerDaysRangeInputDialogOpenedChanged(opened) {
+    if (!opened) {
+      this._dialogMode = null;
+    }
+
+    if (opened) {
+      this.dispatchEvent(new CustomEvent('days-range-input-dialog-opened'));
+    } else {
+      this.dispatchEvent(new CustomEvent('days-range-input-dialog-closed'));
     }
   }
 

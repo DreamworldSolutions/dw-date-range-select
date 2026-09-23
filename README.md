@@ -73,7 +73,7 @@ Extends `DwSelect`. All `dw-select` properties are inherited.
 
 | Name | Type | Default | Required | Description |
 |---|---|---|---|---|
-| `value` | `Object` | — | No | Current value. Shape: `{ start?, end?, valueProvider?, label?, showCustomRange?, showUpToDate? }` |
+| `value` | `Object` | — | No | Current value. Shape: `{ start?, end?, valueProvider?, label?, showCustomRange?, showUpToDate?, showDaysRange?, daysFrom?, daysTo? }` |
 | `valueFormat` | `String` | `'YYYY-MM-DD'` | No | dayjs format string for `start`/`end` date values |
 | `dateRepresentationFormat` | `String` | `'DD MMM YYYY'` | No | dayjs format string used when rendering the selected value in the trigger |
 | `dateInputFormat` | `String` | `'dd/mm/yyyy'` | No | Format hint shown in manual date input fields (lowercase, e.g. `'dd/mm/yyyy'` or `'mm/dd/yyyy'`) |
@@ -86,6 +86,11 @@ Extends `DwSelect`. All `dw-select` properties are inherited.
 | `tabletMode` | `Boolean` | `false` | No | Enables tablet-optimized layout. Reflected as `tablet-mode` attribute |
 | `darkTheme` | `Boolean` | `false` | No | Applies dark theme to dialogs. Reflected as `dark-theme` attribute |
 | `showUpToDateDivider` | `Boolean` | `false` | No | Renders a visual divider before items that have `showUpToDate: true` |
+| `daysRangeHeading` | `String` | — | No | Heading of the days-range dialog. Required in practice whenever an item carries `showDaysRange` — the package holds no language-specific text |
+| `daysRangeFromLabel` | `String` | — | No | Label of the days-range dialog's `From` field |
+| `daysRangeToLabel` | `String` | — | No | Label of the days-range dialog's `To` field |
+| `daysRangeCancelLabel` | `String` | — | No | Label of the days-range dialog's Cancel action. Falls back to English |
+| `daysRangeApplyLabel` | `String` | — | No | Label of the days-range dialog's Apply action. Falls back to English |
 
 ##### Events
 
@@ -97,6 +102,8 @@ Extends `DwSelect`. All `dw-select` properties are inherited.
 | `date-range-input-dialog-opened` | — | Fired when the manual input dialog opens |
 | `date-range-input-dialog-closed` | — | Fired when the manual input dialog closes |
 | `up-to-date-picker-opened-changed` | `{ opened: Boolean }` | Fired when the "up to date" single-date picker opens or closes |
+| `days-range-input-dialog-opened` | — | Fired when the days-range dialog opens |
+| `days-range-input-dialog-closed` | — | Fired when the days-range dialog closes |
 
 ---
 
@@ -184,6 +191,37 @@ Internal manual date entry dialog (`dw-composite-dialog`) with Start date and En
 
 ---
 
+#### `<dw-days-range-input-dialog>`
+
+Internal days-range entry dialog (`dw-composite-dialog`) with `From` and `To` day-count inputs. Opened
+by selecting an item that carries `showDaysRange: true`. Renders as a modal on the `small` layout and
+as a popover otherwise.
+
+Only whole, non-negative numbers can be entered: decimals, minus signs and letters are rejected as the
+user types, and stripped out of pasted text. `Apply` stays disabled until both fields hold a value and
+`From <= To`. `From == To` is valid and yields a single day's age. There is no upper bound.
+
+##### Props
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| `value` | `Object` | — | No | `{ daysFrom: Number, daysTo: Number }`. Pre-fills both fields |
+| `errorMessages` | `Object` | `{}` | No | Map of error keys to message strings. Reads the `fromGreaterThanTo` key only |
+| `heading` | `String` | — | No | Dialog title. Supplied by the consumer |
+| `fromLabel` | `String` | — | No | Label of the `From` field |
+| `toLabel` | `String` | — | No | Label of the `To` field |
+| `cancelLabel` | `String` | — | No | Label of the Cancel action. Falls back to `Cancel` |
+| `applyLabel` | `String` | — | No | Label of the Apply action. Falls back to `Apply` |
+| `darkTheme` | `Boolean` | `false` | No | Dark theme. Reflected as `dark-theme` attribute |
+
+##### Events
+
+| Event | Detail | Description |
+|---|---|---|
+| `change` | `{ daysFrom: Number, daysTo: Number }` | Fired when Apply is clicked while valid. Cancel emits nothing |
+
+---
+
 ### Data Models
 
 #### `DateRangeItem`
@@ -196,6 +234,7 @@ Objects passed to the `.items` array of `<dw-date-range-select>`.
 | `valueProvider` | `Function` | No | Zero-argument function that returns `{ start?, end? }`. Used to compute the actual date range |
 | `showCustomRange` | `Boolean` | No | When `true`, selecting this item opens the calendar picker dialog instead of setting a value directly |
 | `showUpToDate` | `Boolean` | No | When `true`, selecting this item opens a single-date picker. The chosen date is stored as `{ end }` |
+| `showDaysRange` | `Boolean` | No | When `true`, selecting this item opens the days-range dialog. The applied window is stored as `{ daysFrom, daysTo, valueProvider }` |
 
 #### Value Object
 
@@ -206,6 +245,8 @@ The shape of `<dw-date-range-select>.value`:
   start: "YYYY-MM-DD",       // optional — not present for "up to date" ranges
   end:   "YYYY-MM-DD",       // optional — not present for "all" ranges
   valueProvider: Function,   // optional — function that re-derives start/end dynamically
+  daysFrom: Number,          // optional — only for `showDaysRange` items; the newer edge, in days before today
+  daysTo: Number,            // optional — only for `showDaysRange` items; the older edge, in days before today
   // ...any other properties copied from the matched DateRangeItem
 }
 ```
@@ -252,6 +293,7 @@ import { valueProviderFactory } from '@dreamworld/dw-date-range-select/dw-date-r
 | `lastFinancialYear` | `(startsFrom: String, endDate?: Boolean = false) => Function` | `{ start, end }` or `{ end }` | Previous financial year. `startsFrom` format: `"DD/MM"` |
 | `lastNthMonth` | `(n: Number) => Function` | `{ start, end }` | Start and end of the calendar month N months ago (e.g. `1` = last month, `2` = two months ago) |
 | `beforeNDays` | `(n: Number) => Function` | `{ end }` | The date that was N days before today |
+| `daysRange` | `(from: Number, to: Number) => Function` | `{ start, end }` | An age window in days: `start` is `to` days before today, `end` is `from` days before today, both inclusive. Note the inversion — these are ages, so the larger day count yields the earlier date |
 | `thisWeek` | `(endDate?: Boolean = false) => Function` | `{ start, end }` or `{ end }` | Monday–Sunday of the current ISO week |
 | `nextWeek` | `(endDate?: Boolean = false) => Function` | `{ start, end }` or `{ end }` | Monday–Sunday of the next ISO week |
 | `lastWeek` | `(endDate?: Boolean = false) => Function` | `{ start, end }` or `{ end }` | Monday–Sunday of the previous ISO week |
