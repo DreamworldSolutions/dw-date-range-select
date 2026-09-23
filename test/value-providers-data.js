@@ -99,3 +99,18 @@ export const endOfThisFinancialYearData = {
 export const endOfLastFinancialYearData = {
   end: "2022-03-31",
 };
+
+export const daysRangeData = {
+  start: "2022-09-16",
+  end: "2022-11-30",
+};
+
+export const daysRangeSingleDayData = {
+  start: "2022-12-15",
+  end: "2022-12-15",
+};
+
+export const daysRangeTodayData = {
+  start: "2023-01-14",
+  end: "2023-01-14",
+};

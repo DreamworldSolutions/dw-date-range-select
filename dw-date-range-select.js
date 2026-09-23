@@ -9,6 +9,7 @@ import * as _valueProvider from './value-provider.js';
 import * as _valueProviderFactory from './value-provider-factory.js';
 import './dw-date-range-picker.js';
 import './dw-date-range-input-dialog.js';
+import './dw-days-range-input-dialog.js';
 import '@dreamworld/dw-date-input/dw-date-picker.js';
 
 /**
@@ -87,6 +88,14 @@ export class DwDateRangeSelect extends DwSelect {
       }
 
       if (v1 && v1.showUpToDate && v2 && v2.end && !v2.start) {
+        return true;
+      }
+
+      // Placed after the `valueProvider` branches on purpose: those compare two applied windows by
+      // their resolved dates, so a changed window still reports as a change. The `daysFrom`/`daysTo` arm
+      // matches a value a consumer rebuilt from its own stored params, which carries the window but none of
+      // the item's flags - the state after any page reload.
+      if (v1 && v1.showDaysRange && v2 && (v2.showDaysRange || (v2.daysFrom !== undefined && v2.daysTo !== undefined))) {
         return true;
       }
 
@@ -176,9 +185,35 @@ export class DwDateRangeSelect extends DwSelect {
       dateInputFormat: { type: String },
 
       /**
-       * Possible values: 'PICKER' & 'INPUT'
+       * Possible values: 'PICKER', 'UP_TO_DATE_PICKER', 'INPUT', 'DAYS_RANGE_INPUT' & `null`
        */
       _dialogMode: { type: String },
+
+      /**
+       * Heading of the days-range dialog. Supplied by the consumer; this package holds no
+       * language-specific text.
+       */
+      daysRangeHeading: { type: String },
+
+      /**
+       * Label of the days-range dialog's `From` field.
+       */
+      daysRangeFromLabel: { type: String },
+
+      /**
+       * Label of the days-range dialog's `To` field.
+       */
+      daysRangeToLabel: { type: String },
+
+      /**
+       * Label of the days-range dialog's Cancel action.
+       */
+      daysRangeCancelLabel: { type: String },
+
+      /**
+       * Label of the days-range dialog's Apply action.
+       */
+      daysRangeApplyLabel: { type: String },
 
       /**
        * Selector for the element to auto-focus in input dialog
@@ -197,7 +232,8 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   render() {
-    return html`${super.render()} ${this.dateRangePickerTemplate} ${this.dateRangeInputDialogTemplate} ${this.upToDatePickerTemplate}`;
+    return html`${super.render()} ${this.dateRangePickerTemplate} ${this.dateRangeInputDialogTemplate} ${this.upToDatePickerTemplate}
+    ${this.daysRangeInputDialogTemplate}`;
   }
 
   get upToDatePickerTemplate() {
@@ -231,6 +267,40 @@ export class DwDateRangeSelect extends DwSelect {
         @change=${this._onUpToDateChanged}
       >
       </dw-date-picker>
+    `;
+  }
+
+  get daysRangeInputDialogTemplate() {
+    // The popover anchors only on the `opened` false-to-true transition, so it never anchors when the
+    // trigger is still unresolved at that moment. Gate rendering on it instead.
+    if (this._dialogMode !== 'DAYS_RANGE_INPUT' || !this.triggerElement) {
+      return;
+    }
+
+    return html`
+      <dw-days-range-input-dialog
+        .opened=${true}
+        date-picker="false"
+        .type=${this._layout === 'small' ? 'modal' : 'popover'}
+        .popoverAnimation=${'expand'}
+        .placement=${this._layout === 'small' ? 'center' : 'bottom'}
+        .appendTo=${this.appendTo}
+        .zIndex=${this.zIndex}
+        .triggerElement=${this.triggerElement}
+        ._layout=${this._layout}
+        .heading=${this.daysRangeHeading}
+        .fromLabel=${this.daysRangeFromLabel}
+        .toLabel=${this.daysRangeToLabel}
+        .cancelLabel=${this.daysRangeCancelLabel}
+        .applyLabel=${this.daysRangeApplyLabel}
+        .darkTheme=${this.darkTheme}
+        .errorMessages=${this.errorMessages}
+        .value=${this.value}
+        @dw-dialog-closed=${() => this._triggerDaysRangeInputDialogOpenedChanged(false)}
+        @dw-dialog-opened=${() => this._triggerDaysRangeInputDialogOpenedChanged(true)}
+        @change=${this._onDaysRangeChanged}
+      >
+      </dw-days-range-input-dialog>
     `;
   }
 
@@ -430,6 +500,10 @@ export class DwDateRangeSelect extends DwSelect {
     return this.renderRoot.querySelector('dw-date-range-input-dialog');
   }
 
+  get daysRangeInputDialog() {
+    return this.renderRoot.querySelector('dw-days-range-input-dialog');
+  }
+
   async _onSelect(e) {
     if (e?.detail?.showCustomRange) {
       this._dialogMode = 'PICKER';
@@ -438,6 +512,11 @@ export class DwDateRangeSelect extends DwSelect {
 
     if (e?.detail?.showUpToDate) {
       this._dialogMode = 'UP_TO_DATE_PICKER';
+      return;
+    }
+
+    if (e?.detail?.showDaysRange) {
+      this._dialogMode = 'DAYS_RANGE_INPUT';
       return;
     }
 
@@ -463,6 +542,44 @@ export class DwDateRangeSelect extends DwSelect {
       this.dispatchEvent(new CustomEvent('date-range-input-dialog-opened'));
     } else {
       this.dispatchEvent(new CustomEvent('date-range-input-dialog-closed'));
+    }
+  }
+
+  _onDaysRangeChanged(e) {
+    const daysFrom = e?.detail?.daysFrom;
+    const daysTo = e?.detail?.daysTo;
+    if (daysFrom === undefined || daysTo === undefined) {
+      return;
+    }
+
+    const previousValue = this.value;
+    const selectedItem = find(this.items, 'showDaysRange');
+    this.value = {
+      ...selectedItem,
+      ...{
+        daysFrom,
+        daysTo,
+        valueProvider: _valueProviderFactory.daysRange(daysFrom, daysTo),
+      },
+    };
+    // `this.value` rather than `selectedItem`, so a consumer's `valueTextProvider` can read
+    // `daysFrom`/`daysTo` and render the applied window instead of the item's label.
+    this._selectedValueText = this._getValue(this.value);
+    this._dispatchSelected(previousValue);
+    setTimeout(() => {
+      this.validate();
+    }, 0);
+  }
+
+  _triggerDaysRangeInputDialogOpenedChanged(opened) {
+    if (!opened) {
+      this._dialogMode = null;
+    }
+
+    if (opened) {
+      this.dispatchEvent(new CustomEvent('days-range-input-dialog-opened'));
+    } else {
+      this.dispatchEvent(new CustomEvent('days-range-input-dialog-closed'));
     }
   }
 

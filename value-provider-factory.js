@@ -170,6 +170,24 @@ export const beforeNDays = n => {
 };
 
 /**
+ * factory function (valueProvider)
+ * returns a function (which acts as valueProvider and returns the date range of an age window expressed in days)
+ * Note the inversion: these are ages, not forward offsets, so the larger day count yields the earlier date.
+ * @param {Number} from is a whole non-negative integer; the newer edge of the window, in days before today
+ * @param {Number} to is a whole non-negative integer; the older edge of the window. The caller owns the
+ * ordering - passing `to` < `from` returns an inverted range rather than throwing.
+ * @returns {Function} function (which acts as valueProvider and returns `{ start, end }`, both bounds inclusive)
+ */
+export const daysRange = (from, to) => {
+  return () => {
+    return {
+      start: dayjs(currentDate).subtract(to, 'days').format(DATE_FORMAT),
+      end: dayjs(currentDate).subtract(from, 'days').format(DATE_FORMAT),
+    };
+  };
+};
+
+/**
  * This week's duration. Note: Week start with Monday.
  * @param {Boolean} endDate only returns end date when `true`
  * @returns {Object} returns this week's start and end date
