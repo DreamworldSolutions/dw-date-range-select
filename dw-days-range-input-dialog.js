@@ -5,6 +5,9 @@ import '@dreamworld/dw-button';
 import '@dreamworld/dw-input/dw-input.js';
 import DeviceInfo from '@dreamworld/device-info';
 
+// ~999 years. Beyond roughly this the derived date loses its 4-digit year.
+const MAX_DAYS = 365000;
+
 /**
  * Collects an age window expressed in days, e.g. "45 - 120 Days".
  *
@@ -277,9 +280,15 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
     return this._invalid ? this.errorMessages?.fromGreaterThanTo : '';
   }
 
-  // Only a whole non-negative number is a day count.
+  // Only a whole non-negative number is a day count, and not one so large that the date it derives falls
+  // outside a 4-digit year - dayjs formats those as a negative year, which would reach the URL and the server.
   _toDays(value) {
-    return /^\d+$/.test(value === undefined || value === null ? '' : String(value)) ? Number(value) : undefined;
+    if (!/^\d+$/.test(value === undefined || value === null ? '' : String(value))) {
+      return undefined;
+    }
+
+    const days = Number(value);
+    return days <= MAX_DAYS ? days : undefined;
   }
 
   // Avoids rendering "undefined" when no value is bound.

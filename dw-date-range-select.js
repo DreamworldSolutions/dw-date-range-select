@@ -44,6 +44,9 @@ import '@dreamworld/dw-date-input/dw-date-picker.js';
  *    - Dates greater than “end” date are disable for “START date” selection.
  */
 
+// An applied days window. Bounds may be numbers or strings - a consumer rebuilding from URL params has strings.
+const _hasDaysRange = v => !!v && typeof v === 'object' && v.daysFrom !== undefined && v.daysTo !== undefined;
+
 export class DwDateRangeSelect extends DwSelect {
   constructor() {
     super();
@@ -72,6 +75,12 @@ export class DwDateRangeSelect extends DwSelect {
         return v1 === v2;
       }
 
+      // Compared first: after a reload the value is rebuilt from page params with no `valueProvider`, so the
+      // branches below would miss it. Coerced, because those params arrive as strings.
+      if (_hasDaysRange(v1) && _hasDaysRange(v2)) {
+        return Number(v1.daysFrom) === Number(v2.daysFrom) && Number(v1.daysTo) === Number(v2.daysTo);
+      }
+
       if (v1 && v2 && v1.hasOwnProperty('valueProvider') && v2.hasOwnProperty('valueProvider')) {
         return isEqual(v1.valueProvider(), v2.valueProvider());
       }
@@ -91,9 +100,9 @@ export class DwDateRangeSelect extends DwSelect {
         return true;
       }
 
-      // After the `valueProvider` branches on purpose, so a changed window still reports as a change.
-      // The `daysFrom`/`daysTo` arm matches a value a consumer rebuilt from its own params after a reload.
-      if (v1 && v1.showDaysRange && v2 && (v2.showDaysRange || (v2.daysFrom !== undefined && v2.daysTo !== undefined))) {
+      // Matches the bare dropdown item against a value, which is how the list highlights the selected option.
+      // Two values that both carry a window are handled above.
+      if (v1 && v1.showDaysRange && v2 && (v2.showDaysRange || _hasDaysRange(v2))) {
         return true;
       }
 
@@ -566,12 +575,23 @@ export class DwDateRangeSelect extends DwSelect {
         valueProvider: _valueProviderFactory.daysRange(daysFrom, daysTo),
       },
     };
-    // `this.value`, not `selectedItem`, so a consumer's `valueTextProvider` can read the applied window.
-    this._selectedValueText = this._getValue(this.value);
     this._dispatchSelected(previousValue);
     setTimeout(() => {
       this.validate();
     }, 0);
+  }
+
+  /**
+   * A days-range value carries its window; the item it matches does not, so render from the value.
+   * @override
+   */
+  _setSelectedValueText() {
+    if (_hasDaysRange(this.value)) {
+      this._selectedValueText = this._getValue(this.value);
+      return;
+    }
+
+    super._setSelectedValueText();
   }
 
   _triggerDaysRangeInputDialogOpenedChanged(opened) {
