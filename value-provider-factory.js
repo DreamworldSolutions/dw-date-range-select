@@ -171,12 +171,11 @@ export const beforeNDays = n => {
 
 /**
  * factory function (valueProvider)
- * returns a function (which acts as valueProvider and returns the date range of an age window expressed in days)
- * Note the inversion: these are ages, not forward offsets, so the larger day count yields the earlier date.
- * @param {Number} from is a whole non-negative integer; the newer edge of the window, in days before today
- * @param {Number} to is a whole non-negative integer; the older edge of the window. The caller owns the
- * ordering - passing `to` < `from` returns an inverted range rather than throwing.
- * @returns {Function} function (which acts as valueProvider and returns `{ start, end }`, both bounds inclusive)
+ * returns a function which returns the date range of an age window expressed in days.
+ * Note the inversion: these are ages, so the larger day count gives the earlier date.
+ * @param {Number} from newer edge of the window, in days before today
+ * @param {Number} to older edge. The caller owns the ordering; `to` < `from` gives an inverted range
+ * @returns {Function} valueProvider returning `{ start, end }`, both inclusive
  */
 export const daysRange = (from, to) => {
   return () => {

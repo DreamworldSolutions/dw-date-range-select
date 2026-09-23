@@ -46,7 +46,7 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
           height: 48px;
         }
 
-        /* The popover surface is a fixed 280px by default, which is too narrow for two fields. */
+        /* The popover surface defaults to 280px, too narrow for two fields. */
         :host([type='popover']) {
           --dw-popover-width: auto;
           --dw-popover-min-width: 328px;
@@ -68,7 +68,7 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
           border-bottom: 1px solid var(--mdc-theme-divider-color);
         }
 
-        /* The modal and the popover templates name the content element differently. */
+        /* The modal and popover templates name the content element differently. */
         .mdc-dialog__content,
         .dialog__content {
           display: flex;
@@ -106,7 +106,7 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
           gap: 8px;
         }
 
-        /* The popover footer is a plain <footer>, so it needs its own action-row layout. */
+        /* The popover footer is a plain <footer>, so it needs its own action row. */
         :host([type='popover']) footer {
           display: flex;
           justify-content: flex-end;
@@ -185,13 +185,13 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
     this._inputFrom = '';
     this._inputTo = '';
     this._invalid = false;
-    // `dw-input` re-reads `error` on every render, so the identity has to stay stable.
+    // `dw-input` re-reads `error` on every render, so keep the identity stable.
     this._validateFrom = this._validateFrom.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // The consumer may bind `_layout`; fall back to the device's own layout when it does not.
+    // Fall back to the device's layout when the consumer does not bind one.
     this._layout = this._layout || DeviceInfo.info().layout;
   }
 
@@ -255,15 +255,14 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
     return this.renderRoot.querySelector('#to-days');
   }
 
-  // Apply needs both fields filled and a window that is not inverted.
+  // Apply needs both fields filled and a window that isn't inverted.
   get _applyEnabled() {
     return this._toDays(this._inputFrom) !== undefined && this._toDays(this._inputTo) !== undefined && !this._invalid;
   }
 
   /**
-   * Lays the fields out and focuses the first one.
-   * The popover never calls `_setFocusToElement`, and both fields are measured by MDC while still
-   * hidden, so neither the focus nor the notched outline can be left to the base class.
+   * Lays the fields out and focuses the first. The popover never calls `_setFocusToElement`, and MDC
+   * measures the fields while still hidden.
    * @override
    */
   _onDialogOpened(e) {
@@ -273,24 +272,23 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
     this.daysFromInput && this.daysFromInput.focus && this.daysFromInput.focus();
   }
 
-  // `dw-input` reads this as a function, so the message is re-derived on every validation pass.
+  // Read as a function, so the message is re-derived on every validation pass.
   _validateFrom() {
     return this._invalid ? this.errorMessages?.fromGreaterThanTo : '';
   }
 
-  // Only a whole non-negative number is a day count; anything else leaves the window incomplete.
+  // Only a whole non-negative number is a day count.
   _toDays(value) {
     return /^\d+$/.test(value === undefined || value === null ? '' : String(value)) ? Number(value) : undefined;
   }
 
-  // Keeps a bound number out of the field when it is absent, rather than rendering "undefined".
+  // Avoids rendering "undefined" when no value is bound.
   _toInputText(days) {
     return days === undefined || days === null ? '' : String(days);
   }
 
   /**
-   * `allowedPattern` rejects keystrokes but lets pasted text through whenever it contains a digit,
-   * so "4.5" and "-5" have to be stripped here and written back to the field.
+   * `allowedPattern` guards keystrokes but lets pasted text through if it has a digit, so strip it here.
    */
   _sanitize(inputEl) {
     const sanitized = (inputEl?.value || '').replace(/\D/g, '');

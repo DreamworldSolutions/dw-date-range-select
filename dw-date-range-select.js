@@ -91,10 +91,8 @@ export class DwDateRangeSelect extends DwSelect {
         return true;
       }
 
-      // Placed after the `valueProvider` branches on purpose: those compare two applied windows by
-      // their resolved dates, so a changed window still reports as a change. The `daysFrom`/`daysTo` arm
-      // matches a value a consumer rebuilt from its own stored params, which carries the window but none of
-      // the item's flags - the state after any page reload.
+      // After the `valueProvider` branches on purpose, so a changed window still reports as a change.
+      // The `daysFrom`/`daysTo` arm matches a value a consumer rebuilt from its own params after a reload.
       if (v1 && v1.showDaysRange && v2 && (v2.showDaysRange || (v2.daysFrom !== undefined && v2.daysTo !== undefined))) {
         return true;
       }
@@ -271,18 +269,14 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get daysRangeInputDialogTemplate() {
-    // The popover anchors only on the `opened` false-to-true transition, so it never anchors when the
-    // trigger is still unresolved at that moment. Gate rendering on it instead.
+    // The popover anchors only on the `opened` false-to-true transition, so gate on the trigger existing.
     if (this._dialogMode !== 'DAYS_RANGE_INPUT' || !this.triggerElement) {
       return;
     }
 
-    // Bound exactly as `dateRangePickerTemplate` binds the picker, and for the same two reasons:
-    // - `showTrigger` decides the popover's offset. Without it `dw-popover-dialog` uses
-    //   `[0, -triggerEl.offsetHeight]`, which drags the dialog up over the dropdown it was opened from.
-    // - `placement` is read only by the modal styles, where `bottom` is what makes it a bottom sheet
-    //   (`align-items: flex-end`, full width, slide-up). `center` gives a floating centred box instead.
-    //   The popover path ignores it and uses `popoverPlacement`.
+    // Bound exactly as the picker is:
+    // - `showTrigger` decides the popover offset; without it the dialog is dragged up over the dropdown.
+    // - `placement: bottom` is what makes the modal a bottom sheet. The popover path ignores it.
 
     return html`
       <dw-days-range-input-dialog
@@ -572,8 +566,7 @@ export class DwDateRangeSelect extends DwSelect {
         valueProvider: _valueProviderFactory.daysRange(daysFrom, daysTo),
       },
     };
-    // `this.value` rather than `selectedItem`, so a consumer's `valueTextProvider` can read
-    // `daysFrom`/`daysTo` and render the applied window instead of the item's label.
+    // `this.value`, not `selectedItem`, so a consumer's `valueTextProvider` can read the applied window.
     this._selectedValueText = this._getValue(this.value);
     this._dispatchSelected(previousValue);
     setTimeout(() => {
