@@ -1073,11 +1073,12 @@
     "@dreamworld/pwa-helpers" "^1.13.1"
     "@material/mwc-icon" "0.27.0"
 
-"@dreamworld/dw-input@4.1.1", "@dreamworld/dw-input@^4.0.11", "@dreamworld/dw-input@^4.1.20":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-input/-/dw-input-4.1.1.tgz#6e2189370b876a152d11de6cddb2c364e68915f9"
-  integrity sha512-J4rBo8QzSKrhsoJ+U3bYc6LRj5f2rvb4nYxpEuJlM3IUWZxbDZDEhJNbqpA4UXXFQZy2cMpJfcIFQmLbrXCkeg==
+"@dreamworld/dw-input@4.1.28", "@dreamworld/dw-input@^4.0.11", "@dreamworld/dw-input@^4.1.20", "@dreamworld/dw-input@^4.1.28":
+  version "4.1.28"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-input/-/dw-input-4.1.28.tgz#5f7c5a04377db6390b6805b5ab742206f0ae5fda"
+  integrity sha512-1Gx4JqjfyE3Q7egxdy62aN38yuuqverK8QpIK7UJphbbq/YyCP+jGVVJdItnUUe3OYAd7iU939Qa0Qc4BIg6Ig==
   dependencies:
+    "@dreamworld/device-info" "^1.3.0"
     "@dreamworld/dw-button" "^3.0.3"
     "@dreamworld/dw-form" "^4.0.0"
     "@dreamworld/dw-icon" "^4.0.0"
