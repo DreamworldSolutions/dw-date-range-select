@@ -248,6 +248,7 @@ export class DwDateRangeSelect extends DwSelect {
       return;
     }
 
+    // Pre-filled with the current end date; `notifySameValue` lets picking that same date still apply "Up to a Date".
     const value = this.value?.end || this.value?.valueProvider?.()?.end;
 
     return html`
@@ -263,6 +264,7 @@ export class DwDateRangeSelect extends DwSelect {
         .appendTo=${this.appendTo}
         .zIndex=${this.zIndex}
         .value=${value}
+        .notifySameValue=${true}
         .minDate="${this.minDate}"
         .maxDate="${this.maxDate}"
         .inputFormat=${this.dateInputFormat}
