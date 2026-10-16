@@ -1001,15 +1001,15 @@
     "@dreamworld/pwa-helpers" "^1.13.1"
     "@material/mwc-button" "0.27.0"
 
-"@dreamworld/dw-date-input@^6.0.6":
-  version "6.0.6"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-date-input/-/dw-date-input-6.0.6.tgz#b8b58a01ae064fdd520ba15428aa07302c978716"
-  integrity sha512-sEZiKt3gpsvRT6oUIV052HSezIUGM7cxQ/WzhtHRtB9RxWIn5w8SfOo7wb3A2/XBOhah5zqjNL8/WcEcX9KQSA==
+"@dreamworld/dw-date-input@^6.0.34":
+  version "6.0.34"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-date-input/-/dw-date-input-6.0.34.tgz#a22e1797bd2a41e8530a69504d1973acd2996fca"
+  integrity sha512-zg0ZfYUcpSuPsUvwqauJO1Ll76tEvvTDABX/z0mmkSjV3nY3fU0Z0Y0EJqOiBnvmO2oYcozndljd0UHvxFmeZw==
   dependencies:
     "@dreamworld/dw-dialog" "^5.7.4"
     "@dreamworld/dw-form" "^4.1.2"
     "@dreamworld/dw-icon-button" "^3.2.5"
-    "@dreamworld/dw-input" "^4.0.11"
+    "@dreamworld/dw-input" "^4.1.22"
     "@dreamworld/pwa-helpers" "^2.0.1"
     dayjs "^1.11.10"
     litepicker "^2.0.12"
@@ -1073,7 +1073,7 @@
     "@dreamworld/pwa-helpers" "^1.13.1"
     "@material/mwc-icon" "0.27.0"
 
-"@dreamworld/dw-input@4.1.28", "@dreamworld/dw-input@^4.0.11", "@dreamworld/dw-input@^4.1.20", "@dreamworld/dw-input@^4.1.28":
+"@dreamworld/dw-input@4.1.28", "@dreamworld/dw-input@^4.1.20", "@dreamworld/dw-input@^4.1.22", "@dreamworld/dw-input@^4.1.28":
   version "4.1.28"
   resolved "https://registry.yarnpkg.com/@dreamworld/dw-input/-/dw-input-4.1.28.tgz#5f7c5a04377db6390b6805b5ab742206f0ae5fda"
   integrity sha512-1Gx4JqjfyE3Q7egxdy62aN38yuuqverK8QpIK7UJphbbq/YyCP+jGVVJdItnUUe3OYAd7iU939Qa0Qc4BIg6Ig==
