@@ -15,8 +15,9 @@ const MAX_DAYS = 365000;
  * - Only whole, non-negative numbers can be entered; decimals, minus signs and letters are rejected as
  *   the user types, and stripped out of pasted text.
  * - `Apply` stays disabled until both fields hold a value and `From <= To`.
- * - When `From > To` an inline error is shown under the `From` field. The text comes from the
- *   consumer through `errorMessages.fromGreaterThanTo`, so this element stays language-agnostic.
+ * - When `From > To` an inline error is shown under the field that has focus (the last focused one, once
+ *   focus leaves both). The text comes from the consumer through `errorMessages.fromGreaterThanTo` (under
+ *   `From`) and `errorMessages.toLessThanFrom` (under `To`), so this element stays language-agnostic.
  * - `From == To` is valid and yields a single day's age. There is no upper bound.
  * - Renders as a modal on the `small` layout and as a popover otherwise.
  *
@@ -90,14 +91,36 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
           padding: 0 16px;
         }
 
-        dw-input {
-          padding: 21px 0 28px 0;
+        .field {
+          position: relative;
           flex: 1;
+          /* Bottom space is reserved for the error (up to two lines), so showing it doesn't move anything. */
+          padding: 16px 0 48px 0;
         }
 
+        dw-input {
+          display: block;
+        }
+
+        .error {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 72px; /* field padding (16px) + input height (56px) */
+          padding: 0 12px;
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0.4px;
+          color: var(--mdc-theme-error, #b00020);
+        }
+
+        /* Centered on the input box itself, not on the whole field (which includes the error space). */
         .separator {
-          padding: 0 8px;
-          align-self: center;
+          display: flex;
+          align-items: center;
+          height: 56px;
+          margin-top: 16px;
+          padding: 0 16px;
         }
 
         :host([dark-theme][type='modal']) .mdc-dialog .mdc-dialog__surface {
@@ -129,7 +152,7 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
       value: { type: Object },
 
       /**
-       * Error messages keyed by reason. This element reads `fromGreaterThanTo` only.
+       * Error messages keyed by reason. This element reads `fromGreaterThanTo` and `toLessThanFrom`.
        */
       errorMessages: { type: Object },
 
@@ -174,6 +197,11 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
       _invalid: { type: Boolean },
 
       /**
+       * Field the user is working in: `from` or `to`. Decides which one displays the range error.
+       */
+      _activeField: { type: String },
+
+      /**
        * Represents current layout in String.
        * An Enum: possible values - `small`, `medium`, `large`, `hd` and `fullhd`
        */
@@ -188,8 +216,7 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
     this._inputFrom = '';
     this._inputTo = '';
     this._invalid = false;
-    // `dw-input` re-reads `error` on every render, so keep the identity stable.
-    this._validateFrom = this._validateFrom.bind(this);
+    this._activeField = 'from';
   }
 
   connectedCallback() {
@@ -218,29 +245,37 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
   }
 
   get _contentTemplate() {
-    return html`<dw-input
-        id="from-days"
-        .label=${this.fromLabel}
-        .value=${this._inputFrom}
-        allowedPattern="[0-9]"
-        inputmode="numeric"
-        .invalid=${this._invalid}
-        .error=${this._validateFrom}
-        .darkTheme=${this.darkTheme}
-        @input=${this._onFromInput}
-      ></dw-input>
+    return html`<div class="field">
+        <dw-input
+          id="from-days"
+          .label=${this.fromLabel}
+          .value=${this._inputFrom}
+          allowedPattern="[0-9]"
+          inputmode="numeric"
+          .invalid=${this._showError('from')}
+          .darkTheme=${this.darkTheme}
+          @focusin=${this._onFromFocus}
+          @input=${this._onFromInput}
+        ></dw-input>
+        ${this._showError('from') ? html`<div class="error">${this.errorMessages?.fromGreaterThanTo}</div>` : ''}
+      </div>
 
       <div class="separator">-</div>
 
-      <dw-input
-        id="to-days"
-        .label=${this.toLabel}
-        .value=${this._inputTo}
-        allowedPattern="[0-9]"
-        inputmode="numeric"
-        .darkTheme=${this.darkTheme}
-        @input=${this._onToInput}
-      ></dw-input>`;
+      <div class="field">
+        <dw-input
+          id="to-days"
+          .label=${this.toLabel}
+          .value=${this._inputTo}
+          allowedPattern="[0-9]"
+          inputmode="numeric"
+          .invalid=${this._showError('to')}
+          .darkTheme=${this.darkTheme}
+          @focusin=${this._onToFocus}
+          @input=${this._onToInput}
+        ></dw-input>
+        ${this._showError('to') ? html`<div class="error">${this.errorMessages?.toLessThanFrom}</div>` : ''}
+      </div>`;
   }
 
   get _footerTemplate() {
@@ -275,9 +310,17 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
     this.daysFromInput && this.daysFromInput.focus && this.daysFromInput.focus();
   }
 
-  // Read as a function, so the message is re-derived on every validation pass.
-  _validateFrom() {
-    return this._invalid ? this.errorMessages?.fromGreaterThanTo : '';
+  // The range error belongs to the field the user is working in.
+  _showError(field) {
+    return this._invalid && this._activeField === field;
+  }
+
+  _onFromFocus() {
+    this._activeField = 'from';
+  }
+
+  _onToFocus() {
+    this._activeField = 'to';
   }
 
   // Only a whole non-negative number is a day count, and not one so large that the date it derives falls
@@ -334,3 +377,4 @@ export class DwDaysRangeInputDialog extends DwCompositeDialog {
 }
 
 window.customElements.define('dw-days-range-input-dialog', DwDaysRangeInputDialog);
+

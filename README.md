@@ -206,7 +206,7 @@ user types, and stripped out of pasted text. `Apply` stays disabled until both f
 | Name | Type | Default | Required | Description |
 |---|---|---|---|---|
 | `value` | `Object` | — | No | `{ daysFrom: Number, daysTo: Number }`. Pre-fills both fields |
-| `errorMessages` | `Object` | `{}` | No | Map of error keys to message strings. Reads the `fromGreaterThanTo` key only |
+| `errorMessages` | `Object` | `{}` | No | Map of error keys to message strings. Reads `fromGreaterThanTo` (shown under `From`) and `toLessThanFrom` (shown under `To`) |
 | `heading` | `String` | — | No | Dialog title. Supplied by the consumer |
 | `fromLabel` | `String` | — | No | Label of the `From` field |
 | `toLabel` | `String` | — | No | Label of the `To` field |

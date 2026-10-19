@@ -71,6 +71,7 @@ const DateRangeItems = [
 
 const DaysRangeErrorMessages = {
   fromGreaterThanTo: "From Days must be less than or equal to To Days",
+  toLessThanFrom: "To Days must be greater than or equal to From Days",
 };
 
 export class DwDateRangeSelectDemo extends LitElement {
@@ -142,3 +143,4 @@ export class DwDateRangeSelectDemo extends LitElement {
 }
 
 customElements.define("dw-date-range-select-demo", DwDateRangeSelectDemo);
+
