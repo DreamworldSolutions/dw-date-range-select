@@ -280,28 +280,19 @@ export class DwDateRangeSelect extends DwSelect {
   }
 
   get daysRangeInputDialogTemplate() {
-    // The popover anchors only on the `opened` false-to-true transition, so gate on the trigger existing.
-    if (this._dialogMode !== 'DAYS_RANGE_INPUT' || !this.triggerElement) {
+    if (this._dialogMode !== 'DAYS_RANGE_INPUT') {
       return;
     }
 
-    // Bound exactly as the picker is:
-    // - `showTrigger` decides the popover offset; without it the dialog is dragged up over the dropdown.
-    // - `placement: bottom` is what makes the modal a bottom sheet. The popover path ignores it.
-
+    // A centred modal on every layout, the same as the date-range input dialog.
     return html`
       <dw-days-range-input-dialog
         .opened=${true}
         date-picker="false"
-        .type=${this.mobileMode || this._layout === 'small' ? 'modal' : 'popover'}
-        .popoverAnimation=${'expand'}
-        .placement=${'bottom'}
-        .mobileMode=${this.mobileMode}
-        .tabletMode=${this.tabletMode}
-        .showTrigger=${true}
+        .type=${'modal'}
+        .placement=${'center'}
         .appendTo=${this.appendTo}
         .zIndex=${this.zIndex}
-        .triggerElement=${this.triggerElement}
         ._layout=${this._layout}
         .heading=${this.daysRangeHeading}
         .fromLabel=${this.daysRangeFromLabel}

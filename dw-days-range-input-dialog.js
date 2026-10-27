@@ -19,7 +19,7 @@ const MAX_DAYS = 365000;
  *   focus leaves both). The text comes from the consumer through `errorMessages.fromGreaterThanTo` (under
  *   `From`) and `errorMessages.toLessThanFrom` (under `To`), so this element stays language-agnostic.
  * - `From == To` is valid and yields a single day's age. There is no upper bound.
- * - Renders as a modal on the `small` layout and as a popover otherwise.
+ * - `dw-date-range-select` opens it as a centred modal on every layout, like the date-range input dialog.
  *
  * ## Events
  *  - `change` Fired on a valid Apply, with `{ daysFrom, daysTo }` in its detail.
