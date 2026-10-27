@@ -194,8 +194,8 @@ Internal manual date entry dialog (`dw-composite-dialog`) with Start date and En
 #### `<dw-days-range-input-dialog>`
 
 Internal days-range entry dialog (`dw-composite-dialog`) with `From` and `To` day-count inputs. Opened
-by selecting an item that carries `showDaysRange: true`. Renders as a modal on the `small` layout and
-as a popover otherwise.
+by selecting an item that carries `showDaysRange: true`. Opens as a centred modal on every layout, the
+same as the date-range input dialog.
 
 Only whole, non-negative numbers can be entered: decimals, minus signs and letters are rejected as the
 user types, and stripped out of pasted text. `Apply` stays disabled until both fields hold a value and
