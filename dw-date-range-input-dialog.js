@@ -494,7 +494,8 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   _onStartDateChange(e) {
     if (e && e.target) {
-      const dateInputed = dayjs(e.target.value, this.inputFormat);
+      // Strict: otherwise 40/04/2026 silently rolls over to 10/05/2026. The field's text holds spaces.
+      const dateInputed = dayjs((e.target.value || '').replace(/ /g, ''), this.inputFormat, true);
       const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
       this._inputStartDate = date;
     }
@@ -502,7 +503,8 @@ export class DwDateRangeInputDialog extends DwCompositeDialog {
 
   _onEndDateChange(e) {
     if (e && e.target) {
-      const dateInputed = dayjs(e.target.value, this.inputFormat);
+      // Strict: otherwise 40/04/2026 silently rolls over to 10/05/2026. The field's text holds spaces.
+      const dateInputed = dayjs((e.target.value || '').replace(/ /g, ''), this.inputFormat, true);
       const date = dateInputed.isValid() ? dateInputed.format(this.valueFormat) : '';
       this._inputEndDate = date;
     }
